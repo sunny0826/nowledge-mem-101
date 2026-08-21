@@ -1,0 +1,100 @@
+/* mem-video-loading.css
+   <video> 加载状态样式（frame 包裹式）：
+   - .mem-video-frame：视频外框，加载时显示暖色占位，就绪后保留（圆角 + 溢出裁剪）
+   - 加载中：占位背景 + 居中旋转指示器；就绪：轻微淡入；失败：一行低调提示
+   - 浅色 / 深色模式分别适配；动画只用 opacity 与 transform */
+
+.mem-video-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 32px 0; /* 继承原视频的正文间距，维持段落节奏 */
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f4f3f0;
+}
+html.dark .mem-video-frame {
+  background: #1c1b1a;
+}
+
+.mem-video-frame video {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0; /* 覆盖 Mintlify 正文样式的 32px 段落边距，保证与 frame 完全对齐 */
+  border-radius: 8px;
+  background: #000;
+}
+
+/* 加载中：隐藏黑底控件区，占位背景接管高度与观感 */
+.mem-video-frame[data-state="loading"] video {
+  visibility: hidden;
+}
+.mem-video-frame[data-state="loading"] .mem-video-spinner {
+  opacity: 1;
+}
+
+/* 就绪：轻微淡入，不打断阅读 */
+.mem-video-frame[data-state="ready"] video {
+  animation: mem-video-fade-in 0.3s ease;
+}
+
+/* 旋转指示器：加载中可见，其余时间透明且不占交互 */
+.mem-video-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 3px solid rgba(120, 119, 116, 0.18);
+  border-top-color: #2f5679;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  animation: mem-video-spin 0.9s linear infinite;
+  pointer-events: none;
+}
+html.dark .mem-video-spinner {
+  border-top-color: #93b5da;
+}
+
+/* 错误提示：一行低调的灰字，不放大不强调 */
+.mem-video-error {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #6b6b67;
+  pointer-events: none;
+}
+html.dark .mem-video-error {
+  color: #a3a29e;
+}
+
+@keyframes mem-video-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes mem-video-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mem-video-spinner {
+    animation: none;
+  }
+  .mem-video-frame[data-state="ready"] video {
+    animation: none;
+  }
+}

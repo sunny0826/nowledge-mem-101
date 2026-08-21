@@ -4,9 +4,23 @@
   "name": "Nowledge Mem 101",
   "description": "通过真实操作，学会把知识留给未来的自己和 AI。",
   "colors": {
-    "primary": "#5643B1",
-    "light": "#3C83F6",
-    "dark": "#45368E"
+    "primary": "#2F5679",
+    "light": "#93B5DA",
+    "dark": "#1E3F5F"
+  },
+  "fonts": {
+    "body": {
+      "family": "Geist"
+    },
+    "heading": {
+      "family": "Newsreader"
+    }
+  },
+  "background": {
+    "color": {
+      "light": "#FAF9F7",
+      "dark": "#121110"
+    }
   },
   "favicon": "/logo/nowledge-mem-logo.png",
   "logo": {
