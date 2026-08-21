@@ -32,7 +32,35 @@
     "socials": {
       "website": "https://mem.nowledge.co",
       "github": "https://github.com/nowledge-co"
-    }
+    },
+    "links": [
+      {
+        "header": "本教程",
+        "items": [
+          {
+            "label": "从这里开始",
+            "href": "/"
+          },
+          {
+            "label": "Essentials",
+            "href": "/essentials/index"
+          }
+        ]
+      },
+      {
+        "header": "产品",
+        "items": [
+          {
+            "label": "Nowledge Mem 官网",
+            "href": "https://mem.nowledge.co"
+          },
+          {
+            "label": "完整文档",
+            "href": "https://mem.nowledge.co/zh/docs"
+          }
+        ]
+      }
+    ]
   },
   "contextual": {
     "options": ["copy", "view", "chatgpt", "claude"]
