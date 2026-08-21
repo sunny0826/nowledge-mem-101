@@ -1,20 +1,107 @@
 ---
-title: "Introduction"
-description: "Welcome to your project"
+title: "Nowledge Mem 101"
+description: "通过真实操作，学会把知识留给未来的自己和 AI。"
+sidebarTitle: "Introduction"
+icon: "house"
 ---
 
-Write a short description of your product here. What it does, who it's for, and what they can accomplish with it.
+> 让你的 AI，用上你已经知道的东西。
 
-<Tip>
-  Ready to make this your own? Start by editing this page. Update your `docs.json` file to customize your site. Then fill out the [Quickstart](/quickstart) page.
-</Tip>
+**通过真实操作，学会把知识留给未来的自己和 AI。**
 
-<Card title="Quickstart" icon="rocket" href="/quickstart">
-  This card links to the quickstart page in your project.
-</Card>
-<Card title="Components" icon="puzzle-piece" href="https://mintlify.com/docs/components">
-  Add cards, callouts, steps, tabs, and more to design and structure your pages.
-</Card>
-<Card title="Settings" icon="gear" href="https://mintlify.com/docs/organize/settings">
-  Set your site name, branding, and navigation in the `docs.json` file.
-</Card>
+从第一条记忆开始，逐渐建立属于你的 AI 知识层。
+
+## 浏览教程
+
+移动端可能看不到完整的顶部标签栏，下面的入口同样可以到达各个板块。
+
+<CardGroup cols={2}>
+  <Card title="Essentials" icon="book-open" href="/essentials">
+    从第一条记忆开始，建立 Mem 最基本的使用闭环。
+
+    Beginner · 6 lessons · ~20 min
+  </Card>
+  <Card title="AI Workflow（即将上线）" icon="workflow">
+    让不同 AI 工具共享同一份上下文。
+
+    Intermediate
+  </Card>
+  <Card title="AI Now（即将上线）" icon="sparkles">
+    用自己的知识完成研究、分析和复杂任务。
+
+    Intermediate
+  </Card>
+  <Card title="Knowledge System（即将上线）" icon="library">
+    理解并建立自己的长期知识系统。
+
+    Advanced
+  </Card>
+</CardGroup>
+
+## 这是什么
+
+Nowledge Mem 是你的长期知识层。你留下的每一条信息，之后都可以被重新搜索、和其他知识产生关联，并被连接到 Mem 的 AI 工具再次使用。
+
+**适合谁：** 每天使用 AI 工具，却不想反复解释同一份背景的人。
+
+**有什么不同：**
+
+- **跨工具**：Codex、Claude Code、Cursor 等 AI 共享同一份上下文
+- **可操作**：教程以真实练习为主，从第一条记忆开始建立完整闭环
+- **渐进式**：从 Essentials 到知识系统，按目标选择路线
+
+## 如何运作
+
+```mermaid
+flowchart LR
+  A["Capture 留下"] --> B["Recall 找回"]
+  B --> C["Connect 连接 AI"]
+  C --> D["Reuse 复用"]
+```
+
+先留下知识，需要时直接把它找回来，再让连接 Mem 的 AI 使用它。
+
+## 快速体验
+
+3 分钟体验第一个 Capture → Recall 闭环：
+
+<Steps>
+  <Step title="打开 Nowledge Mem，进入 Timeline">
+    在输入框中写下一件真实、值得留下的事情。
+
+    ```text
+    我们决定新版官网使用 Next.js，因为需要 SSR 和更好的 SEO。
+    ```
+  </Step>
+  <Step title="按 Enter 保存">
+    内容出现在 Timeline 中，第一条记忆就留下了。
+  </Step>
+  <Step title="直接问 Mem">
+    不要翻记录，在 Timeline 中提问：
+
+    ```text
+    新版官网之前决定使用什么技术？
+    ```
+
+    Mem 会找到刚才的记忆并回答你。
+  </Step>
+</Steps>
+
+完成上面的步骤，你已经走通了 Mem 最基本的闭环。详细讲解见[第一课](/essentials/first-memory)和[第二课](/essentials/recall-memory)。
+
+## 从这里开始
+
+<CardGroup cols={2}>
+  <Card title="Essentials 课程" icon="graduation-cap" href="/essentials">
+    6 节课建立完整的 Capture → Recall 闭环，约 20 分钟。
+  </Card>
+  <Card title="Mem 官方文档" icon="book" href="https://mem.nowledge.co/zh/docs">
+    了解 Memory、Timeline 等功能的完整说明。
+  </Card>
+  <Card title="5 分钟上手：让 Codex 使用你的 Mem（即将上线）" icon="terminal">
+    5 min · Beginner
+  </Card>
+  <Card title="5 分钟上手：导入 ChatGPT 历史对话（即将上线）" icon="message-square">
+    4 min · Beginner
+  </Card>
+</CardGroup>

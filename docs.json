@@ -1,72 +1,61 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "name": "Nowledge Mem 101",
+  "description": "通过真实操作，学会把知识留给未来的自己和 AI。",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#5643B1",
+    "light": "#3C83F6",
+    "dark": "#45368E"
   },
-  "favicon": "/favicon.svg",
-  "navigation": {
-    "pages": [
-      {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
+  "favicon": "/logo/nowledge-mem-logo.png",
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/wordmark-light.svg",
+    "dark": "/logo/wordmark-dark.svg"
+  },
+  "icons": {
+    "library": "lucide"
   },
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "Mem Docs",
+        "href": "https://mem.nowledge.co/zh/docs"
+      },
+      {
+        "type": "github",
+        "href": "https://github.com/nowledge-co"
       }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.mintlify.com"
-    }
-  },
-  "contextual": {
-    "options": [
-      "copy",
-      "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
     ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "website": "https://mem.nowledge.co",
+      "github": "https://github.com/nowledge-co"
     }
+  },
+  "contextual": {
+    "options": ["copy", "view", "chatgpt", "claude"]
+  },
+  "search": {
+    "prompt": "搜索教程…"
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "开始使用",
+        "icon": "house",
+        "pages": ["index"]
+      },
+      {
+        "tab": "Essentials",
+        "icon": "book-open",
+        "pages": [
+          "essentials/index",
+          "essentials/first-memory",
+          "essentials/recall-memory"
+        ]
+      }
+    ]
   }
 }
