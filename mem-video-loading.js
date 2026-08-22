@@ -7,14 +7,17 @@
  *   - 就绪后 frame 保留（圆角 + 溢出裁剪，呈现统一的视频外观），指示器移除
  *   - 加载失败时显示一行低调的提示文案
  *
- * 与 React 共存（避免视频重复）：
- *   重复的根源：页面（Mintlify 客户端路由）由 React 渲染，若在 React 水合/挂载期间
- *   移动其管理的 <video> 节点，React 重渲染时会额外创建视频。
+ * 与 React 共存（避免视频重复与位置错乱）：
+ *   重复/错位的根源：页面（Mintlify 客户端路由）由 React 渲染，若在 React 水合/挂载期间
+ *   同步移动其管理的 <video> 节点，React 重渲染时会额外创建视频，或把 frame 重排到
+ *   错误位置（例如内容顶部）。
  *   因此：
  *     a) 初始扫描推迟到水合结束之后（DOMContentLoaded + 延迟补偿 + load 兜底）
- *     b) MutationObserver 持续自愈：同一内容容器内同源视频只保留一个；
+ *     b) MutationObserver 持续自愈：对观察到的所有变更统一防抖（150ms），等 React
+ *        当前渲染批次稳定后再 reconcile —— 同一内容容器内同源视频只保留一个；
  *        不含视频的空 frame 视为孤儿移除
- *     c) 客户端路由（SPA）新增的视频由观察器即时包装，不等待
+ *     c) 防抖后的 reconcile 会包装所有未初始化的视频（含客户端路由新增的视频），
+ *        不再在 React 挂载中途改 DOM
  */
 (function () {
   "use strict";
@@ -23,6 +26,21 @@
   var DEFER_MS = 1200; // 水合补偿窗口
   var FRAME_CLASS = "mem-video-frame";
   var INIT_ATTR = "data-mem-video-init";
+  // SPA（React 客户端路由）导航时，观察器若在 React 挂载过程中同步包装 <video>，
+  // 会改动 React 正在管理的 DOM，导致视频被 React 重排到错误位置（例如内容顶部）。
+  // 因此对观察器的所有变更统一做防抖：等 React 当前渲染批次稳定后再 reconcile。
+  var RECONCILE_DEBOUNCE_MS = 150;
+  var reconcileTimer = null;
+
+  function scheduleReconcile() {
+    if (reconcileTimer) {
+      return;
+    }
+    reconcileTimer = setTimeout(function () {
+      reconcileTimer = null;
+      reconcile();
+    }, RECONCILE_DEBOUNCE_MS);
+  }
 
   function containerOf(node) {
     return node.closest ? (node.closest(".mdx-content") || null) : null;
@@ -170,21 +188,7 @@
     if (node.nodeType !== 1) {
       return;
     }
-    if (node.tagName === "VIDEO") {
-      dedupeContainer(node);
-      cleanupEmptyFrames();
-      if (node.parentElement && !node.getAttribute(INIT_ATTR)) {
-        initVideo(node);
-      }
-      return;
-    }
-    node.querySelectorAll("video").forEach(function (v) {
-      dedupeContainer(v);
-      if (!v.getAttribute(INIT_ATTR)) {
-        initVideo(v);
-      }
-    });
-    cleanupEmptyFrames();
+    scheduleReconcile();
   }
 
   function handleRemoved(node) {
@@ -195,7 +199,7 @@
     var isVideo = node.tagName === "VIDEO";
     var containsAny = node.querySelector && node.querySelectorAll("." + FRAME_CLASS + ", video").length;
     if (isFrame || isVideo || containsAny) {
-      requestAnimationFrame(cleanupEmptyFrames);
+      scheduleReconcile();
     }
   }
 
