@@ -2,7 +2,7 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Nowledge Mem 101",
-  "description": "通过真实操作，学会把知识留给未来的自己和 AI。",
+  "description": "Learn to leave knowledge for your future self and your AI — by doing it for real.",
   "colors": {
     "primary": "#2F5679",
     "light": "#93B5DA",
@@ -30,12 +30,11 @@
   "icons": {
     "library": "lucide"
   },
+  "appearance": {
+    "strict": true
+  },
   "navbar": {
     "links": [
-      {
-        "label": "Mem Docs",
-        "href": "https://mem.nowledge.co/zh/docs"
-      },
       {
         "type": "github",
         "href": "https://github.com/nowledge-co"
@@ -49,10 +48,10 @@
     },
     "links": [
       {
-        "header": "本教程",
+        "header": "This tutorial",
         "items": [
           {
-            "label": "从这里开始",
+            "label": "Start here",
             "href": "/"
           },
           {
@@ -62,15 +61,15 @@
         ]
       },
       {
-        "header": "产品",
+        "header": "Product",
         "items": [
           {
-            "label": "Nowledge Mem 官网",
+            "label": "Nowledge Mem website",
             "href": "https://mem.nowledge.co"
           },
           {
-            "label": "完整文档",
-            "href": "https://mem.nowledge.co/zh/docs"
+            "label": "Full docs",
+            "href": "https://mem.nowledge.co/docs"
           }
         ]
       }
@@ -80,22 +79,88 @@
     "options": ["copy", "view", "chatgpt", "claude"]
   },
   "search": {
-    "prompt": "搜索教程…"
+    "prompt": "Search the docs…"
   },
   "navigation": {
-    "tabs": [
+    "languages": [
       {
-        "tab": "开始使用",
-        "icon": "house",
-        "pages": ["index"]
+        "language": "en",
+        "tabs": [
+          {
+            "tab": "Getting started",
+            "icon": "house",
+            "pages": ["index"]
+          },
+          {
+            "tab": "Essentials",
+            "icon": "book-open",
+            "pages": [
+              "essentials/index",
+              "essentials/first-memory",
+              "essentials/recall-memory"
+            ]
+          }
+        ]
       },
       {
-        "tab": "Essentials",
-        "icon": "book-open",
-        "pages": [
-          "essentials/index",
-          "essentials/first-memory",
-          "essentials/recall-memory"
+        "language": "zh",
+        "navbar": {
+          "links": [
+            {
+              "type": "github",
+              "href": "https://github.com/nowledge-co"
+            }
+          ]
+        },
+        "footer": {
+          "socials": {
+            "website": "https://mem.nowledge.co",
+            "github": "https://github.com/nowledge-co"
+          },
+          "links": [
+            {
+              "header": "本教程",
+              "items": [
+                {
+                  "label": "从这里开始",
+                  "href": "/zh"
+                },
+                {
+                  "label": "Essentials",
+                  "href": "/zh/essentials/index"
+                }
+              ]
+            },
+            {
+              "header": "产品",
+              "items": [
+                {
+                  "label": "Nowledge Mem 官网",
+                  "href": "https://mem.nowledge.co"
+                },
+                {
+                  "label": "完整文档",
+                  "href": "https://mem.nowledge.co/zh/docs"
+                }
+              ]
+            }
+          ]
+        },
+        "tabs": [
+          {
+            "tab": "开始使用",
+            "icon": "house",
+            "pages": ["zh/index"]
+          },
+          {
+            "tab": "Essentials",
+            "icon": "book-open",
+            "pages": [
+              "zh/essentials/index",
+              "zh/essentials/first-memory",
+              "zh/essentials/recall-memory"
+            ]
+          }
         ]
       }
     ]

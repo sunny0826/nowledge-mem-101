@@ -1,0 +1,11 @@
+/* 将语言切换器移动到导航栏右侧（桌面端） */
+/* #localization-select-trigger 是 Mintlify 语言切换器的稳定 ID；
+   它的直接父容器被移出流，绝对定位到导航栏主行（position: relative）的右端，
+   与原来的亮暗模式按钮位置对齐。移动端语言切换器在抽屉菜单中，不受影响。 */
+div:has(> #localization-select-trigger) {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  margin: 0;
+}
