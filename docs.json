@@ -4,22 +4,22 @@
   "name": "Nowledge Mem 101",
   "description": "Learn to leave knowledge for your future self and your AI — by doing it for real.",
   "colors": {
-    "primary": "#2F5679",
+    "primary": "#0075DE",
     "light": "#93B5DA",
-    "dark": "#1E3F5F"
+    "dark": "#2383E2"
   },
   "fonts": {
     "body": {
-      "family": "Geist"
+      "family": "Inter"
     },
     "heading": {
-      "family": "Newsreader"
+      "family": "Inter"
     }
   },
   "background": {
     "color": {
-      "light": "#FAF9F7",
-      "dark": "#121110"
+      "light": "#FFFFFF",
+      "dark": "#191919"
     }
   },
   "favicon": "/logo/nowledge-mem-logo.png",

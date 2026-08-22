@@ -48,7 +48,7 @@ html.dark .mem-video-frame {
   height: 36px;
   margin: -18px 0 0 -18px;
   border: 3px solid rgba(120, 119, 116, 0.18);
-  border-top-color: #2f5679;
+  border-top-color: #0075de;
   border-radius: 50%;
   opacity: 0;
   transition: opacity 0.25s ease;
@@ -56,7 +56,7 @@ html.dark .mem-video-frame {
   pointer-events: none;
 }
 html.dark .mem-video-spinner {
-  border-top-color: #93b5da;
+  border-top-color: #2383e2;
 }
 
 /* 错误提示：一行低调的灰字，不放大不强调 */

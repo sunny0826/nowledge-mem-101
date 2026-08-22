@@ -5,62 +5,74 @@ sidebarTitle: "Overview"
 icon: "book-open"
 ---
 
-从第一条记忆开始，体验信息如何被找回，最终让不同 AI 使用你以前积累的上下文。
+<div className="course-meta" aria-label="课程信息">
+  <span><Icon icon="user-round" /> Beginner</span>
+  <span><Icon icon="book-open" /> 6 lessons</span>
+  <span><Icon icon="clock-3" /> ~20 min</span>
+</div>
 
-Beginner · 6 lessons · ~20 min
+<p className="course-intro">从第一条记忆开始，体验信息如何被找回，最终让不同 AI 使用你以前积累的上下文。</p>
 
-<Card title="开始第一课 →" href="/zh/essentials/first-memory" horizontal />
+<a className="course-cta" href="/zh/essentials/first-memory">开始第一课 <span aria-hidden="true">→</span></a>
 
 ## 你会经历什么
 
-<CardGroup cols={4}>
-  <Card title="Capture">
-    留下重要信息。
-  </Card>
-  <Card title="Recall">
-    需要时重新找到。
-  </Card>
-  <Card title="Connect">
-    连接你每天使用的 AI。
-  </Card>
-  <Card title="Reuse">
-    让新的 AI 继续以前的工作。
-  </Card>
-</CardGroup>
-
-教程不是教你熟悉所有按钮，而是帮你建立一个完整工作闭环。
+<div className="learning-stages" aria-label="学习阶段">
+  <div className="learning-stage learning-stage-active">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Capture</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Recall</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Connect</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Reuse</span>
+  </div>
+</div>
 
 ## 课程路线
 
-<CardGroup cols={2}>
-  <Card title="01 保存第一条记忆" href="/zh/essentials/first-memory">
-    在 Mem 中留下第一件真实、值得未来再次使用的事情。
-
-    3 min · Available
-  </Card>
-  <Card title="02 把它找回来" href="/zh/essentials/recall-memory">
-    不要翻记录。直接问 Mem，看看它能不能找到刚才的知识。
-
-    3 min · Available
-  </Card>
-  <Card title="03 加入一份真实资料（即将上线）">
-    让 PDF、文档或 URL 成为你的长期知识。
-
-    4 min
-  </Card>
-  <Card title="04 保存一次 AI 对话（即将上线）">
-    把一次真正有价值的 AI 对话留下来。
-
-    4 min
-  </Card>
-  <Card title="05 连接你的 AI（即将上线）">
-    让 Codex、Claude Code、Cursor 或其他工具访问 Mem。
-
-    5 min
-  </Card>
-  <Card title="06 不要再重复解释（即将上线）">
-    让另一个 AI 找到以前的决定，并从那里继续工作。
-
-    5 min
-  </Card>
-</CardGroup>
+<div className="course-grid">
+  <a className="course-card course-card-featured" href="/zh/essentials/first-memory">
+    <span className="course-card-index">01</span>
+    <h3>保存第一条记忆</h3>
+    <p>在 Mem 中留下第一件真实、值得未来再次使用的事情。</p>
+    <div className="course-card-footer"><span>~3 min</span><span className="course-card-action">可开始 →</span></div>
+  </a>
+  <a className="course-card course-card-featured" href="/zh/essentials/recall-memory">
+    <span className="course-card-index">02</span>
+    <h3>把它找回来</h3>
+    <p>不要翻记录。直接问 Mem，看看它能不能找到刚才的知识。</p>
+    <div className="course-card-footer"><span>~3 min</span><span className="course-card-action">可开始 →</span></div>
+  </a>
+  <div className="course-card course-card-upcoming">
+    <span className="course-card-index">03</span>
+    <h3>加入一份真实资料</h3>
+    <p>让 PDF、文档或 URL 成为你的长期知识。</p>
+    <div className="course-card-footer"><span>~4 min</span><span className="course-card-status"><i aria-hidden="true"></i>即将上线</span></div>
+  </div>
+  <div className="course-card course-card-upcoming">
+    <span className="course-card-index">04</span>
+    <h3>保存一次 AI 对话</h3>
+    <p>把一次真正有价值的 AI 对话留下来。</p>
+    <div className="course-card-footer"><span>~4 min</span><span className="course-card-status"><i aria-hidden="true"></i>即将上线</span></div>
+  </div>
+  <div className="course-card course-card-upcoming">
+    <span className="course-card-index">05</span>
+    <h3>连接你的 AI</h3>
+    <p>让 Codex、Claude Code、Cursor 或其他工具访问 Mem。</p>
+    <div className="course-card-footer"><span>~5 min</span><span className="course-card-status"><i aria-hidden="true"></i>即将上线</span></div>
+  </div>
+  <div className="course-card course-card-upcoming">
+    <span className="course-card-index">06</span>
+    <h3>不要再重复解释</h3>
+    <p>让另一个 AI 找到以前的决定，并从那里继续工作。</p>
+    <div className="course-card-footer"><span>~5 min</span><span className="course-card-status"><i aria-hidden="true"></i>即将上线</span></div>
+  </div>
+</div>

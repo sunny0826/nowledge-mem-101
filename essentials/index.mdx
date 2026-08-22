@@ -5,62 +5,74 @@ sidebarTitle: "Overview"
 icon: "book-open"
 ---
 
-Start with your first memory, see how information gets recalled, and let different AIs use the context you've built up.
+<div className="course-meta" aria-label="Course information">
+  <span><Icon icon="user-round" /> Beginner</span>
+  <span><Icon icon="book-open" /> 6 lessons</span>
+  <span><Icon icon="clock-3" /> ~20 min</span>
+</div>
 
-Beginner · 6 lessons · ~20 min
+<p className="course-intro">Start with your first memory, see how information gets recalled, and let different AIs use the context you've built up.</p>
 
-<Card title="Start lesson 1 →" href="/essentials/first-memory" horizontal />
+<a className="course-cta" href="/essentials/first-memory">Start lesson 1 <span aria-hidden="true">→</span></a>
 
 ## What you'll go through
 
-<CardGroup cols={4}>
-  <Card title="Capture">
-    Leave important information.
-  </Card>
-  <Card title="Recall">
-    Find it again when you need it.
-  </Card>
-  <Card title="Connect">
-    Connect the AIs you use every day.
-  </Card>
-  <Card title="Reuse">
-    Let new AIs continue where you left off.
-  </Card>
-</CardGroup>
-
-This tutorial isn't about learning every button. It helps you build a complete working loop.
+<div className="learning-stages" aria-label="Learning stages">
+  <div className="learning-stage learning-stage-active">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Capture</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Recall</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Connect</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Reuse</span>
+  </div>
+</div>
 
 ## Course path
 
-<CardGroup cols={2}>
-  <Card title="01 Save your first memory" href="/essentials/first-memory">
-    Leave one real thing in Mem that's worth using again later.
-
-    3 min · Available
-  </Card>
-  <Card title="02 Bring it back" href="/essentials/recall-memory">
-    Don't scroll through your notes. Ask Mem directly and see if it finds what you saved.
-
-    3 min · Available
-  </Card>
-  <Card title="03 Add a real document (coming soon)">
-    Make a PDF, document, or URL part of your long-term knowledge.
-
-    4 min
-  </Card>
-  <Card title="04 Save an AI conversation (coming soon)">
-    Keep a genuinely valuable AI conversation.
-
-    4 min
-  </Card>
-  <Card title="05 Connect your AI (coming soon)">
-    Let Codex, Claude Code, Cursor, or other tools access Mem.
-
-    5 min
-  </Card>
-  <Card title="06 Stop re-explaining (coming soon)">
-    Let another AI find past decisions and continue from there.
-
-    5 min
-  </Card>
-</CardGroup>
+<div className="course-grid">
+  <a className="course-card course-card-featured" href="/essentials/first-memory">
+    <span className="course-card-index">01</span>
+    <h3>Save your first memory</h3>
+    <p>Leave one real thing in Mem that's worth using again later.</p>
+    <div className="course-card-footer"><span>~3 min</span><span className="course-card-action">Available →</span></div>
+  </a>
+  <a className="course-card course-card-featured" href="/essentials/recall-memory">
+    <span className="course-card-index">02</span>
+    <h3>Bring it back</h3>
+    <p>Don't scroll through your notes. Ask Mem directly and see if it finds what you saved.</p>
+    <div className="course-card-footer"><span>~3 min</span><span className="course-card-action">Available →</span></div>
+  </a>
+  <div className="course-card course-card-upcoming">
+    <span className="course-card-index">03</span>
+    <h3>Add a real document</h3>
+    <p>Make a PDF, document, or URL part of your long-term knowledge.</p>
+    <div className="course-card-footer"><span>~4 min</span><span className="course-card-status"><i aria-hidden="true"></i>Coming soon</span></div>
+  </div>
+  <div className="course-card course-card-upcoming">
+    <span className="course-card-index">04</span>
+    <h3>Save an AI conversation</h3>
+    <p>Keep a genuinely valuable AI conversation.</p>
+    <div className="course-card-footer"><span>~4 min</span><span className="course-card-status"><i aria-hidden="true"></i>Coming soon</span></div>
+  </div>
+  <div className="course-card course-card-upcoming">
+    <span className="course-card-index">05</span>
+    <h3>Connect your AI</h3>
+    <p>Let Codex, Claude Code, Cursor, or other tools access Mem.</p>
+    <div className="course-card-footer"><span>~5 min</span><span className="course-card-status"><i aria-hidden="true"></i>Coming soon</span></div>
+  </div>
+  <div className="course-card course-card-upcoming">
+    <span className="course-card-index">06</span>
+    <h3>Stop re-explaining</h3>
+    <p>Let another AI find past decisions and continue from there.</p>
+    <div className="course-card-footer"><span>~5 min</span><span className="course-card-status"><i aria-hidden="true"></i>Coming soon</span></div>
+  </div>
+</div>
