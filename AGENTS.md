@@ -12,7 +12,7 @@
 - `docs.json` defines the Mintlify site, language navigation, branding, and global links.
 - `index.mdx` and `zh/index.mdx` are the English and Chinese landing pages.
 - `essentials/` and `zh/essentials/` contain the beginner course.
-- `custom.css`, `mem-video-loading.css`, and `mem-video-loading.js` provide site-specific presentation and video behavior.
+- `custom.css`, `mem-video-loading.css`, and `mem-video-loading.js` provide site-specific presentation and bilibili video embed behavior (loading state, 16:9 frame, and a fallback link).
 - Static assets belong in the existing purpose-specific directories such as `logo/` and `cover-image/`. Use descriptive, kebab-case names for new assets.
 - `prompts/` contains production prompts and is not published tutorial content unless it is added to `docs.json`.
 

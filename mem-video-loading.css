@@ -1,14 +1,15 @@
 /* mem-video-loading.css
-   <video> 加载状态样式（frame 包裹式）：
-   - .mem-video-frame：视频外框，加载时显示暖色占位，就绪后保留（圆角 + 溢出裁剪）
-   - 加载中：占位背景 + 居中旋转指示器；就绪：轻微淡入；失败：一行低调提示
+   bilibili <iframe> 加载状态与兜底样式（frame 包裹式）：
+   - .mem-video-frame：视频外框（圆角 + 溢出裁剪），内含 16:9 播放区与底部兜底链接
+   - .mem-video-stage：16:9 播放区；加载中显示暖色占位 + 居中旋转指示器
+   - 就绪：轻微淡入；兜底链接常驻，无法播放时可直接前往 bilibili
    - 浅色 / 深色模式分别适配；动画只用 opacity 与 transform */
 
 .mem-video-frame {
   position: relative;
   display: block;
   width: 100%;
-  margin: 32px 0; /* 继承原视频的正文间距，维持段落节奏 */
+  margin: 32px 0; /* 与正文段落节奏一致 */
   overflow: hidden;
   border-radius: 8px;
   background: #f4f3f0;
@@ -17,17 +18,26 @@ html.dark .mem-video-frame {
   background: #1c1b1a;
 }
 
-.mem-video-frame video {
-  display: block;
+.mem-video-stage {
+  position: relative;
   width: 100%;
-  height: auto;
-  margin: 0; /* 覆盖 Mintlify 正文样式的 32px 段落边距，保证与 frame 完全对齐 */
-  border-radius: 8px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
   background: #000;
 }
 
-/* 加载中：隐藏黑底控件区，占位背景接管高度与观感 */
-.mem-video-frame[data-state="loading"] video {
+.mem-video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0; /* 覆盖 Mintlify 默认 iframe 样式，保证与播放区完全对齐 */
+  border: 0;
+  background: #000;
+}
+
+/* 加载中：隐藏黑底播放器，占位背景接管高度与观感 */
+.mem-video-frame[data-state="loading"] iframe {
   visibility: hidden;
 }
 .mem-video-frame[data-state="loading"] .mem-video-spinner {
@@ -35,7 +45,7 @@ html.dark .mem-video-frame {
 }
 
 /* 就绪：轻微淡入，不打断阅读 */
-.mem-video-frame[data-state="ready"] video {
+.mem-video-frame[data-state="ready"] iframe {
   animation: mem-video-fade-in 0.3s ease;
 }
 
@@ -59,21 +69,27 @@ html.dark .mem-video-spinner {
   border-top-color: #2383e2;
 }
 
-/* 错误提示：一行低调的灰字，不放大不强调 */
-.mem-video-error {
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 14px;
+/* 兜底链接：一行低调的灰字，常驻于播放区下方 */
+.mem-video-fallback {
   margin: 0;
+  padding: 8px 14px 10px;
   text-align: center;
   font-size: 13px;
   line-height: 1.5;
   color: #6b6b67;
-  pointer-events: none;
 }
-html.dark .mem-video-error {
+.mem-video-fallback a {
+  color: #0075de;
+  text-decoration: none;
+}
+.mem-video-fallback a:hover {
+  text-decoration: underline;
+}
+html.dark .mem-video-fallback {
   color: #a3a29e;
+}
+html.dark .mem-video-fallback a {
+  color: #2383e2;
 }
 
 @keyframes mem-video-spin {
@@ -94,7 +110,7 @@ html.dark .mem-video-error {
   .mem-video-spinner {
     animation: none;
   }
-  .mem-video-frame[data-state="ready"] video {
+  .mem-video-frame[data-state="ready"] iframe {
     animation: none;
   }
 }

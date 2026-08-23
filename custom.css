@@ -406,14 +406,6 @@ html[data-current-path^="/zh/essentials/"] [data-badge] {
   font-size: 0.72rem;
 }
 
-html[data-current-path^="/essentials/"] video,
-html[data-current-path^="/zh/essentials/"] video {
-  width: 100%;
-  border: 1px solid var(--course-border);
-  border-radius: 12px;
-  background: #191919;
-}
-
 /* --- Dark mode (Notion dark palette) ------------------------------------ */
 
 html.dark {
