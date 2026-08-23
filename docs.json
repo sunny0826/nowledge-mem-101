@@ -33,6 +33,10 @@
   "appearance": {
     "strict": true
   },
+  "thumbnails": {
+    "appearance": "dark",
+    "background": "/cover-image/og-background.png"
+  },
   "navbar": {
     "links": [
       {
@@ -44,7 +48,8 @@
   "footer": {
     "socials": {
       "website": "https://mem.nowledge.co",
-      "github": "https://github.com/nowledge-co"
+      "github": "https://github.com/nowledge-co",
+      "x": "https://x.com/NowledgeMem"
     },
     "links": [
       {
@@ -81,6 +86,12 @@
   "search": {
     "prompt": "Search the docs…"
   },
+  "seo": {
+    "metatags": {
+      "twitter:site": "@NowledgeMem",
+      "twitter:creator": "@NowledgeMem"
+    }
+  },
   "navigation": {
     "languages": [
       {
@@ -115,7 +126,8 @@
         "footer": {
           "socials": {
             "website": "https://mem.nowledge.co",
-            "github": "https://github.com/nowledge-co"
+            "github": "https://github.com/nowledge-co",
+            "x": "https://x.com/NowledgeMem"
           },
           "links": [
             {
