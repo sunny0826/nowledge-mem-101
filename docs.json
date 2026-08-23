@@ -108,7 +108,8 @@
             "pages": [
               "essentials/index",
               "essentials/first-memory",
-              "essentials/recall-memory"
+              "essentials/recall-memory",
+              "essentials/add-a-document"
             ]
           }
         ]
@@ -170,7 +171,8 @@
             "pages": [
               "zh/essentials/index",
               "zh/essentials/first-memory",
-              "zh/essentials/recall-memory"
+              "zh/essentials/recall-memory",
+              "zh/essentials/add-a-document"
             ]
           }
         ]
