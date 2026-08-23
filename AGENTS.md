@@ -57,6 +57,46 @@
 - Distinguish available lessons from planned lessons. Label unreleased material **Coming soon** or **即将上线** and do not link to nonexistent pages.
 - Keep lesson numbers, duration estimates, availability, previous/next links, course cards, and navigation entries consistent across the site.
 
+## Visual style
+
+- The site uses a restrained Notion Help Center style system defined in `custom.css` (see the reference note at the top of that file). Reuse its existing classes before adding new ones, and keep all custom styling in `custom.css`.
+- Palette values live in the `--course-*` CSS variables, which have separate light and dark values under `html.dark`. Never hardcode colors in MDX or new CSS rules; use the variables so both color modes stay correct.
+- The course style scope covers `/essentials`, `/essentials/*`, `/zh/essentials`, and `/zh/essentials/*` path prefixes. Page content on these paths is capped at 42rem by the scoped `#content` selectors in `custom.css`; add new course paths to those selectors.
+- Every Essentials page opens with a `.course-meta` row, not `<Badge>` pills. One icon per token type: `book-open` for lesson position or count, `clock-3` for duration, `user-round` for level.
+
+  ```mdx
+  <div className="course-meta" aria-label="Lesson information">
+    <span><Icon icon="book-open" /> Essentials · Lesson 1 / 6</span>
+    <span><Icon icon="clock-3" /> ~3 min</span>
+    <span><Icon icon="user-round" /> Beginner</span>
+  </div>
+  ```
+
+  Chinese pages use `aria-label="课程信息"` and natural tokens such as `第 1 课 / 共 6 课`, `约 3 分钟`, and `入门`.
+- Do not use Mintlify `<Badge>` on Essentials pages.
+- These classes are overview-only: `.course-intro`, `.course-cta`, `.learning-stages`, `.course-grid`, and `.course-card*`. Do not reuse them inside lesson bodies.
+- End an available lesson's **Next lesson** section with `<Card title="..." horizontal href="...">`, which the global `.card` rules restyle to match the course cards. When the next lesson is not yet available, use the muted status line instead of a link or badge:
+
+  ```mdx
+  <p className="course-status-line"><i aria-hidden="true"></i>Coming soon</p>
+  ```
+
+  Chinese pages render `即将上线` with the same markup.
+- Course cards have two states: `.course-card-featured` is an `<a>` linking to an available lesson; `.course-card-upcoming` is a non-link `<div>` labeled **Coming soon** or **即将上线**. A card's state must match the target lesson's availability.
+
+## Demo videos
+
+- Every Essentials lesson embeds a bilibili demo video in a **Watch how it's done** section (Chinese: **看看怎么做**), placed between **What you'll accomplish** and **Your turn**.
+- Use the exact iframe format from the existing lessons: `https://` URL, `&autoplay=0`, a descriptive `title`, and `allowfullscreen="true"`. Do not add attributes such as `scrolling`, `border`, `frameborder`, or `framespacing`.
+
+  ```html
+  <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=<aid>&bvid=<bvid>&cid=<cid>&p=1&autoplay=0" title="Demo: ..." allowfullscreen="true"></iframe>
+  ```
+
+- Use the same video URL (same `aid`, `bvid`, `cid`) on both the English and Chinese versions of a page. Localize only the `title` attribute: `Demo: ...` in English, `演示：...` in Chinese.
+- `mem-video-loading.js` automatically wraps bilibili iframes with a 16:9 frame, loading state, and a fallback link, so no extra markup is needed around the iframe.
+- Do not invent a video URL. If the demo video is not ready, leave a `{/* TODO: ... */}` comment where the iframe will go and keep the lesson's availability state consistent with the missing video.
+
 ## Localization
 
 - When changing reader-facing content, update the corresponding English and Simplified Chinese pages in the same change unless the task explicitly targets one locale.
@@ -92,4 +132,4 @@
 - Run `mint broken-links` after changing pages, navigation, or links.
 - Run `mint a11y` after changing content, components, or media.
 - If the Mintlify CLI is unavailable, report which checks could not run. Do not claim validation succeeded without running it.
-- For visual or layout changes, run `mint dev` and inspect the affected pages in both desktop and mobile widths, in both locales when applicable.
+- For visual or layout changes, run `mint dev` and inspect the affected pages in both desktop and mobile widths, in both locales and both color modes when applicable.
