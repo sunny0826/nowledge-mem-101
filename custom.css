@@ -7,13 +7,17 @@
    - Accent: Notion link blue #0075DE
    ========================================================================== */
 
-/* Language switcher pinned to the navbar right (desktop) */
-div:has(> #localization-select-trigger) {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  margin: 0;
-  transform: translateY(-50%);
+/* Language switcher pinned to the navbar right (desktop only).
+   On mobile, this container belongs to the navigation drawer and must remain
+   in normal flow so the language and section controls do not overlap. */
+@media (min-width: 1024px) {
+  div:has(> #localization-select-trigger) {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin: 0;
+    transform: translateY(-50%);
+  }
 }
 
 /* --- Notion typography --------------------------------------------------- */
