@@ -133,3 +133,8 @@
 - Run `mint a11y` after changing content, components, or media.
 - If the Mintlify CLI is unavailable, report which checks could not run. Do not claim validation succeeded without running it.
 - For visual or layout changes, run `mint dev` and inspect the affected pages in both desktop and mobile widths, in both locales and both color modes when applicable.
+
+## Pull requests
+
+- Write pull requests in English: the PR title, the PR description, and commit messages must use English.
+- Keep each pull request focused on a single task, and review the diff for unintended changes before opening it.
