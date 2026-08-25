@@ -1,13 +1,13 @@
 /**
  * mem-video-loading.js
- * 为教程页面的 bilibili <iframe> 提供克制的加载状态与失败兜底：
+ * 为教程页面的视频 <iframe>（bilibili 或 YouTube）提供克制的加载状态与失败兜底：
  *
- *   - 每个 bilibili 教程 iframe 被包进一个 .mem-video-frame：
+ *   - 每个教程视频 iframe 被包进一个 .mem-video-frame：
  *       播放区（.mem-video-stage）保持 16:9，加载时显示暖色占位 + 旋转指示器
  *       （延迟 350ms 出现，避免缓存闪烁），iframe load 后移除指示器；
  *       长时间等不到 load 也按时收起，避免一直转圈
- *   - 播放区下方常驻一行低调的兜底链接（按页面语言切换中英文）：
- *       无法播放时可直接前往 bilibili 观看
+ *   - 播放区下方常驻一行低调的兜底链接（按视频平台与页面语言切换文案）：
+ *       无法播放时可直接前往 bilibili / YouTube 观看
  *   - 与 React 共存（避免 iframe 重复与位置错乱）：
  *     重复/错位的根源：页面（Mintlify 客户端路由）由 React 渲染，若在 React 水合/挂载期间
  *     同步移动其管理的 <iframe> 节点，React 重渲染时会额外创建 iframe，或把 frame 重排到
@@ -59,13 +59,17 @@
     return (document.documentElement.lang || "").toLowerCase().indexOf("zh") === 0;
   }
 
-  // 只处理教程页里的 bilibili 播放器 iframe，不触碰其他 iframe
+  // 只处理教程页里的视频播放器 iframe（bilibili 或 YouTube），不触碰其他 iframe
   function isTutorialIframe(node) {
     if (!node || node.tagName !== "IFRAME") {
       return false;
     }
     var src = node.getAttribute("src") || "";
-    return src.indexOf("player.bilibili.com") !== -1;
+    return (
+      src.indexOf("player.bilibili.com") !== -1 ||
+      src.indexOf("youtube.com/embed") !== -1 ||
+      src.indexOf("youtube-nocookie.com/embed") !== -1
+    );
   }
 
   function makeSpinner() {
@@ -74,27 +78,35 @@
     return el;
   }
 
-  // 从 bilibili 播放器地址中取出 bvid，拼出可跳转的观看页链接
+  // 从播放器地址中拼出可跳转的观看页链接（bilibili 取 bvid，YouTube 取视频 id）
   function watchUrlOf(iframe) {
     var src = iframe.getAttribute("src") || "";
-    var m = src.match(/[?&]bvid=([^&]+)/);
-    if (!m) {
+    if (src.indexOf("player.bilibili.com") !== -1) {
+      var m = src.match(/[?&]bvid=([^&]+)/);
+      if (!m) {
+        return "";
+      }
+      return "https://www.bilibili.com/video/" + m[1];
+    }
+    var y = src.match(/\/embed\/([^?&#]+)/);
+    if (!y) {
       return "";
     }
-    return "https://www.bilibili.com/video/" + m[1];
+    return "https://youtu.be/" + y[1];
   }
 
-  function makeFallback(url) {
+  function makeFallback(url, src) {
     var caption = document.createElement("p");
     caption.className = "mem-video-fallback";
     if (url) {
+      var isBilibili = src.indexOf("player.bilibili.com") !== -1;
       var a = document.createElement("a");
       a.href = url;
       a.target = "_blank";
       a.rel = "noopener noreferrer";
-      a.textContent = isZh()
-        ? "无法播放？在 bilibili 观看"
-        : "Can't play? Watch on bilibili";
+      a.textContent = isBilibili
+        ? (isZh() ? "无法播放？在 bilibili 观看" : "Can't play? Watch on bilibili")
+        : (isZh() ? "无法播放？在 YouTube 观看" : "Can't play? Watch on YouTube");
       caption.appendChild(a);
     }
     return caption;
@@ -111,7 +123,7 @@
     frame.appendChild(stage);
     stage.appendChild(iframe);
     stage.appendChild(makeSpinner());
-    frame.appendChild(makeFallback(watchUrlOf(iframe)));
+    frame.appendChild(makeFallback(watchUrlOf(iframe), iframe.getAttribute("src") || ""));
     return frame;
   }
 

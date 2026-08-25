@@ -1,8 +1,8 @@
 /* mem-video-loading.css
-   bilibili <iframe> 加载状态与兜底样式（frame 包裹式）：
+   教程视频 <iframe>（bilibili / YouTube）加载状态与兜底样式（frame 包裹式）：
    - .mem-video-frame：视频外框（圆角 + 溢出裁剪），内含 16:9 播放区与底部兜底链接
    - .mem-video-stage：16:9 播放区；加载中显示暖色占位 + 居中旋转指示器
-   - 就绪：轻微淡入；兜底链接常驻，无法播放时可直接前往 bilibili
+   - 就绪：轻微淡入；兜底链接常驻，无法播放时可直接前往 bilibili / YouTube
    - 浅色 / 深色模式分别适配；动画只用 opacity 与 transform */
 
 .mem-video-frame {
