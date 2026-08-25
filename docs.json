@@ -111,7 +111,8 @@
               "essentials/recall-memory",
               "essentials/add-a-document",
               "essentials/save-ai-conversation",
-              "essentials/connect-your-ai"
+              "essentials/connect-your-ai",
+              "essentials/stop-re-explaining"
             ]
           }
         ]
@@ -176,7 +177,8 @@
               "zh/essentials/recall-memory",
               "zh/essentials/add-a-document",
               "zh/essentials/save-ai-conversation",
-              "zh/essentials/connect-your-ai"
+              "zh/essentials/connect-your-ai",
+              "zh/essentials/stop-re-explaining"
             ]
           }
         ]
