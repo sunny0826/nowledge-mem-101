@@ -12,7 +12,7 @@
 - `docs.json` defines the Mintlify site, language navigation, branding, and global links.
 - `index.mdx` and `zh/index.mdx` are the English and Chinese landing pages.
 - `essentials/` and `zh/essentials/` contain the beginner course.
-- `custom.css`, `mem-video-loading.css`, and `mem-video-loading.js` provide site-specific presentation and bilibili video embed behavior (loading state, 16:9 frame, and a fallback link).
+- `custom.css`, `mem-video-loading.css`, and `mem-video-loading.js` provide site-specific presentation and demo video embed behavior (loading state, 16:9 frame, and a fallback link).
 - Static assets belong in the existing purpose-specific directories such as `logo/` and `cover-image/`. Use descriptive, kebab-case names for new assets.
 - `prompts/` contains production prompts and is not published tutorial content unless it is added to `docs.json`.
 
@@ -86,15 +86,23 @@
 
 ## Demo videos
 
-- Every Essentials lesson embeds a bilibili demo video in a **Watch how it's done** section (Chinese: **看看怎么做**), placed between **What you'll accomplish** and **Your turn**.
+- Every Essentials lesson embeds a demo video in a **Watch how it's done** section (Chinese: **看看怎么做**), placed between **What you'll accomplish** and **Your turn**. English lessons embed a YouTube video; Chinese lessons embed a bilibili video.
 - Use the exact iframe format from the existing lessons: `https://` URL, `&autoplay=0`, a descriptive `title`, and `allowfullscreen="true"`. Do not add attributes such as `scrolling`, `border`, `frameborder`, or `framespacing`.
 
+  English (YouTube):
+
   ```html
-  <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=<aid>&bvid=<bvid>&cid=<cid>&p=1&autoplay=0" title="Demo: ..." allowfullscreen="true"></iframe>
+  <iframe src="https://www.youtube.com/embed/<video-id>?autoplay=0" title="Demo: ..." allowfullscreen="true"></iframe>
   ```
 
-- Use the same video URL (same `aid`, `bvid`, `cid`) on both the English and Chinese versions of a page. Localize only the `title` attribute: `Demo: ...` in English, `演示：...` in Chinese.
-- `mem-video-loading.js` automatically wraps bilibili iframes with a 16:9 frame, loading state, and a fallback link, so no extra markup is needed around the iframe.
+  Chinese (bilibili):
+
+  ```html
+  <iframe src="https://player.bilibili.com/player.html?isOutside=true&aid=<aid>&bvid=<bvid>&cid=<cid>&p=1&autoplay=0" title="演示：..." allowfullscreen="true"></iframe>
+  ```
+
+- The English and Chinese versions of a page use their own video source (YouTube for English, bilibili for Chinese). Localize only the `title` attribute: `Demo: ...` in English, `演示：...` in Chinese.
+- `mem-video-loading.js` automatically wraps lesson video iframes (bilibili or YouTube) with a 16:9 frame, loading state, and a fallback link, so no extra markup is needed around the iframe.
 - Do not invent a video URL. If the demo video is not ready, leave a `{/* TODO: ... */}` comment where the iframe will go and keep the lesson's availability state consistent with the missing video.
 
 ## Localization
