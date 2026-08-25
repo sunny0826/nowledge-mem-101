@@ -110,7 +110,8 @@
               "essentials/first-memory",
               "essentials/recall-memory",
               "essentials/add-a-document",
-              "essentials/save-ai-conversation"
+              "essentials/save-ai-conversation",
+              "essentials/connect-your-ai"
             ]
           }
         ]
@@ -174,7 +175,8 @@
               "zh/essentials/first-memory",
               "zh/essentials/recall-memory",
               "zh/essentials/add-a-document",
-              "zh/essentials/save-ai-conversation"
+              "zh/essentials/save-ai-conversation",
+              "zh/essentials/connect-your-ai"
             ]
           }
         ]
