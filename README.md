@@ -1,55 +1,51 @@
-# Mintlify Starter Kit
+# Nowledge Mem 101
 
-Use the starter kit to get your docs deployed and ready to customize.
+A hands-on tutorial for people who use AI tools and want their existing knowledge to be reusable across those tools. The tutorial teaches by asking readers to complete real tasks in [Nowledge Mem](https://mem.nowledge.co), starting with the core **Capture → Recall** loop and later covering **Connect → Reuse**.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+The site is built with [Mintlify](https://mintlify.com) and is bilingual: English pages live at the repository root, and Simplified Chinese pages mirror them under `zh/`.
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+## Structure
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
-
-## AI-assisted writing
-
-Set up your AI coding tool to work with Mintlify:
-
-```bash
-npx skills add https://mintlify.com/docs
-```
-
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
-
-See the [AI tools guides](/ai-tools) for tool-specific setup.
+- `docs.json` — Mintlify site configuration: language navigation, branding, and global links
+- `index.mdx` / `zh/index.mdx` — English and Chinese landing pages
+- `essentials/` / `zh/essentials/` — the beginner course (6 lessons, ~20 minutes)
+- `custom.css` — site presentation and the course design system
+- `mem-video-loading.css` / `mem-video-loading.js` — bilibili demo video embed behavior
+- `logo/`, `cover-image/` — static assets
+- `prompts/` — production prompts, not published tutorial content
 
 ## Development
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
+Install the [Mintlify CLI](https://www.npmjs.com/package/mint) if you don't have it yet:
 
-```
+```bash
 npm i -g mint
 ```
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
+Run the dev server from the repository root (where `docs.json` lives):
 
-```
+```bash
 mint dev
 ```
 
 View your local preview at `http://localhost:3000`.
 
-## Publishing changes
+## Validation
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+After changing MDX, navigation, or content, run the Mintlify checks:
 
-## Need help?
+```bash
+mint validate
+mint broken-links
+mint a11y
+```
 
-### Troubleshooting
+## Localization
 
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
+- English and Simplified Chinese pages are updated in the same change, preserving meaning, order, links, and structure across locales.
+- English pages use root-relative links (for example `/essentials/first-memory`); Chinese pages use `/zh/...`.
+- Full product documentation lives at [mem.nowledge.co/docs](https://mem.nowledge.co/docs) (Chinese: [mem.nowledge.co/zh/docs](https://mem.nowledge.co/zh/docs)). This repository only contains the tutorial.
 
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+## License
+
+[MIT](LICENSE)
