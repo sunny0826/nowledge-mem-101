@@ -99,11 +99,19 @@ h1#page-title {
   font-weight: 700;
 }
 
-/* Essentials overview: a restrained, Notion-like course system. */
+/* Course overview: a restrained, Notion-like course system. */
 html[data-current-path="/essentials"] #content,
 html[data-current-path="/zh/essentials"] #content,
 html[data-current-path^="/essentials/"] #content,
-html[data-current-path^="/zh/essentials/"] #content {
+html[data-current-path^="/zh/essentials/"] #content,
+html[data-current-path="/ai-workflow"] #content,
+html[data-current-path="/zh/ai-workflow"] #content,
+html[data-current-path^="/ai-workflow/"] #content,
+html[data-current-path^="/zh/ai-workflow/"] #content,
+html[data-current-path="/ai-now"] #content,
+html[data-current-path="/zh/ai-now"] #content,
+html[data-current-path^="/ai-now/"] #content,
+html[data-current-path^="/zh/ai-now/"] #content {
   max-width: 42rem;
 }
 

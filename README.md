@@ -30,6 +30,16 @@ mint dev
 
 View your local preview at `http://localhost:3000`.
 
+### Preview unpublished course drafts
+
+Use `just drafts` to preview unpublished course drafts at their final local URLs without including them in the published site:
+
+```bash
+just drafts
+```
+
+For the current AI Workflow drafts, open `http://localhost:3000/ai-workflow` or `http://localhost:3000/zh/ai-workflow`. See [`drafts/README.md`](drafts/README.md) for the promotion checklist.
+
 ## Validation
 
 After changing MDX, navigation, or content, run the Mintlify checks:
