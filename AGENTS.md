@@ -13,6 +13,9 @@
 - `index.mdx` and `zh/index.mdx` are the English and Chinese landing pages.
 - `essentials/` and `zh/essentials/` contain the beginner course.
 - `custom.css`, `mem-video-loading.css`, and `mem-video-loading.js` provide site-specific presentation and demo video embed behavior (loading state, 16:9 frame, and a fallback link).
+- `drafts/playground-assets/playground.css` and `drafts/playground-assets/playground.js` implement the Playground component: a pure front-end replica of the Mem Timeline UI. The draft preview copies them to its temporary root, so production pages do not load them before the Playground is promoted.
+- `snippets/playground.mdx` is the embeddable Playground mount point. The draft preview supplies its assets; when promoting the Playground, move the assets to the repository root before publishing.
+- `drafts/playground/` and `drafts/zh/playground/` hold the unpublished demo pages that host the component. Preview them locally with `just playground`.
 - Static assets belong in the existing purpose-specific directories such as `logo/` and `cover-image/`. Use descriptive, kebab-case names for new assets.
 - `prompts/` contains production prompts and is not published tutorial content unless it is added to `docs.json`.
 
