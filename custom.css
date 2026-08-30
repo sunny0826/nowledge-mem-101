@@ -111,7 +111,11 @@ html[data-current-path^="/zh/ai-workflow/"] #content,
 html[data-current-path="/ai-now"] #content,
 html[data-current-path="/zh/ai-now"] #content,
 html[data-current-path^="/ai-now/"] #content,
-html[data-current-path^="/zh/ai-now/"] #content {
+html[data-current-path^="/zh/ai-now/"] #content,
+html[data-current-path="/knowledge-system"] #content,
+html[data-current-path="/zh/knowledge-system"] #content,
+html[data-current-path^="/knowledge-system/"] #content,
+html[data-current-path^="/zh/knowledge-system/"] #content {
   max-width: 42rem;
 }
 

@@ -32,13 +32,13 @@ View your local preview at `http://localhost:3000`.
 
 ### Preview unpublished course drafts
 
-Use `just drafts` to preview unpublished course drafts at their final local URLs without including them in the published site:
+Use `just drafts` to preview every unpublished draft at its final local URL without including it in the published site:
 
 ```bash
 just drafts
 ```
 
-For the current AI Workflow drafts, open `http://localhost:3000/ai-workflow` or `http://localhost:3000/zh/ai-workflow`. See [`drafts/README.md`](drafts/README.md) for the promotion checklist.
+The current AI Workflow, AI Now, and Playground drafts are available at their final local URLs. See [`drafts/README.md`](drafts/README.md) for the full URL list and promotion checklist.
 
 ## Validation
 
