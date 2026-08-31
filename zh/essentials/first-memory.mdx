@@ -3,11 +3,14 @@ title: "保存你的第一条记忆"
 description: "在 Mem 中留下第一件真实、值得未来再次使用的事情。"
 sidebarTitle: "1. 保存第一条记忆"
 icon: "pen-line"
+mode: "wide"
 ---
+
+import Playground from "/snippets/playground.mdx"
 
 <div className="course-meta" aria-label="课程信息">
   <span><Icon icon="book-open" /> Essentials · 第 1 课 / 共 6 课</span>
-  <span><Icon icon="clock-3" /> 约 3 分钟</span>
+  <span><Icon icon="clock-3" /> 约 4 分钟</span>
   <span><Icon icon="user-round" /> 入门</span>
 </div>
 
@@ -25,27 +28,50 @@ Mem 的价值不是单纯帮你记笔记。今天留下的信息，未来仍然�
 
 ## 轮到你了
 
-<Steps>
-  <Step title="打开 Nowledge Mem">
-    进入 Timeline。
-  </Step>
-  <Step title="想一件今天真正值得留下的事情">
-    可以是一项决定、一个洞察、一个项目背景，或以后还会用到的信息。
+### 在 Nowledge Mem 中保存
 
-    最好使用你自己的真实内容。
-  </Step>
-  <Step title="把它写下来并保存">
-    在 Timeline 输入框中输入内容，然后按 Enter。
+在 Nowledge Mem 中使用一条真实记忆完成下面的步骤。每一步都按真实 APP 描述；想先练习的话，点击「开始模拟」，弹出窗口中会有对应的操作提示。
 
-    ```text
-    我们决定新版官网使用 Next.js，因为需要 SSR 和更好的 SEO。
-    ```
+<script src="/course-playground-guide.js?v=15" defer></script>
 
-    <Tip>
-      示例可以复制，但使用自己的真实信息效果更好。
-    </Tip>
-  </Step>
-</Steps>
+<div className="course-playground-workflow" data-course-playground-guide data-course-guide-current="1" data-course-playground-open="false" data-course-guide-replay-label="重新练习" data-course-guide-close-label="关闭模拟" data-course-guide-mini-label="Playground" data-course-guide-hint-1="点这里，进入 Timeline" data-course-guide-hint-2="在这里输入这条记忆" data-course-guide-hint-3="点击发送，完成保存" data-course-guide-hint-4="已保存——新记忆出现在这里" data-course-guide-fillable="我们决定新版官网使用 Next.js，因为需要 SSR 和更好的 SEO。" data-course-guide-fill-label="填入示例" data-course-guide-done-message="模拟完成，可以继续在 Nowledge Mem 中尝试" data-course-guide-open-mem-label="打开 Nowledge Mem" data-course-guide-confirm-label="知道了" data-course-guide-mem-url="https://mem.nowledge.co">
+  <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-window-zh" aria-expanded="false">
+    <Icon icon="panel-right-open" /> <span data-course-guide-open-label>开始模拟</span>
+  </button>
+
+  <Steps>
+    <Step title="打开 Nowledge Mem">
+      <span className="course-playground-step-anchor" data-course-guide-source="1" aria-hidden="true"></span>
+
+      打开 Nowledge Mem，进入 **Timeline**。
+    </Step>
+    <Step title="想一件今天真正值得留下的事情">
+      <span className="course-playground-step-anchor" data-course-guide-source="2" aria-hidden="true"></span>
+
+      选择一项决定、一个洞察、项目背景，或以后会用到的信息。
+
+      ```text
+      我们决定新版官网使用 Next.js，因为需要 SSR 和更好的 SEO。
+      ```
+    </Step>
+    <Step title="把它写下来并保存">
+      <span className="course-playground-step-anchor" data-course-guide-source="3" aria-hidden="true"></span>
+
+      在 Timeline 中输入这条记忆并保存——按 Enter 或点击**发送**。
+    </Step>
+  </Steps>
+
+  <p className="course-playground-workflow-status" data-course-guide-ready>
+    准备好后，从第一步开始模拟。Playground 会从右侧展开。
+  </p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>
+    模拟已完成。现在使用同一条记忆，在 Nowledge Mem 中完成这三个步骤。
+  </p>
+
+  <div id="course-playground-window-zh" className="course-playground-window" data-course-playground-window role="region" aria-label="模拟保存一条记忆" aria-hidden="true">
+    <Playground />
+  </div>
+</div>
 
 ## 你应该看到
 

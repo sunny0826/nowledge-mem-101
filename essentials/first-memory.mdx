@@ -3,11 +3,14 @@ title: "Save your first memory"
 description: "Leave one real thing in Mem that's worth using again later."
 sidebarTitle: "1. Save your first memory"
 icon: "pen-line"
+mode: "wide"
 ---
+
+import Playground from "/snippets/playground.mdx"
 
 <div className="course-meta" aria-label="Lesson information">
   <span><Icon icon="book-open" /> Essentials · Lesson 1 / 6</span>
-  <span><Icon icon="clock-3" /> ~3 min</span>
+  <span><Icon icon="clock-3" /> ~4 min</span>
   <span><Icon icon="user-round" /> Beginner</span>
 </div>
 
@@ -25,27 +28,50 @@ Mem's value isn't just taking notes. Information you leave today can still be fo
 
 ## Your turn
 
-<Steps>
-  <Step title="Open Nowledge Mem">
-    Go to Timeline.
-  </Step>
-  <Step title="Think of something real worth keeping today">
-    It can be a decision, an insight, a project's context, or information you'll need later.
+### Save it in Nowledge Mem
 
-    Use your own real content if you can.
-  </Step>
-  <Step title="Write it down and save it">
-    Type it in the Timeline input, then press Enter.
+Use one real memory in Nowledge Mem for the steps below. Each step describes the real app; to practise first, click **Start the simulation** and the popup window will show matching hints as you go.
 
-    ```text
-    We decided the new marketing site uses Next.js because we need SSR and better SEO.
-    ```
+<script src="/course-playground-guide.js?v=15" defer></script>
 
-    <Tip>
-      You can copy the example, but your own real information works better.
-    </Tip>
-  </Step>
-</Steps>
+<div className="course-playground-workflow" data-course-playground-guide data-course-guide-current="1" data-course-playground-open="false" data-course-guide-replay-label="Practise again" data-course-guide-close-label="Close simulation" data-course-guide-mini-label="Playground" data-course-guide-hint-1="Click here to open Timeline" data-course-guide-hint-2="Type your memory here" data-course-guide-hint-3="Click Send to save it" data-course-guide-hint-4="Saved — your new memory appears here" data-course-guide-fillable="We decided the new marketing site uses Next.js because we need SSR and better SEO." data-course-guide-fill-label="Fill the example" data-course-guide-done-message="Simulation complete — you can keep trying it in Nowledge Mem." data-course-guide-open-mem-label="Open Nowledge Mem" data-course-guide-confirm-label="Got it" data-course-guide-mem-url="https://mem.nowledge.co">
+  <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-window-en" aria-expanded="false">
+    <Icon icon="panel-right-open" /> <span data-course-guide-open-label>Start the simulation</span>
+  </button>
+
+  <Steps>
+    <Step title="Open Nowledge Mem">
+      <span className="course-playground-step-anchor" data-course-guide-source="1" aria-hidden="true"></span>
+
+      Open Nowledge Mem and go to **Timeline**.
+    </Step>
+    <Step title="Think of something real worth keeping today">
+      <span className="course-playground-step-anchor" data-course-guide-source="2" aria-hidden="true"></span>
+
+      Choose one decision, insight, project context, or detail you'll need later.
+
+      ```text
+      We decided the new marketing site uses Next.js because we need SSR and better SEO.
+      ```
+    </Step>
+    <Step title="Write it down and save it">
+      <span className="course-playground-step-anchor" data-course-guide-source="3" aria-hidden="true"></span>
+
+      Enter the memory in Timeline and save it — press Enter or click **Send**.
+    </Step>
+  </Steps>
+
+  <p className="course-playground-workflow-status" data-course-guide-ready>
+    Start the simulation from step 1 when you're ready. The Playground will open from the right.
+  </p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>
+    Simulation complete. Now finish the same three steps in Nowledge Mem using the same memory.
+  </p>
+
+  <div id="course-playground-window-en" className="course-playground-window" data-course-playground-window role="region" aria-label="Practise saving a memory" aria-hidden="true">
+    <Playground />
+  </div>
+</div>
 
 ## What you should see
 
