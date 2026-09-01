@@ -124,10 +124,19 @@ html[data-current-path^="/zh/knowledge-system/"] #content {
   max-width: 42rem;
 }
 
+/* Simulation lesson pages: the article shifts and narrows while the docked
+   Playground window is open. */
 html[data-current-path="/essentials/first-memory"] #content,
-html[data-current-path="/zh/essentials/first-memory"] #content {
+html[data-current-path="/zh/essentials/first-memory"] #content,
+html[data-current-path="/essentials/recall-memory"] #content,
+html[data-current-path="/zh/essentials/recall-memory"] #content,
+html[data-current-path="/essentials/add-a-document"] #content,
+html[data-current-path="/zh/essentials/add-a-document"] #content,
+html[data-current-path="/essentials/save-ai-conversation"] #content,
+html[data-current-path="/zh/essentials/save-ai-conversation"] #content,
+html[data-current-path="/ai-workflow/create-a-work-brief"] #content,
+html[data-current-path="/zh/ai-workflow/create-a-work-brief"] #content {
   isolation: auto;
-  /* The article shifts and narrows while the docked Playground window is open. */
   transition: margin-left 260ms ease, max-width 260ms ease;
 }
 
@@ -570,7 +579,15 @@ html[data-course-playground-docked="true"] #sidebar {
 @media (prefers-reduced-motion: reduce) {
   .course-playground-window,
   html[data-current-path="/essentials/first-memory"] #content,
-  html[data-current-path="/zh/essentials/first-memory"] #content {
+  html[data-current-path="/zh/essentials/first-memory"] #content,
+  html[data-current-path="/essentials/recall-memory"] #content,
+  html[data-current-path="/zh/essentials/recall-memory"] #content,
+  html[data-current-path="/essentials/add-a-document"] #content,
+  html[data-current-path="/zh/essentials/add-a-document"] #content,
+  html[data-current-path="/essentials/save-ai-conversation"] #content,
+  html[data-current-path="/zh/essentials/save-ai-conversation"] #content,
+  html[data-current-path="/ai-workflow/create-a-work-brief"] #content,
+  html[data-current-path="/zh/ai-workflow/create-a-work-brief"] #content {
     transition: none;
   }
 }
@@ -653,7 +670,8 @@ html[data-current-path="/zh/essentials"] h2#课程路线 {
 
 .learning-stages {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
   margin: 2.15rem 0 2.25rem;
 }
 

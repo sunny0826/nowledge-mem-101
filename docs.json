@@ -114,6 +114,14 @@
               "essentials/connect-your-ai",
               "essentials/stop-re-explaining"
             ]
+          },
+          {
+            "tab": "AI Workflow",
+            "icon": "workflow",
+            "pages": [
+              "ai-workflow/index",
+              "ai-workflow/create-a-work-brief"
+            ]
           }
         ]
       },
@@ -179,6 +187,14 @@
               "zh/essentials/save-ai-conversation",
               "zh/essentials/connect-your-ai",
               "zh/essentials/stop-re-explaining"
+            ]
+          },
+          {
+            "tab": "AI Workflow",
+            "icon": "workflow",
+            "pages": [
+              "zh/ai-workflow/index",
+              "zh/ai-workflow/create-a-work-brief"
             ]
           }
         ]

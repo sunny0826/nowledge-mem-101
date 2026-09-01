@@ -48,6 +48,20 @@
       },
       changed: "[data-mp-thr-list] .mp-thr-row",
     },
+    // AI Workflow lesson 1: save a work brief, then ask Mem to bring it
+    // back. Two sends — the brief (input clears) and the question (answer).
+    "save-ask": {
+      steps: 4,
+      fillSteps: [1, 3],
+      completion: "answer",
+      targets: {
+        1: "[data-mp-input]",
+        2: "[data-mp-send]",
+        3: "[data-mp-input]",
+        4: "[data-mp-send]",
+      },
+      changed: ".mp-answer",
+    },
     // Lesson 3 mirrors the real app: paste a document link into Timeline to
     // import it, ask about its content right there, then find the document
     // in Library. Completion is the final nav click, not a send.
@@ -582,12 +596,31 @@
       return;
     }
 
-    // Save and recall both end on the Timeline send button.
+    // Save and recall end on the Timeline send button; save-ask has one
+    // mid-flow send (saving the brief clears the input) before its final
+    // send.
     var send = target.closest("[data-mp-send]");
     var input = state.windowEl.querySelector("[data-mp-input]");
-    if (state.step === spec(state).steps && send && input && input.value.trim()) {
+    if (!send || !input || !input.value.trim()) return;
+    if (state.step === spec(state).steps) {
       tryComplete(state, input);
+      return;
     }
+    if (spec(state).targets[state.step] === "[data-mp-send]") {
+      midSendAdvance(state, input);
+    }
+  }
+
+  // A mid-flow send either saved (input cleared) or asked (answer card).
+  function midSendAdvance(state, input) {
+    setTimeout(function () {
+      var landed =
+        input.value === "" || state.windowEl.querySelector(".mp-answer");
+      if (landed && spec(state).targets[state.step] === "[data-mp-send]") {
+        state.step += 1;
+        render(state);
+      }
+    }, 60);
   }
 
   function librarySendAdvance(state, input) {
@@ -690,14 +723,17 @@
     if (
       state.scenario !== "threads" &&
       state.scenario !== "library" &&
-      state.step === spec(state).steps &&
       event.target.matches("[data-mp-input]") &&
       event.key === "Enter" &&
       !event.shiftKey &&
       !event.isComposing &&
       event.target.value.trim()
     ) {
-      tryComplete(state, event.target);
+      if (state.step === spec(state).steps) {
+        tryComplete(state, event.target);
+      } else if (spec(state).targets[state.step] === "[data-mp-send]") {
+        midSendAdvance(state, event.target);
+      }
     }
   }
 
