@@ -77,8 +77,11 @@ function draftMappings() {
 }
 
 function copyDraft(source, destination) {
-  rmSync(destination, { recursive: true, force: true });
   mkdirSync(dirname(destination), { recursive: true });
+  // Merge, do not wipe the destination: a course may have both published pages
+  // and draft additions living in the same destination directory. Only files
+  // the draft actually provides overwrite their published counterparts, so
+  // published pages the draft does not touch stay available in the preview.
   cpSync(source, destination, { recursive: true });
 }
 
@@ -166,40 +169,130 @@ function pagesForLanguage(pageFiles, languageCode, languageCodes) {
     });
 }
 
-function draftTabs(languageCode, languageCodes, pageFiles) {
-  const pages = pagesForLanguage(pageFiles, languageCode, languageCodes);
+function languagePrefix(languageCode) {
+  return languageCode === "en" ? "" : `${languageCode}/`;
+}
+
+function localPageOf(pagePath, prefix) {
+  return prefix && pagePath.startsWith(prefix) ? pagePath.slice(prefix.length) : pagePath;
+}
+
+function courseOfPage(pagePath, prefix) {
+  return localPageOf(pagePath, prefix).split("/")[0];
+}
+
+function compareCoursePages(left, right) {
+  const leftIsIndex = pageIsIndex(left.localPage);
+  const rightIsIndex = pageIsIndex(right.localPage);
+  if (leftIsIndex !== rightIsIndex) return leftIsIndex ? -1 : 1;
+  const leftLesson = lessonNumber(left);
+  const rightLesson = lessonNumber(right);
+  if (leftLesson !== rightLesson) return leftLesson - rightLesson;
+  return left.localPage.localeCompare(right.localPage);
+}
+
+function coursePathLessonNumber(pagePath, prefix) {
+  const absolutePath = join(previewRoot, `${pagePath}.mdx`);
+  if (!existsSync(absolutePath)) return Number.POSITIVE_INFINITY;
+  const sidebarTitle = frontmatterField(absolutePath, "sidebarTitle") ?? "";
+  const match = sidebarTitle.match(/^(\d+)\./);
+  return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
+}
+
+// Sort a list of site page paths (e.g. "ai-workflow/index") with the overview
+// first, then by the sidebarTitle lesson number, then alphabetically.
+function sortCoursePagePaths(pagePaths, prefix) {
+  const position = (pagePath) => {
+    const localPage = localPageOf(pagePath, prefix);
+    const isOverview = pageIsIndex(localPage) ? -2 : coursePathLessonNumber(pagePath, prefix);
+    return isOverview;
+  };
+  return pagePaths
+    .slice()
+    .sort((left, right) => {
+      const leftPosition = position(left);
+      const rightPosition = position(right);
+      if (leftPosition !== rightPosition) return leftPosition - rightPosition;
+      return left.localeCompare(right);
+    });
+}
+
+// Merge a draft course's pages into an already-published tab for the same course.
+// Unifies both published and draft pages under one sidebar, keeping the overview
+// first and ordering the rest by lesson number. Pages that belong to a different
+// course in the same tab are left untouched in place.
+function mergeDraftCourseIntoExistingTab(tab, course, draftPages, prefix) {
+  const pages = tab.pages ?? [];
+  const sortedCoursePaths = sortCoursePagePaths(
+    Array.from(
+      new Set([
+        ...pages.filter((pagePath) => courseOfPage(pagePath, prefix) === course),
+        ...draftPages.map(({ page }) => page),
+      ]),
+    ),
+    prefix,
+  );
+
+  let cursor = 0;
+  tab.pages = pages.flatMap((pagePath) => {
+    if (courseOfPage(pagePath, prefix) !== course) return [pagePath];
+    return cursor === 0 ? (cursor += 1, sortedCoursePaths) : [];
+  });
+
+  const matched = pages.some((pagePath) => courseOfPage(pagePath, prefix) === course);
+  if (!matched) {
+    // A draft course can exist without any published page for it; append its
+    // own sorted overview-led pages at the end of the tab.
+    tab.pages.push(...sortedCoursePaths);
+  }
+}
+
+// Decide where each draft course should live in the navigation. A course that
+// already has a published tab is merged into that tab; a course that has no
+// published counterpart gets its own "(draft)" tab. Returns the fully built
+// tab array for a single language.
+function buildLanguageTabs(language, languageCodes, pageFiles) {
+  const languageCode = language.language;
+  const prefix = languagePrefix(languageCode);
+  const tabs = (language.tabs ?? []).map((tab) => ({ ...tab, pages: [...(tab.pages ?? [])] }));
+  const draftPages = pagesForLanguage(pageFiles, languageCode, languageCodes);
   const courses = new Map();
 
-  for (const page of pages) {
+  for (const page of draftPages) {
     const entries = courses.get(page.course) ?? [];
     entries.push(page);
     courses.set(page.course, entries);
   }
 
-  return [...courses.entries()]
-    .sort(([left], [right]) => left.localeCompare(right))
-    .map(([course, coursePages]) => {
-      coursePages.sort((left, right) => {
-        const leftIsIndex = pageIsIndex(left.localPage);
-        const rightIsIndex = pageIsIndex(right.localPage);
-        if (leftIsIndex !== rightIsIndex) return leftIsIndex ? -1 : 1;
-        const leftLesson = lessonNumber(left);
-        const rightLesson = lessonNumber(right);
-        if (leftLesson !== rightLesson) return leftLesson - rightLesson;
-        return left.localPage.localeCompare(right.localPage);
-      });
+  for (const coursePages of courses.values()) {
+    coursePages.sort(compareCoursePages);
+  }
 
-      const overview = coursePages.find(({ localPage }) => pageIsIndex(localPage));
-      const representative = overview ?? coursePages[0];
-      const title = frontmatterField(representative.absolutePath, "title") ?? course;
-      const icon = frontmatterField(representative.absolutePath, "icon") ?? "file-text";
+  const addedTabs = [];
 
-      return {
-        tab: languageCode === "zh" ? `${title}（草稿）` : `${title} (draft)`,
-        icon,
-        pages: coursePages.map(({ page }) => page),
-      };
+  for (const [course, coursePages] of [...courses.entries()].sort(([l], [r]) => l.localeCompare(r))) {
+    const existingTab = tabs.find((tab) =>
+      (tab.pages ?? []).some((pagePath) => courseOfPage(pagePath, prefix) === course),
+    );
+
+    if (existingTab) {
+      mergeDraftCourseIntoExistingTab(existingTab, course, coursePages, prefix);
+      continue;
+    }
+
+    const overview = coursePages.find(({ localPage }) => pageIsIndex(localPage));
+    const representative = overview ?? coursePages[0];
+    const title = frontmatterField(representative.absolutePath, "title") ?? course;
+    const icon = frontmatterField(representative.absolutePath, "icon") ?? "file-text";
+
+    addedTabs.push({
+      tab: languageCode === "zh" ? `${title}（草稿）` : `${title} (draft)`,
+      icon,
+      pages: coursePages.map(({ page }) => page),
     });
+  }
+
+  return [...tabs, ...addedTabs];
 }
 
 function writePreviewConfig() {
@@ -209,7 +302,7 @@ function writePreviewConfig() {
   const languageCodes = config.navigation.languages.map(({ language }) => language);
 
   for (const language of config.navigation.languages) {
-    language.tabs.push(...draftTabs(language.language, languageCodes, pageFiles));
+    language.tabs = buildLanguageTabs(language, languageCodes, pageFiles);
   }
 
   const temporaryConfigPath = `${configPath}.draft-preview`;
