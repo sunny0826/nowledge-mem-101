@@ -3,7 +3,10 @@ title: "Add a real document"
 description: "Make a PDF, document, or URL part of your long-term knowledge."
 sidebarTitle: "3. Add a real document"
 icon: "file-text"
+mode: "wide"
 ---
+
+import Playground from "/snippets/playground.mdx"
 
 <div className="course-meta" aria-label="Lesson information">
   <span><Icon icon="book-open" /> Essentials · Lesson 3 / 6</span>
@@ -25,30 +28,57 @@ So far you've saved short memories. But real knowledge often lives in longer mat
 
 ## Your turn
 
-<Steps>
-  <Step title="Find a real document you care about">
-    Choose a PDF, report, spec, Markdown file, or a public web page you'll actually need again.
+Use a real document of your own in Nowledge Mem for the steps below. Each step describes the real app; to practise first, click **Start the simulation** and the popup window will show matching hints as you go.
 
-    Use your own real material if you can.
-  </Step>
-  <Step title="Add it to Mem">
-    Drag the file into the Timeline input, or paste the URL. You can also import it in the Library view.
+<script src="/course-playground-guide.js?v=19" defer></script>
 
-    Mem parses the content, splits it into chunks, and indexes it.
-  </Step>
-  <Step title="Wait for it to become searchable">
-    Check its status in the Library view. Once it shows as searchable, you can ask questions about it.
-  </Step>
-  <Step title="Ask a question only that document can answer">
-    Type the question in Timeline.
+<div className="course-playground-workflow" data-course-playground-guide data-course-guide-scenario="library" data-course-guide-current="1" data-course-playground-open="false" data-course-guide-replay-label="Practise again" data-course-guide-close-label="Close simulation" data-course-guide-mini-label="Playground" data-course-guide-hint-1="Paste the document link here" data-course-guide-hint-2="Click Send to import it — indexing takes a moment" data-course-guide-hint-3="Now ask a question about this document" data-course-guide-hint-4="Click Send to ask" data-course-guide-hint-5="Open Library — the document you imported is there" data-course-guide-hint-6="This is the document you just imported" data-course-guide-fillable-1="https://cdn.atlas.example.com/atlas-architecture-review.pdf" data-course-guide-fillable-3="What does the architecture review say about API rate limiting?" data-course-guide-fill-label="Fill the example" data-course-guide-done-message="Simulation complete — you can keep trying it in Nowledge Mem." data-course-guide-open-mem-label="Open Nowledge Mem" data-course-guide-confirm-label="Got it" data-course-guide-mem-url="https://mem.nowledge.co">
+  <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-window-en" aria-expanded="false">
+    <Icon icon="panel-right-open" /> <span data-course-guide-open-label>Start the simulation</span>
+  </button>
 
-    If you added an architecture review, ask:
+  <Steps>
+    <Step title="Find a real document you care about">
+      Choose a PDF, report, spec, Markdown file, or a public web page you'll actually need again.
 
-    ```text
-    What does the architecture review say about API rate limiting?
-    ```
-  </Step>
-</Steps>
+      Use your own real material if you can.
+    </Step>
+    <Step title="Add it to Mem">
+      <span className="course-playground-step-anchor" data-course-guide-source="1" aria-hidden="true"></span>
+      <span className="course-playground-step-anchor" data-course-guide-source="2" aria-hidden="true"></span>
+
+      Drag the file into the Timeline input, or paste the URL. You can also import it in the Library view.
+
+      Mem parses the content, splits it into chunks, and indexes it.
+    </Step>
+    <Step title="Wait for it to become searchable">
+      Check its status in the Library view. Once it shows as searchable, you can ask questions about it.
+    </Step>
+    <Step title="Ask a question only that document can answer">
+      <span className="course-playground-step-anchor" data-course-guide-source="3" aria-hidden="true"></span>
+      <span className="course-playground-step-anchor" data-course-guide-source="4" aria-hidden="true"></span>
+
+      Type the question in Timeline.
+
+      If you added an architecture review, ask:
+
+      ```text
+      What does the architecture review say about API rate limiting?
+      ```
+    </Step>
+  </Steps>
+
+  <p className="course-playground-workflow-status" data-course-guide-ready>
+    Start the simulation when you're ready. The Playground will open from the right.
+  </p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>
+    Simulation complete. Now add your own document in Nowledge Mem and ask it the same kind of question.
+  </p>
+
+  <div id="course-playground-window-en" className="course-playground-window" data-course-playground-window role="region" aria-label="Practise adding a document" aria-hidden="true">
+    <Playground />
+  </div>
+</div>
 
 ## What you should see
 

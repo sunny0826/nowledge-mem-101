@@ -148,7 +148,7 @@
         ["msgtext", "Threads", "threads"],
         ["asterisk", "AI Now", null],
         ["share", "Graph", null],
-        ["library", "Library", null],
+        ["library", "Library", "library"],
         ["network", "Knowledge Tree", null],
         ["diamonds", "Skills", null],
         ["compass", "Context", null],
@@ -530,6 +530,44 @@
           date: "Aug 15, 2026",
         },
       ],
+      libView: {
+        title: "Library",
+        badge: "Remote",
+        subtitle: "Documents and sources Mem can search inside.",
+        importBtn: "Import document",
+        importEvent: "Document imported",
+        indexing: "Indexing…",
+        indexed: "Indexed",
+        importDoc: {
+          name: "Atlas architecture review.pdf",
+          kind: "PDF",
+          size: "12 pages",
+          page: "p. 4",
+          excerpt:
+            "API rate limiting: 100 requests per minute per token, bursts up to 300 with exponential backoff. Public endpoints share one bucket.",
+          tags: ["Atlas", "API"],
+        },
+      },
+      libList: [
+        {
+          name: "Atlas one-pager.md",
+          kind: "Markdown",
+          size: "4 pages",
+          page: "p. 1",
+          excerpt:
+            "Atlas is a knowledge base for small teams. Positioning: your existing knowledge, reusable across AI tools.",
+          tags: ["Atlas"],
+        },
+        {
+          name: "Launch checklist.pdf",
+          kind: "PDF",
+          size: "2 pages",
+          page: "p. 2",
+          excerpt:
+            "Before launch: pricing page live, docs site proofread, demo video published, status page connected.",
+          tags: ["Release"],
+        },
+      ],
     },
     zh: {
       workspace: "演示工作空间",
@@ -540,7 +578,7 @@
         ["msgtext", "会话记录", "threads"],
         ["asterisk", "AI Now", null],
         ["share", "知识图谱", null],
-        ["library", "资料库", null],
+        ["library", "资料库", "library"],
         ["network", "知识树", null],
         ["diamonds", "技能", null],
         ["compass", "上下文", null],
@@ -892,6 +930,44 @@
           date: "Aug 15, 2026",
         },
       ],
+      libView: {
+        title: "资料库",
+        badge: "远程",
+        subtitle: "Mem 可以检索内容的文档与资料。",
+        importBtn: "导入文档",
+        importEvent: "已导入文档",
+        indexing: "索引中…",
+        indexed: "已索引",
+        importDoc: {
+          name: "Atlas 架构评审.pdf",
+          kind: "PDF",
+          size: "12 页",
+          page: "第 4 页",
+          excerpt:
+            "API 限流：每个令牌每分钟 100 次请求，突发可到 300，超出后指数退避。公开端点共用一个额度桶。",
+          tags: ["Atlas", "API"],
+        },
+      },
+      libList: [
+        {
+          name: "Atlas 产品一页纸.md",
+          kind: "Markdown",
+          size: "4 页",
+          page: "第 1 页",
+          excerpt:
+            "Atlas 是面向小团队的知识库。定位：把你已有的知识，变成跨 AI 工具可复用的资产。",
+          tags: ["Atlas"],
+        },
+        {
+          name: "发布检查清单.pdf",
+          kind: "PDF",
+          size: "2 页",
+          page: "第 2 页",
+          excerpt:
+            "发布前确认：定价页上线、文档站校对完成、演示视频发布、状态页接入。",
+          tags: ["发布"],
+        },
+      ],
     },
   };
 
@@ -942,6 +1018,37 @@
     });
     return scored.slice(0, 3).map(function (hit) {
       return hit.memory;
+    });
+  }
+
+  // Same keyword matching over indexed Library documents.
+  function searchDocuments(docs, query) {
+    var tokens = tokenize(query);
+    if (!tokens.length) {
+      return [];
+    }
+    var scored = [];
+    for (var i = 0; i < docs.length; i++) {
+      var doc = docs[i];
+      if (doc.status !== "indexed") {
+        continue;
+      }
+      var haystack = (doc.name + " " + doc.excerpt + " " + doc.tags.join(" ")).toLowerCase();
+      var score = 0;
+      for (var t = 0; t < tokens.length; t++) {
+        if (haystack.indexOf(tokens[t]) !== -1) {
+          score += 1;
+        }
+      }
+      if (score > 0) {
+        scored.push({ doc: doc, score: score });
+      }
+    }
+    scored.sort(function (a, b) {
+      return b.score - a.score;
+    });
+    return scored.slice(0, 2).map(function (hit) {
+      return hit.doc;
     });
   }
 
@@ -1183,6 +1290,7 @@
       "</div>" +
       memPaneHtml(L) +
       threadsPaneHtml(L) +
+      libPaneHtml(L) +
       "</div>" +
       '<div class="mp-rail-right" data-mp-rail-right>' +
       '<h3 class="mp-panel-title">' +
@@ -1409,10 +1517,12 @@
       return;
     }
     var body;
-    if (state.answer.matches.length) {
+    var docs = state.answer.docs || [];
+    var total = state.answer.matches.length + docs.length;
+    if (total) {
       body =
         '<div class="mp-answer-text">' +
-        esc(L.answerFound(state.answer.matches.length)) +
+        esc(L.answerFound(total)) +
         "</div>" +
         state.answer.matches
           .map(function (memory) {
@@ -1426,6 +1536,21 @@
               " " +
               esc(memory.time) +
               "</div></div>"
+            );
+          })
+          .join("") +
+        docs
+          .map(function (doc) {
+            return (
+              '<div class="mp-cite mp-cite-doc"><div class="mp-cite-text">' +
+              esc(doc.excerpt) +
+              '</div><div class="mp-cite-meta">' +
+              icon("note") +
+              "<span>" +
+              esc(doc.name) +
+              " · " +
+              esc(doc.page) +
+              "</span></div></div>"
             );
           })
           .join("");
@@ -1836,6 +1961,72 @@
       : "";
   }
 
+  /* --- Library view --------------------------------------------------------- */
+
+  function libPaneHtml(L) {
+    var V = L.libView;
+    return (
+      '<div class="mp-pane" data-mp-pane="library" hidden>' +
+      '<div class="mp-head"><span class="mp-side-toggle" aria-hidden="true">' +
+      icon("panelleft") +
+      '</span><h2 class="mp-title">' +
+      esc(V.title) +
+      '</h2><span class="mp-space-pill">' +
+      icon("broadcast") +
+      esc(V.badge) +
+      "</span></div>" +
+      '<div class="mp-subtitle">' +
+      esc(V.subtitle) +
+      "</div>" +
+      '<div class="mp-mem-bar">' +
+      '<span class="mp-mem-bar-gap"></span>' +
+      '<button type="button" class="mp-mem-btn" data-mp-lib-import>' +
+      icon("upload") +
+      "<span>" +
+      esc(V.importBtn) +
+      "</span></button>" +
+      "</div>" +
+      '<div data-mp-lib-list></div>' +
+      "</div>"
+    );
+  }
+
+  function libRowHtml(L, doc) {
+    var V = L.libView;
+    var indexing = doc.status !== "indexed";
+    return (
+      '<div class="mp-thr-row mp-lib-row">' +
+      '<span class="mp-thr-avatar mp-lib-icon">' +
+      icon("note") +
+      "</span>" +
+      '<div class="mp-thr-main">' +
+      '<h3 class="mp-thr-title">' +
+      esc(doc.name) +
+      '</h3><div class="mp-thr-meta">' +
+      icon("library") +
+      "<span>" +
+      esc(doc.kind) +
+      "</span><em>•</em><span>" +
+      esc(doc.size) +
+      "</span></div></div>" +
+      '<span class="mp-lib-status' +
+      (indexing ? " mp-lib-indexing" : "") +
+      '" data-mp-lib-status="' +
+      (indexing ? "indexing" : "indexed") +
+      '">' +
+      esc(indexing ? V.indexing : V.indexed) +
+      "</span></div>"
+    );
+  }
+
+  function renderLibList(mount, L, state) {
+    mount.querySelector("[data-mp-lib-list]").innerHTML = state.library.list
+      .map(function (doc) {
+        return libRowHtml(L, doc);
+      })
+      .join("");
+  }
+
   /* --- Mount and wire -------------------------------------------------------- */
 
   function init(mount) {
@@ -1890,6 +2081,20 @@
           };
         }),
       },
+      library: {
+        imported: false,
+        list: L.libList.map(function (doc) {
+          return {
+            name: doc.name,
+            kind: doc.kind,
+            size: doc.size,
+            page: doc.page,
+            excerpt: doc.excerpt,
+            tags: doc.tags.slice(),
+            status: "indexed",
+          };
+        }),
+      },
     };
 
     mount.innerHTML = renderShell(L);
@@ -1900,6 +2105,43 @@
     function submit() {
       var text = input.value.trim();
       if (!text) {
+        return;
+      }
+      // 粘贴文件链接或文档名（.pdf/.md 等）视为导入资料：进入 Library，
+      // 先显示索引中，片刻后可被提问引用——与真实应用的流水线一致。
+      var isDocument =
+        /^https?:\/\/\S+/i.test(text) ||
+        /\.(pdf|md|markdown|txt|docx?)\b/i.test(text);
+      if (isDocument && !/[?？]\s*$/.test(text)) {
+        var doc = {
+          name: L.libView.importDoc.name,
+          kind: L.libView.importDoc.kind,
+          size: L.libView.importDoc.size,
+          page: L.libView.importDoc.page,
+          excerpt: L.libView.importDoc.excerpt,
+          tags: L.libView.importDoc.tags.slice(),
+          status: "indexing",
+        };
+        state.library.list.unshift(doc);
+        state.events.unshift({
+          day: "today",
+          time: nowHM(),
+          title: L.libView.importEvent,
+          sub: doc.name,
+        });
+        state.answer = null;
+        input.value = "";
+        send.disabled = true;
+        rerenderAll();
+        renderLibList(mount, L, state);
+        var docMain = mount.querySelector(".mp-main");
+        if (docMain) {
+          docMain.scrollTop = 0;
+        }
+        setTimeout(function () {
+          doc.status = "indexed";
+          renderLibList(mount, L, state);
+        }, 2500);
         return;
       }
       // 与真实应用一致：输入框不做模式切换，以 ? 结尾的内容视为提问
@@ -1934,7 +2176,11 @@
           main.scrollTop = 0;
         }
       } else {
-        state.answer = { query: text, matches: searchMemories(state.memories, text) };
+        state.answer = {
+          query: text,
+          matches: searchMemories(state.memories, text),
+          docs: searchDocuments(state.library.list, text),
+        };
         renderAnswer(mount, L, state);
       }
     }
@@ -1977,6 +2223,9 @@
       }
       if (view === "threads") {
         renderThreadList(mount, L, state);
+      }
+      if (view === "library") {
+        renderLibList(mount, L, state);
       }
       var main = mount.querySelector(".mp-main");
       if (main) {
@@ -2021,7 +2270,7 @@
     mount.addEventListener("click", function (event) {
       var target = event.target.closest
         ? event.target.closest(
-            "[data-mp-filter], [data-mp-close], [data-mp-send], [data-mp-view], [data-mp-mode], [data-mp-tier], [data-mp-mem-go], [data-mp-mem-refresh], [data-mp-rate], [data-mp-pin], [data-mp-del], [data-mp-thr-go], [data-mp-trefresh], [data-mp-tcopy], [data-mp-tpin], [data-mp-tdel]"
+            "[data-mp-filter], [data-mp-close], [data-mp-send], [data-mp-view], [data-mp-mode], [data-mp-tier], [data-mp-mem-go], [data-mp-mem-refresh], [data-mp-rate], [data-mp-pin], [data-mp-del], [data-mp-thr-go], [data-mp-trefresh], [data-mp-tcopy], [data-mp-tpin], [data-mp-tdel], [data-mp-lib-import]"
           )
         : null;
       if (!target || !mount.contains(target)) {
@@ -2172,6 +2421,31 @@
       if (target.hasAttribute("data-mp-tdel")) {
         state.threads.list.splice(Number(target.getAttribute("data-mp-tdel")), 1);
         renderThreadList(mount, L, state);
+        return;
+      }
+      if (target.hasAttribute("data-mp-lib-import")) {
+        // Import the sample document: it lands as "indexing" and flips to
+        // searchable a moment later, like the real app's pipeline.
+        if (state.library.imported) {
+          return;
+        }
+        state.library.imported = true;
+        var doc = {
+          name: L.libView.importDoc.name,
+          kind: L.libView.importDoc.kind,
+          size: L.libView.importDoc.size,
+          page: L.libView.importDoc.page,
+          excerpt: L.libView.importDoc.excerpt,
+          tags: L.libView.importDoc.tags.slice(),
+          status: "indexing",
+        };
+        state.library.list.unshift(doc);
+        renderLibList(mount, L, state);
+        setTimeout(function () {
+          doc.status = "indexed";
+          renderLibList(mount, L, state);
+        }, 2500);
+        return;
       }
     });
 

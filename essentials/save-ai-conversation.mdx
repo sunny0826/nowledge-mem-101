@@ -3,7 +3,10 @@ title: "Save an AI conversation"
 description: "Keep a genuinely valuable AI conversation."
 sidebarTitle: "4. Save an AI conversation"
 icon: "messages-square"
+mode: "wide"
 ---
+
+import Playground from "/snippets/playground.mdx"
 
 <div className="course-meta" aria-label="Lesson information">
   <span><Icon icon="book-open" /> Essentials · Lesson 4 / 6</span>
@@ -31,24 +34,50 @@ AI conversations carry context that a one-line summary drops: what you asked, ho
 
 ## Your turn
 
-<Steps>
-  <Step title="Pick a genuinely valuable AI conversation">
-    Choose a real session where you solved a problem, made a decision, or produced something you'll want again. Skip trivial back-and-forth — pick something worth finding later.
-  </Step>
-  <Step title="Save it into Mem">
-    Open **Threads → Import → Find AI conversations**. Mem scans this machine's coding-agent conversations and imports them.
+Use one of your own real conversations in Nowledge Mem for the steps below. Each step describes the real app; to practise the find-it-again part first, click **Start the simulation** and the popup window will show matching hints as you go.
 
-    <Tip>
-      Using a web AI chat? Install the Nowledge Mem Exchange browser extension to capture the current session. You can also import a single conversation from a Markdown file in **Threads → Import**.
-    </Tip>
-  </Step>
-  <Step title="Confirm it's in Mem">
-    Open **Threads** from the sidebar (or press **Cmd + 3** on macOS) and check that the conversation is there.
-  </Step>
-  <Step title="Search it back">
-    In Threads, search for a detail only that conversation contains. It comes back.
-  </Step>
-</Steps>
+<script src="/course-playground-guide.js?v=19" defer></script>
+
+<div className="course-playground-workflow" data-course-playground-guide data-course-guide-scenario="threads" data-course-guide-current="1" data-course-playground-open="false" data-course-guide-replay-label="Practise again" data-course-guide-close-label="Close simulation" data-course-guide-mini-label="Playground" data-course-guide-hint-1="Click here to open Threads" data-course-guide-hint-2="Search a detail only that conversation has" data-course-guide-hint-3="Press Enter or click search" data-course-guide-hint-4="Found — the conversation is here" data-course-guide-fillable="hero" data-course-guide-fill-label="Fill the example" data-course-guide-done-message="Simulation complete — you can keep trying it in Nowledge Mem." data-course-guide-open-mem-label="Open Nowledge Mem" data-course-guide-confirm-label="Got it" data-course-guide-mem-url="https://mem.nowledge.co">
+  <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-window-en" aria-expanded="false">
+    <Icon icon="panel-right-open" /> <span data-course-guide-open-label>Start the simulation</span>
+  </button>
+
+  <Steps>
+    <Step title="Pick a genuinely valuable AI conversation">
+      Choose a real session where you solved a problem, made a decision, or produced something you'll want again. Skip trivial back-and-forth — pick something worth finding later.
+    </Step>
+    <Step title="Save it into Mem">
+      Open **Threads → Import → Find AI conversations**. Mem scans this machine's coding-agent conversations and imports them.
+
+      <Tip>
+        Using a web AI chat? Install the Nowledge Mem Exchange browser extension to capture the current session. You can also import a single conversation from a Markdown file in **Threads → Import**.
+      </Tip>
+    </Step>
+    <Step title="Confirm it's in Mem">
+      <span className="course-playground-step-anchor" data-course-guide-source="1" aria-hidden="true"></span>
+
+      Open **Threads** from the sidebar (or press **Cmd + 3** on macOS) and check that the conversation is there.
+    </Step>
+    <Step title="Search it back">
+      <span className="course-playground-step-anchor" data-course-guide-source="2" aria-hidden="true"></span>
+      <span className="course-playground-step-anchor" data-course-guide-source="3" aria-hidden="true"></span>
+
+      In Threads, search for a detail only that conversation contains. It comes back.
+    </Step>
+  </Steps>
+
+  <p className="course-playground-workflow-status" data-course-guide-ready>
+    Start the simulation when you're ready. The Playground will open from the right.
+  </p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>
+    Simulation complete. Now search your own imported conversation in Nowledge Mem.
+  </p>
+
+  <div id="course-playground-window-en" className="course-playground-window" data-course-playground-window role="region" aria-label="Practise finding a saved conversation" aria-hidden="true">
+    <Playground />
+  </div>
+</div>
 
 ## What you should see
 

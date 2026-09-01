@@ -8,15 +8,75 @@
   var tracked = [];
   var scanTimer = null;
 
+  // Per-lesson simulation flows. The course root picks one with
+  // data-course-guide-scenario; "save" (lesson 1) is the default. Each
+  // scenario maps its steps to Playground controls, names the steps that
+  // carry the one-click fill button, declares how completion is verified,
+  // and selects what changed when the flow completes. Lessons 5 and 6 have
+  // no scenario: AI-tool connections happen outside the Mem UI the replica
+  // shows.
+  var SCENARIOS = {
+    save: {
+      steps: 3,
+      fillSteps: [2],
+      completion: "cleared", // a save clears the input
+      targets: {
+        1: '[data-mp-view="timeline"]',
+        2: "[data-mp-input]",
+        3: "[data-mp-send]",
+      },
+      changed: "[data-mp-timeline] .mp-entry",
+    },
+    recall: {
+      steps: 2,
+      fillSteps: [1],
+      completion: "answer", // a question produces an answer card
+      targets: {
+        1: "[data-mp-input]",
+        2: "[data-mp-send]",
+      },
+      changed: ".mp-answer",
+    },
+    threads: {
+      steps: 3,
+      fillSteps: [2],
+      completion: "query", // a thread search keeps its query
+      targets: {
+        1: '[data-mp-view="threads"]',
+        2: "[data-mp-thr-q]",
+        3: "[data-mp-thr-go]",
+      },
+      changed: "[data-mp-thr-list] .mp-thr-row",
+    },
+    // Lesson 3 mirrors the real app: paste a document link into Timeline to
+    // import it, ask about its content right there, then find the document
+    // in Library. Completion is the final nav click, not a send.
+    library: {
+      steps: 5,
+      fillSteps: [1, 3],
+      completion: "view",
+      targets: {
+        1: "[data-mp-input]",
+        2: "[data-mp-send]",
+        3: "[data-mp-input]",
+        4: "[data-mp-send]",
+        5: '[data-mp-view="library"]',
+      },
+      changed: "[data-mp-lib-list] .mp-lib-row",
+    },
+  };
+
+  function spec(state) {
+    return SCENARIOS[state.scenario] || SCENARIOS.save;
+  }
+
   function targetForStep(state, step) {
-    var selectors = {
-      1: '[data-mp-view="timeline"]',
-      2: "[data-mp-input]",
-      3: "[data-mp-send]",
-    };
-    var el = state.windowEl.querySelector(selectors[step]);
-    // Step 2 points at the textarea; ring the whole capture box instead.
-    if (step === 2 && el) el = el.closest(".mp-capture") || el;
+    var selector = spec(state).targets[step];
+    var el = state.windowEl.querySelector(selector);
+    // A step that points at the Timeline textarea rings the whole capture
+    // box instead; the threads search step rings the whole search box.
+    if (el && selector === "[data-mp-input]") el = el.closest(".mp-capture") || el;
+    if (el && selector === "[data-mp-thr-q]") el = el.closest(".mp-mem-search") || el;
     return el;
   }
 
@@ -80,8 +140,9 @@
   var FILL_ICON =
     '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>';
 
-  // Rebuild the floating caption. On step 2 it also carries the one-click
-  // fill button, so the action sits right where the learner is looking.
+  // Rebuild the floating caption. On the scenario's fill step it also
+  // carries the one-click fill button, so the action sits right where the
+  // learner is looking.
   // Content is cached: rebuilding between mousedown and mouseup (e.g. while
   // the window scrolls) would swap the button node and swallow the click.
   function renderHint(state, text, withFill) {
@@ -94,7 +155,9 @@
     label.textContent = text;
     hint.appendChild(label);
     if (!withFill) return;
-    var value = state.rootEl.getAttribute("data-course-guide-fillable");
+    var value =
+      state.rootEl.getAttribute("data-course-guide-fillable-" + state.step) ||
+      state.rootEl.getAttribute("data-course-guide-fillable");
     var fillLabel = state.rootEl.getAttribute("data-course-guide-fill-label");
     if (!value || !fillLabel) return;
     var button = document.createElement("button");
@@ -133,9 +196,12 @@
       return;
     }
 
-    // After the send step, point at what changed: the newly saved entry.
-    if (state.step > 3) {
-      var changedText = state.changedEl && state.rootEl.getAttribute("data-course-guide-hint-4");
+    // After the final step, point at what changed: the new entry, the
+    // answer card, or the found thread.
+    if (state.step > spec(state).steps) {
+      var changedText =
+        state.changedEl &&
+        state.rootEl.getAttribute("data-course-guide-hint-" + (spec(state).steps + 1));
       if (hint && changedText) {
         renderHint(state, changedText, false);
         placeHint(state, state.changedEl);
@@ -155,12 +221,12 @@
 
     var text = state.rootEl.getAttribute("data-course-guide-hint-" + state.step);
     if (!hint || !text) return;
-    renderHint(state, text, state.step === 2);
+    renderHint(state, text, spec(state).fillSteps.indexOf(state.step) !== -1);
     placeHint(state, target);
   }
 
   function updateCourseSteps(state) {
-    for (var step = 1; step <= 3; step += 1) {
+    for (var step = 1; step <= spec(state).steps; step += 1) {
       var anchor = state.rootEl.querySelector('[data-course-guide-source="' + step + '"]');
       var item = anchor && anchor.closest('[role="listitem"]');
       if (!item) continue;
@@ -171,8 +237,9 @@
 
   function render(state) {
     var root = state.rootEl;
+    var stepCount = spec(state).steps;
     root.setAttribute("data-course-guide-current", String(state.step));
-    if (state.step < 4 && state.changedEl) {
+    if (state.step <= stepCount && state.changedEl) {
       state.changedEl.removeAttribute("data-course-guide-changed");
       state.changedEl = null;
     }
@@ -180,7 +247,7 @@
     // the matching course step into view.
     if (state.open && state.renderedStep !== undefined && state.step !== state.renderedStep) {
       var syncAnchor = root.querySelector(
-        '[data-course-guide-source="' + Math.min(state.step, 3) + '"]'
+        '[data-course-guide-source="' + Math.min(state.step, stepCount) + '"]'
       );
       var syncItem = syncAnchor && syncAnchor.closest('[role="listitem"]');
       if (syncItem) {
@@ -193,14 +260,14 @@
 
     var ready = root.querySelector("[data-course-guide-ready]");
     var done = root.querySelector("[data-course-guide-done]");
-    if (ready) ready.hidden = state.step >= 4;
-    if (done) done.hidden = state.step < 4;
+    if (ready) ready.hidden = state.step > stepCount;
+    if (done) done.hidden = state.step <= stepCount;
 
     var launchLabel = root.querySelector("[data-course-guide-open-label]");
     if (launchLabel) {
       if (state.open) {
         launchLabel.textContent = root.getAttribute("data-course-guide-close-label");
-      } else if (state.step >= 4) {
+      } else if (state.step > stepCount) {
         launchLabel.textContent = root.getAttribute("data-course-guide-replay-label");
       } else {
         launchLabel.textContent = state.startLabel;
@@ -276,11 +343,12 @@
     render(state);
   }
 
-  // Mark what the send just changed: the new entry lands at the top of the
-  // timeline. The completion dialog appears a beat later so the learner
-  // sees the change first.
+  // Mark what the last action just changed: the new timeline entry, the
+  // answer card, or the found thread — whatever the scenario names. The
+  // completion dialog appears a beat later so the learner sees the change
+  // first.
   function markChange(state) {
-    var entry = state.windowEl.querySelector("[data-mp-timeline] .mp-entry");
+    var entry = state.windowEl.querySelector(spec(state).changed);
     state.changedEl = entry || null;
     if (entry) {
       entry.setAttribute("data-course-guide-changed", "");
@@ -290,7 +358,7 @@
 
   function showDoneModal(state) {
     var modal = state.modalEl;
-    if (!modal || state.step < 4) return;
+    if (!modal || state.step <= spec(state).steps) return;
     modal.hidden = false;
     var confirm = modal.querySelector("[data-course-guide-done-confirm]");
     if (confirm) confirm.focus();
@@ -302,23 +370,34 @@
 
   function tryComplete(state, input) {
     setTimeout(function () {
-      if (input.value !== "") return;
-      state.step = 4;
+      // Verify the action landed the way the scenario expects (see
+      // SCENARIOS completion modes).
+      var mode = spec(state).completion;
+      if (mode === "answer") {
+        if (!state.windowEl.querySelector(".mp-answer")) return;
+      } else if (mode === "query") {
+        if (!input.value.trim()) return;
+      } else if (input.value !== "") {
+        return;
+      }
+      state.step = spec(state).steps + 1;
       markChange(state);
       render(state);
+      // Give the learner a moment to see the change before the dialog.
       setTimeout(function () {
         showDoneModal(state);
-      }, 1100);
+      }, 5000);
     }, 40);
   }
 
   function fillExample(state, value) {
-    var input = state.windowEl.querySelector("[data-mp-input]");
+    // The fill button only appears on fill steps, whose target is an input.
+    var input = state.windowEl.querySelector(spec(state).targets[state.step]);
     if (!input || !value) return;
     if (!state.open) setWindowOpen(state, true);
     input.value = value;
+    // handleInput advances the step when the dispatched input event lands.
     input.dispatchEvent(new Event("input", { bubbles: true }));
-    state.step = 3;
     render(state);
     setTimeout(function () {
       input.focus();
@@ -395,7 +474,8 @@
       root.getAttribute("data-course-guide-confirm-label") || "OK";
 
     modal.addEventListener("click", function (event) {
-      // Either action ends the simulation.
+      // "Open Nowledge Mem" ends the simulation; the confirm button only
+      // dismisses the dialog and leaves the window open for more practise.
       if (event.target.closest(".course-playground-done-open")) {
         event.preventDefault();
         openMemApp(state);
@@ -405,7 +485,6 @@
       }
       if (event.target.closest("[data-course-guide-done-confirm]")) {
         hideDoneModal(state);
-        setWindowOpen(state, false);
         return;
       }
       if (event.target.closest("[data-course-guide-done-dismiss]")) {
@@ -432,7 +511,7 @@
       if (state.open) {
         setWindowOpen(state, false);
       } else {
-        if (state.step >= 4) state.step = 1;
+        if (state.step > spec(state).steps) state.step = 1;
         hideDoneModal(state);
         setWindowOpen(state, true);
       }
@@ -457,24 +536,110 @@
       return;
     }
 
-    var timeline = target.closest('[data-mp-view="timeline"]');
-    if (state.step === 1 && timeline && state.windowEl.contains(timeline)) {
-      state.step = 2;
-      render(state);
+    var viewNav = target.closest("[data-mp-view]");
+    if (viewNav && state.windowEl.contains(viewNav)) {
+      var navSel = '[data-mp-view="' + viewNav.getAttribute("data-mp-view") + '"]';
+      var navSpec = spec(state);
+      if (navSpec.targets[state.step] === navSel) {
+        if (state.step === navSpec.steps) {
+          // The final step is opening a view (library flow). The pane
+          // renders after this click, so mark the changed element a tick
+          // later.
+          state.step = navSpec.steps + 1;
+          setTimeout(function () {
+            markChange(state);
+            render(state);
+          }, 60);
+          setTimeout(function () {
+            showDoneModal(state);
+          }, 5000);
+        } else {
+          state.step += 1;
+          render(state);
+        }
+        return;
+      }
+    }
+
+    // Library flow: two mid-flow sends — importing the link (step 2, the
+    // input clears) and asking about the document (step 4, an answer card
+    // appears).
+    if (state.scenario === "library") {
+      var libSend = target.closest("[data-mp-send]");
+      var libInput = state.windowEl.querySelector("[data-mp-input]");
+      if (libSend && libInput && libInput.value.trim()) {
+        librarySendAdvance(state, libInput);
+      }
       return;
     }
 
+    if (state.scenario === "threads") {
+      var thrGo = target.closest("[data-mp-thr-go]");
+      var thrInput = state.windowEl.querySelector("[data-mp-thr-q]");
+      if (state.step === 3 && thrGo && !thrGo.disabled && thrInput && thrInput.value.trim()) {
+        tryComplete(state, thrInput);
+      }
+      return;
+    }
+
+    // Save and recall both end on the Timeline send button.
     var send = target.closest("[data-mp-send]");
     var input = state.windowEl.querySelector("[data-mp-input]");
-    if (state.step === 3 && send && input && input.value.trim()) {
+    if (state.step === spec(state).steps && send && input && input.value.trim()) {
       tryComplete(state, input);
     }
   }
 
+  function librarySendAdvance(state, input) {
+    setTimeout(function () {
+      if (state.step === 2 && input.value === "") {
+        // The import landed. Move on once the document is searchable, like
+        // the course step "wait for it to become searchable".
+        var waitStart = Date.now();
+        var poll = setInterval(function () {
+          var first = state.windowEl.querySelector(
+            "[data-mp-lib-list] .mp-lib-row [data-mp-lib-status]"
+          );
+          if (
+            (first && first.getAttribute("data-mp-lib-status") === "indexed") ||
+            Date.now() - waitStart > 6000
+          ) {
+            clearInterval(poll);
+            if (state.step === 2) {
+              state.step = 3;
+              render(state);
+            }
+          }
+        }, 250);
+      } else if (
+        state.step === 4 &&
+        state.windowEl.querySelector(".mp-answer")
+      ) {
+        state.step = 5;
+        render(state);
+      }
+    }, 60);
+  }
+
   function handleInput(state, event) {
-    if (!event.target.matches("[data-mp-input]") || state.step < 2 || state.step > 3) return;
-    state.step = event.target.value.trim() ? 3 : 2;
-    render(state);
+    if (state.scenario === "threads") {
+      if (!event.target.matches("[data-mp-thr-q]") || state.step < 2 || state.step > 3) return;
+      state.step = event.target.value.trim() ? 3 : 2;
+      render(state);
+      return;
+    }
+    if (!event.target.matches("[data-mp-input]")) return;
+    // Typing on an input step arms the next step; clearing drops back.
+    var t = spec(state).targets;
+    if (t[state.step] === "[data-mp-input]" && event.target.value.trim()) {
+      state.step += 1;
+      render(state);
+      return;
+    }
+    if (t[state.step - 1] === "[data-mp-input]" && !event.target.value.trim()) {
+      state.step -= 1;
+      render(state);
+    }
   }
 
   function handleKeydown(state, event) {
@@ -500,7 +665,32 @@
       return;
     }
     if (
+      state.scenario === "threads" &&
       state.step === 3 &&
+      event.target.matches("[data-mp-thr-q]") &&
+      event.key === "Enter" &&
+      !event.isComposing &&
+      event.target.value.trim()
+    ) {
+      tryComplete(state, event.target);
+      return;
+    }
+    if (
+      state.scenario === "library" &&
+      (state.step === 2 || state.step === 4) &&
+      event.target.matches("[data-mp-input]") &&
+      event.key === "Enter" &&
+      !event.shiftKey &&
+      !event.isComposing &&
+      event.target.value.trim()
+    ) {
+      librarySendAdvance(state, event.target);
+      return;
+    }
+    if (
+      state.scenario !== "threads" &&
+      state.scenario !== "library" &&
+      state.step === spec(state).steps &&
       event.target.matches("[data-mp-input]") &&
       event.key === "Enter" &&
       !event.shiftKey &&
@@ -557,6 +747,7 @@
       modalEl: null,
       miniEl: null,
       changedEl: null,
+      scenario: root.getAttribute("data-course-guide-scenario") || "save",
       step: 1,
       open: false,
       minimized: false,
