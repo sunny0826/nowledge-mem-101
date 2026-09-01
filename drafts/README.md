@@ -31,6 +31,6 @@ When a draft is ready to publish:
 
 1. Move its English and Chinese paths from `drafts/` to their matching publish paths, for example `drafts/ai-workflow/` to `ai-workflow/` and `drafts/zh/ai-workflow/` to `zh/ai-workflow/`.
 2. When promoting Playground, move `drafts/playground-assets/playground.css` and `drafts/playground-assets/playground.js` to the repository root.
-3. For a course, replace every video TODO with its localized iframe and change its status from `Coming soon` or `即将上线` to the matching link.
+3. For a course, replace every video TODO with its localized iframe and change its status from `Coming soon` or `即将上线` to the matching link. Remove the draft `tag` (for example `tag: "Draft"` or `tag: "草稿"`) from each promoted lesson's frontmatter; the tag exists to mark draft pages in the sidebar of mixed published/draft courses.
 4. Add the published pages to `docs.json`, then make the matching home-page course cards available when applicable.
 5. Run `mint validate`, `mint broken-links`, and `mint a11y` before opening the PR.
