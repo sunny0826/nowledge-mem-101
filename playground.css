@@ -673,6 +673,51 @@ button.mp-nav-item.mp-active:hover {
   font-size: 0.66rem;
 }
 
+.mp-cite-doc .mp-cite-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.mp-cite-doc .mp-cite-meta svg {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+/* Library pane: document rows reuse the thread-row layout, plus a status pill */
+
+.mp-lib-icon {
+  color: var(--course-faint);
+}
+
+.mp-lib-status {
+  flex-shrink: 0;
+  align-self: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: var(--course-surface);
+  border: 1px solid var(--course-border-soft);
+  color: var(--course-faint);
+  font-size: 0.66rem;
+  white-space: nowrap;
+}
+
+.mp-lib-status.mp-lib-indexing {
+  color: var(--course-accent);
+  border-color: var(--course-accent);
+  animation: mp-lib-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes mp-lib-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
 /* Timeline: hairline day separators, soft capture cards, light event rows —
    mirrors the real app feed */
 

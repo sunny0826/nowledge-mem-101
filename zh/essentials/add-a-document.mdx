@@ -3,7 +3,10 @@ title: "加入一份真实资料"
 description: "让 PDF、文档或 URL 成为你的长期知识。"
 sidebarTitle: "3. 加入一份真实资料"
 icon: "file-text"
+mode: "wide"
 ---
+
+import Playground from "/snippets/playground.mdx"
 
 <div className="course-meta" aria-label="课程信息">
   <span><Icon icon="book-open" /> Essentials · 第 3 课 / 共 6 课</span>
@@ -25,30 +28,57 @@ icon: "file-text"
 
 ## 轮到你了
 
-<Steps>
-  <Step title="找一份你在意的真实材料">
-    选择一份之后还会用到的 PDF、报告、规范、Markdown 文件或公开网页。
+在 Nowledge Mem 中使用你自己的一份真实材料完成下面的步骤。每一步都按真实 APP 描述；想先练习的话，点击「开始模拟」，弹出窗口中会有对应的操作提示。
 
-    尽量使用你自己真实的材料。
-  </Step>
-  <Step title="把它加入 Mem">
-    把文件拖进 Timeline 输入框，或粘贴 URL，也可以在资料库视图中导入。
+<script src="/course-playground-guide.js?v=19" defer></script>
 
-    Mem 会解析内容、切分片段并建立索引。
-  </Step>
-  <Step title="等它变成可搜索状态">
-    在资料库视图中查看处理状态。显示可搜索后，就可以针对它提问了。
-  </Step>
-  <Step title="问一个只有这份文档才能回答的问题">
-    在 Timeline 中输入问题。
+<div className="course-playground-workflow" data-course-playground-guide data-course-guide-scenario="library" data-course-guide-current="1" data-course-playground-open="false" data-course-guide-replay-label="重新练习" data-course-guide-close-label="关闭模拟" data-course-guide-mini-label="Playground" data-course-guide-hint-1="把文档链接粘贴到这里" data-course-guide-hint-2="点击发送导入，索引需要稍等片刻" data-course-guide-hint-3="现在问一个关于这份资料的问题" data-course-guide-hint-4="点击发送，提出问题" data-course-guide-hint-5="打开「资料库」——你导入的文档就在那里" data-course-guide-hint-6="这就是你刚刚导入的文档" data-course-guide-fillable-1="https://cdn.atlas.example.com/atlas-architecture-review.pdf" data-course-guide-fillable-3="架构评审文档里关于 API 限流是怎么说的？" data-course-guide-fill-label="填入示例" data-course-guide-done-message="模拟完成，可以继续在 Nowledge Mem 中尝试" data-course-guide-open-mem-label="打开 Nowledge Mem" data-course-guide-confirm-label="知道了" data-course-guide-mem-url="https://mem.nowledge.co">
+  <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-window-zh" aria-expanded="false">
+    <Icon icon="panel-right-open" /> <span data-course-guide-open-label>开始模拟</span>
+  </button>
 
-    如果你加入的是一份架构评审，可以问：
+  <Steps>
+    <Step title="找一份你在意的真实材料">
+      选择一份之后还会用到的 PDF、报告、规范、Markdown 文件或公开网页。
 
-    ```text
-    架构评审文档里关于 API 限流是怎么说的？
-    ```
-  </Step>
-</Steps>
+      尽量使用你自己真实的材料。
+    </Step>
+    <Step title="把它加入 Mem">
+      <span className="course-playground-step-anchor" data-course-guide-source="1" aria-hidden="true"></span>
+      <span className="course-playground-step-anchor" data-course-guide-source="2" aria-hidden="true"></span>
+
+      把文件拖进 Timeline 输入框，或粘贴 URL，也可以在资料库视图中导入。
+
+      Mem 会解析内容、切分片段并建立索引。
+    </Step>
+    <Step title="等它变成可搜索状态">
+      在资料库视图中查看处理状态。显示可搜索后，就可以针对它提问了。
+    </Step>
+    <Step title="问一个只有这份文档才能回答的问题">
+      <span className="course-playground-step-anchor" data-course-guide-source="3" aria-hidden="true"></span>
+      <span className="course-playground-step-anchor" data-course-guide-source="4" aria-hidden="true"></span>
+
+      在 Timeline 中输入问题。
+
+      如果你加入的是一份架构评审，可以问：
+
+      ```text
+      架构评审文档里关于 API 限流是怎么说的？
+      ```
+    </Step>
+  </Steps>
+
+  <p className="course-playground-workflow-status" data-course-guide-ready>
+    准备好后开始模拟。Playground 会从右侧展开。
+  </p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>
+    模拟已完成。现在在 Nowledge Mem 中加入你自己的资料，并问一个同类问题。
+  </p>
+
+  <div id="course-playground-window-zh" className="course-playground-window" data-course-playground-window role="region" aria-label="模拟加入一份资料" aria-hidden="true">
+    <Playground />
+  </div>
+</div>
 
 ## 你应该看到
 

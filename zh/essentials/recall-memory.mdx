@@ -3,7 +3,10 @@ title: "把它找回来"
 description: "直接问 Mem，看看它能否使用刚才保存的知识回答你。"
 sidebarTitle: "2. 把它找回来"
 icon: "search"
+mode: "wide"
 ---
+
+import Playground from "/snippets/playground.mdx"
 
 <div className="course-meta" aria-label="课程信息">
   <span><Icon icon="book-open" /> Essentials · 第 2 课 / 共 6 课</span>
@@ -25,29 +28,54 @@ icon: "search"
 
 ## 轮到你了
 
-<Steps>
-  <Step title="回想上一课保存的那件事情">
-    不要先翻历史记录。
-  </Step>
-  <Step title="问一个只有刚才那条记忆才能回答的问题">
-    在 Timeline 中输入问题。
+在 Nowledge Mem 中就上一课保存的记忆提问。每一步都按真实 APP 描述；想先练习的话，点击「开始模拟」，弹出窗口中会有对应的操作提示。
 
-    如果你保存的是：
+<script src="/course-playground-guide.js?v=19" defer></script>
 
-    ```text
-    我们决定新版官网使用 Next.js，因为需要 SSR 和更好的 SEO。
-    ```
+<div className="course-playground-workflow" data-course-playground-guide data-course-guide-scenario="recall" data-course-guide-current="1" data-course-playground-open="false" data-course-guide-replay-label="重新练习" data-course-guide-close-label="关闭模拟" data-course-guide-mini-label="Playground" data-course-guide-hint-1="在这里输入你的问题" data-course-guide-hint-2="点击发送，提出问题" data-course-guide-hint-3="已回答——Mem 用上了保存的记忆" data-course-guide-fillable="新版官网之前决定使用什么技术？" data-course-guide-fill-label="填入示例" data-course-guide-done-message="模拟完成，可以继续在 Nowledge Mem 中尝试" data-course-guide-open-mem-label="打开 Nowledge Mem" data-course-guide-confirm-label="知道了" data-course-guide-mem-url="https://mem.nowledge.co">
+  <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-window-zh" aria-expanded="false">
+    <Icon icon="panel-right-open" /> <span data-course-guide-open-label>开始模拟</span>
+  </button>
 
-    现在可以问：
+  <Steps>
+    <Step title="回想上一课保存的那件事情">
+      不要先翻历史记录。
+    </Step>
+    <Step title="问一个只有刚才那条记忆才能回答的问题">
+      <span className="course-playground-step-anchor" data-course-guide-source="1" aria-hidden="true"></span>
 
-    ```text
-    新版官网之前决定使用什么技术？
-    ```
-  </Step>
-  <Step title="提交问题">
-    观察 Mem 返回的答案。
-  </Step>
-</Steps>
+      在 Timeline 中输入问题。
+
+      如果你保存的是：
+
+      ```text
+      我们决定新版官网使用 Next.js，因为需要 SSR 和更好的 SEO。
+      ```
+
+      现在可以问：
+
+      ```text
+      新版官网之前决定使用什么技术？
+      ```
+    </Step>
+    <Step title="提交问题">
+      <span className="course-playground-step-anchor" data-course-guide-source="2" aria-hidden="true"></span>
+
+      观察 Mem 返回的答案。
+    </Step>
+  </Steps>
+
+  <p className="course-playground-workflow-status" data-course-guide-ready>
+    准备好后开始模拟。Playground 会从右侧展开。
+  </p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>
+    模拟已完成。现在用你自己保存的记忆，在 Nowledge Mem 中问同样的问题。
+  </p>
+
+  <div id="course-playground-window-zh" className="course-playground-window" data-course-playground-window role="region" aria-label="模拟找回一条记忆" aria-hidden="true">
+    <Playground />
+  </div>
+</div>
 
 ## 你应该看到
 

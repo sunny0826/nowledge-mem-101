@@ -23,13 +23,14 @@ const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = resolve(scriptDirectory, "..");
 const draftsDirectory = join(repositoryRoot, "drafts");
 const previewRoot = mkdtempSync(join(tmpdir(), "nowledge-mem-drafts-"));
-const playgroundAssetsDirectory = join(draftsDirectory, "playground-assets");
 const sharedFiles = [
   "custom.css",
+  "course-playground-guide.js",
   "mem-video-loading.css",
   "mem-video-loading.js",
+  "playground.css",
+  "playground.js",
 ];
-const playgroundAssetFiles = ["playground.css", "playground.js"];
 let synchronizedDestinations = new Set();
 const watchedFileMtimes = new Map();
 
@@ -280,20 +281,6 @@ function syncSharedFile(file) {
   cpSync(source, destination, { force: true });
 }
 
-function syncPlaygroundAssets() {
-  for (const file of playgroundAssetFiles) {
-    const source = join(playgroundAssetsDirectory, file);
-    const destination = join(previewRoot, file);
-
-    if (!existsSync(source)) {
-      rmSync(destination, { force: true });
-      continue;
-    }
-
-    cpSync(source, destination, { force: true });
-  }
-}
-
 function modifiedAt(file) {
   const path = join(repositoryRoot, file);
   return existsSync(path) ? statSync(path).mtimeMs : null;
@@ -340,7 +327,6 @@ function syncChangedPath(sourceRoot, destinationRoot, filename) {
 
 copyRepository();
 syncDrafts();
-syncPlaygroundAssets();
 writePreviewConfig();
 for (const file of ["docs.json", ...sharedFiles]) {
   watchedFileMtimes.set(file, modifiedAt(file));
@@ -354,16 +340,6 @@ const watchers = [
     withRaceRetry(syncConfigIfChanged),
   ),
 ];
-
-// The playground-assets directory leaves the repository when the Playground is
-// promoted, so only watch it while it exists.
-if (existsSync(playgroundAssetsDirectory)) {
-  watchers.push(
-    watch(playgroundAssetsDirectory, { recursive: true }, () =>
-      withRaceRetry(syncPlaygroundAssets),
-    ),
-  );
-}
 
 for (const file of sharedFiles) {
   watchers.push(

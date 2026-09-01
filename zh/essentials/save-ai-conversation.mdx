@@ -3,7 +3,10 @@ title: "保存一次 AI 对话"
 description: "把一次真正有价值的 AI 对话留下来。"
 sidebarTitle: "4. 保存一次 AI 对话"
 icon: "messages-square"
+mode: "wide"
 ---
+
+import Playground from "/snippets/playground.mdx"
 
 <div className="course-meta" aria-label="课程信息">
   <span><Icon icon="book-open" /> Essentials · 第 4 课 / 共 6 课</span>
@@ -31,24 +34,50 @@ AI 对话里有很多无法用一句话概括的上下文：你问了什么、AI
 
 ## 轮到你了
 
-<Steps>
-  <Step title="挑一次真正有价值的 AI 对话">
-    选择一段真实会话：你解决了一个问题、做了一个决定，或产出了之后还想用的东西。别保存琐碎的来回闲聊——要挑值得之后找回的。
-  </Step>
-  <Step title="把它保存进 Mem">
-    打开 **对话 → 导入 → 查找 AI 对话**。Mem 会扫描这台机器上的编程智能体对话并导入。
+在 Nowledge Mem 中使用你自己的一段真实对话完成下面的步骤。每一步都按真实 APP 描述；想先练习「搜回来」这一步的话，点击「开始模拟」，弹出窗口中会有对应的操作提示。
 
-    <Tip>
-      用的是网页版 AI 聊天？安装 Nowledge Mem Exchange 浏览器扩展，可以直接捕获当前会话；也可以在 **对话 → 导入** 中从 Markdown 文件导入单条对话。
-    </Tip>
-  </Step>
-  <Step title="确认它已经进入 Mem">
-    从侧边栏打开 **对话**（macOS 上也可按 **Cmd + 3**），确认这条对话已经在那里。
-  </Step>
-  <Step title="把它搜回来">
-    在对话视图中搜索一个只有这条对话才有的细节，看它能不能被找到。
-  </Step>
-</Steps>
+<script src="/course-playground-guide.js?v=19" defer></script>
+
+<div className="course-playground-workflow" data-course-playground-guide data-course-guide-scenario="threads" data-course-guide-current="1" data-course-playground-open="false" data-course-guide-replay-label="重新练习" data-course-guide-close-label="关闭模拟" data-course-guide-mini-label="Playground" data-course-guide-hint-1="点这里，打开「会话记录」" data-course-guide-hint-2="搜索一个只有这段对话才有的细节" data-course-guide-hint-3="按 Enter 或点击搜索" data-course-guide-hint-4="找到了——对话就在这里" data-course-guide-fillable="hero" data-course-guide-fill-label="填入示例" data-course-guide-done-message="模拟完成，可以继续在 Nowledge Mem 中尝试" data-course-guide-open-mem-label="打开 Nowledge Mem" data-course-guide-confirm-label="知道了" data-course-guide-mem-url="https://mem.nowledge.co">
+  <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-window-zh" aria-expanded="false">
+    <Icon icon="panel-right-open" /> <span data-course-guide-open-label>开始模拟</span>
+  </button>
+
+  <Steps>
+    <Step title="挑一次真正有价值的 AI 对话">
+      选择一段真实会话：你解决了一个问题、做了一个决定，或产出了之后还想用的东西。别保存琐碎的来回闲聊——要挑值得之后找回的。
+    </Step>
+    <Step title="把它保存进 Mem">
+      打开 **对话 → 导入 → 查找 AI 对话**。Mem 会扫描这台机器上的编程智能体对话并导入。
+
+      <Tip>
+        用的是网页版 AI 聊天？安装 Nowledge Mem Exchange 浏览器扩展，可以直接捕获当前会话；也可以在 **对话 → 导入** 中从 Markdown 文件导入单条对话。
+      </Tip>
+    </Step>
+    <Step title="确认它已经进入 Mem">
+      <span className="course-playground-step-anchor" data-course-guide-source="1" aria-hidden="true"></span>
+
+      从侧边栏打开 **对话**（macOS 上也可按 **Cmd + 3**），确认这条对话已经在那里。
+    </Step>
+    <Step title="把它搜回来">
+      <span className="course-playground-step-anchor" data-course-guide-source="2" aria-hidden="true"></span>
+      <span className="course-playground-step-anchor" data-course-guide-source="3" aria-hidden="true"></span>
+
+      在对话视图中搜索一个只有这条对话才有的细节，看它能不能被找到。
+    </Step>
+  </Steps>
+
+  <p className="course-playground-workflow-status" data-course-guide-ready>
+    准备好后开始模拟。Playground 会从右侧展开。
+  </p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>
+    模拟已完成。现在到 Nowledge Mem 中搜索你自己导入的对话。
+  </p>
+
+  <div id="course-playground-window-zh" className="course-playground-window" data-course-playground-window role="region" aria-label="模拟找回一次对话" aria-hidden="true">
+    <Playground />
+  </div>
+</div>
 
 ## 你应该看到
 
