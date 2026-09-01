@@ -120,7 +120,8 @@
             "icon": "workflow",
             "pages": [
               "ai-workflow/index",
-              "ai-workflow/create-a-work-brief"
+              "ai-workflow/create-a-work-brief",
+              "ai-workflow/start-with-your-first-ai"
             ]
           }
         ]
@@ -194,7 +195,8 @@
             "icon": "workflow",
             "pages": [
               "zh/ai-workflow/index",
-              "zh/ai-workflow/create-a-work-brief"
+              "zh/ai-workflow/create-a-work-brief",
+              "zh/ai-workflow/start-with-your-first-ai"
             ]
           }
         ]
