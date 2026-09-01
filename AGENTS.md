@@ -65,7 +65,7 @@
 
 - The site uses a restrained Notion Help Center style system defined in `custom.css` (see the reference note at the top of that file). Reuse its existing classes before adding new ones, and keep all custom styling in `custom.css`.
 - Palette values live in the `--course-*` CSS variables, which have separate light and dark values under `html.dark`. Never hardcode colors in MDX or new CSS rules; use the variables so both color modes stay correct.
-- The course style scope covers `/essentials`, `/essentials/*`, `/zh/essentials`, and `/zh/essentials/*` path prefixes. Page content on these paths is capped at 42rem by the scoped `#content` selectors in `custom.css`; add new course paths to those selectors.
+- The course style scope covers `/essentials`, `/essentials/*`, `/zh/essentials`, `/zh/essentials/*`, `/ai-workflow`, `/ai-workflow/*`, `/zh/ai-workflow`, and `/zh/ai-workflow/*` path prefixes. Page content on these paths is capped at 42rem by the scoped `#content` selectors in `custom.css`; add new course paths to those selectors.
 - Every Essentials page opens with a `.course-meta` row, not `<Badge>` pills. One icon per token type: `book-open` for lesson position or count, `clock-3` for duration, `user-round` for level.
 
   ```mdx
@@ -79,6 +79,7 @@
   Chinese pages use `aria-label="课程信息"` and natural tokens such as `第 1 课 / 共 6 课`, `约 3 分钟`, and `入门`.
 - Do not use Mintlify `<Badge>` on Essentials pages.
 - These classes are overview-only: `.course-intro`, `.course-cta`, `.learning-stages`, `.course-grid`, and `.course-card*`. Do not reuse them inside lesson bodies.
+- Render course-level progression sequences (the Capture → Recall → Connect → Reuse loop, a course's workflow stages, and similar step flows) with the `.learning-stages` component, not a fenced `text` code block. One `.learning-stage` per step; mark the stage of the first available lesson with `.learning-stage-active`. The grid auto-sizes to the stage count — do not hardcode a column count. Localize the `aria-label` (`Learning stages`, `Workflow stages`, `学习阶段`, `工作流程`).
 - End an available lesson's **Next lesson** section with `<Card title="..." horizontal href="...">`, which the global `.card` rules restyle to match the course cards. When the next lesson is not yet available, use the muted status line instead of a link or badge:
 
   ```mdx
