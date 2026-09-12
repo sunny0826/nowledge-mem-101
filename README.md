@@ -1,6 +1,6 @@
 # Nowledge Mem 101
 
-A hands-on tutorial for people who use AI tools and want their existing knowledge to be reusable across those tools. The tutorial teaches by asking readers to complete real tasks in [Nowledge Mem](https://mem.nowledge.co), starting with the core **Capture → Recall** loop and later covering **Connect → Reuse**.
+A hands-on tutorial for people who use AI tools and want their existing knowledge to be reusable across those tools. The tutorial teaches by asking readers to complete real tasks in [Nowledge Mem](https://mem.nowledge.co), following the **Capture → Recall → Connect → Reuse** learning loop.
 
 The site is built with [Mintlify](https://mintlify.com) and is bilingual: English pages live at the repository root, and Simplified Chinese pages mirror them under `zh/`.
 
@@ -8,9 +8,9 @@ The site is built with [Mintlify](https://mintlify.com) and is bilingual: Englis
 
 - `docs.json` — Mintlify site configuration: language navigation, branding, and global links
 - `index.mdx` / `zh/index.mdx` — English and Chinese landing pages
-- `essentials/` / `zh/essentials/` — the beginner course (6 lessons, ~20 minutes)
+- `essentials/` / `zh/essentials/` — the beginner course (6 lessons, ~25 minutes)
 - `custom.css` — site presentation and the course design system
-- `mem-video-loading.css` / `mem-video-loading.js` — bilibili demo video embed behavior
+- `mem-video-loading.css` / `mem-video-loading.js` — YouTube and bilibili demo video embed behavior
 - `logo/`, `cover-image/` — static assets
 - `prompts/` — production prompts, not published tutorial content
 
@@ -59,3 +59,12 @@ mint a11y
 ## License
 
 [MIT](LICENSE)
+
+
+## Contributor guidance
+
+Read [AGENTS.md](AGENTS.md) for project conventions. This repository README is English-only; tutorial pages and video scripts are maintained in English and Simplified Chinese.
+
+Use `just drafts` for the merged draft preview and `just check-drafts` to validate all unpublished lessons at their final paths. See [draft publication states](drafts/README.md) for text-first releases and fully available lessons.
+
+Project-specific instructions live in [.agents/skills/nowledge-course/](.agents/skills/nowledge-course/SKILL.md). One upstream Mintlify skill is pinned in `skills-lock.json`; the course and deployment API skills are locally maintained.

@@ -22,6 +22,14 @@ import { spawn } from "node:child_process";
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = resolve(scriptDirectory, "..");
 const draftsDirectory = join(repositoryRoot, "drafts");
+const cliArgs = process.argv.slice(2);
+const checkMode = cliArgs[0] === "--check";
+const availableChecks = ["validate", "broken-links", "a11y"];
+const requestedChecks = cliArgs.length > 1 ? cliArgs.slice(1) : availableChecks;
+if (checkMode && requestedChecks.some((check) => !availableChecks.includes(check))) {
+  console.error("Usage: node scripts/preview-drafts.mjs --check [validate broken-links a11y]");
+  process.exit(2);
+}
 const previewRoot = mkdtempSync(join(tmpdir(), "nowledge-mem-drafts-"));
 const sharedFiles = [
   "custom.css",
@@ -418,9 +426,52 @@ function syncChangedPath(sourceRoot, destinationRoot, filename) {
   cpSync(sourcePath, destinationPath, { force: true });
 }
 
-copyRepository();
-syncDrafts();
-writePreviewConfig();
+async function runChecks() {
+  let child;
+  let interrupted = 0;
+  const interrupt = (signal) => {
+    interrupted = signal === "SIGINT" ? 130 : 143;
+    child?.kill(signal);
+  };
+  const onInterrupt = () => interrupt("SIGINT");
+  const onTerminate = () => interrupt("SIGTERM");
+  process.on("SIGINT", onInterrupt);
+  process.on("SIGTERM", onTerminate);
+  try {
+    console.log(`Checking published pages and merged drafts in ${previewRoot}`);
+    for (const check of requestedChecks) {
+      if (interrupted) return interrupted;
+      console.log(`Running mint ${check}`);
+      const code = await new Promise((resolveExit) => {
+        child = spawn("mint", [check], { cwd: previewRoot, stdio: "inherit" });
+        child.once("error", (error) => {
+          console.error(`Cannot run mint ${check}: ${error.message}`);
+          resolveExit(1);
+        });
+        child.once("close", (code) => resolveExit(code ?? 1));
+      });
+      child = undefined;
+      if (interrupted || code !== 0) return interrupted || code;
+    }
+    return 0;
+  } finally {
+    process.off("SIGINT", onInterrupt);
+    process.off("SIGTERM", onTerminate);
+    rmSync(previewRoot, { recursive: true, force: true });
+  }
+}
+
+try {
+  copyRepository();
+  syncDrafts();
+  writePreviewConfig();
+} catch (error) {
+  rmSync(previewRoot, { recursive: true, force: true });
+  throw error;
+}
+
+if (checkMode) process.exit(await runChecks());
+
 for (const file of ["docs.json", ...sharedFiles]) {
   watchedFileMtimes.set(file, modifiedAt(file));
 }
@@ -491,6 +542,10 @@ function stopPreview(signal) {
 
 process.on("SIGINT", () => stopPreview("SIGINT"));
 process.on("SIGTERM", () => stopPreview("SIGTERM"));
+
+mint.on("error", (error) => {
+  console.error(`Cannot start mint dev: ${error.message}`);
+});
 
 mint.on("close", (code) => {
   for (const watcher of watchers) watcher.close();
