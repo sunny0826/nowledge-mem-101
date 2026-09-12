@@ -8,7 +8,7 @@ icon: "library"
 <div className="course-meta" aria-label="课程信息">
   <span><Icon icon="book-open" /> 共 6 课</span>
   <span><Icon icon="clock-3" /> 约 35 分钟</span>
-  <span><Icon icon="user-round" /> 进阶</span>
+  <span><Icon icon="user-round" /> 高阶</span>
 </div>
 
 <p className="course-intro">围绕一个真实主题，在 Nowledge Mem 中建立长期知识系统。整理长期记忆、保留完整来源、建立一条有明确含义的连接、记录知识变化，最后验证 Mem 能否返回当前结论及其历史。</p>
@@ -19,21 +19,45 @@ icon: "library"
 
 完成课程后，一个真正关心的主题会拥有一套小而有效的知识系统：
 
-```text
-主题 → 长期记忆 → 来源 → 显式连接 → 知识变化 → 找回验证
-```
+<div className="learning-stages" aria-label="学习阶段">
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">划定主题</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">整理记忆</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">保留来源</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">建立连接</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">记录变化</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">找回验证</span>
+  </div>
+</div>
 
-课程使用 Atlas 团队的年度计划流程作为案例。可以换成自己的长期项目、客户、研究领域或工作方法。
+虚构 Atlas 案例从 9 月“每年复盘一次”的决定开始，继续到 10 月改为“两次较小复盘”的新决定。第 1 课和第 3 课提供练习记忆和来源，日期用于描述案例历史。处理真实主题时，请使用自己的记录和日期。
 
 ## 开始前准备
 
 - 完成 [Essentials 课程](/zh/essentials)。
-- 在同一个 Space 中准备至少五条与真实主题有关的记忆。使用 Default 即可。
-- 准备一份包含该主题来源资料的文档。
-- 如果当前版本提供 Background Intelligence，并且希望课程中更新 Wiki 主题和知识变化关系，请配置 Remote LLM 并启用它。
+- 选择一个在同一 Space 中已有几条记忆的主题，或使用第 1 课的练习资料。使用 Default 即可。
+- 准备一份相关文档，或使用第 3 课的复盘示例。
+- 为 AI 阅读和问答步骤配置可用的模型。
+- Background Intelligence 是可选的。需要自动 Wiki 分组和 EVOLVES 检测时再启用；课程也提供无需等待后台处理即可完成的检查。
 
 <Note>
-不要为了看起来更整齐而创建 Space。只有当两个真实场景持续互相干扰时，才需要离开 Default。
+把课程记录保存在同一 Space 中，方便一起检索和建立连接。需要不同的知识范围时再使用独立 Space，不必为普通分类创建分区。
 </Note>
 
 ## 课程路线
@@ -79,7 +103,7 @@ icon: "library"
 
 ## 这门课程不要求什么
 
-不需要先设计完美的标签体系，不需要为每个主题建立文件夹，也不需要手动维护 Wiki。Mem 会在后台完成主题分组和图谱维护；需要负责的是选择有价值的来源、保持长期记忆清晰，并明确记录重要关系。
+先从少量记录开始。后台处理可以帮助组织内容，需要亲自检查的是来源、决定和关系含义。最终以问答验证：能否找回当前结论、依据和历史。
 
 ## 深入了解
 

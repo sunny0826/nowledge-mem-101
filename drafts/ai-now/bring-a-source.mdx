@@ -11,7 +11,7 @@ icon: "paperclip"
   <span><Icon icon="user-round" /> Intermediate</span>
 </div>
 
-Your memories describe what you already know. Add the primary source that contains the details you need to examine.
+Add one primary source to the AI Now task in Nowledge Mem. Use its exact wording to check the question you scoped in lesson 1.
 
 ## What you'll accomplish
 
@@ -21,34 +21,97 @@ Your memories describe what you already know. Add the primary source that contai
 
 ## Watch how it's done
 
-{/* TODO: Add the English YouTube demo for bringing a source into AI Now. */}
+{/*
+TODO: Add the English YouTube demo for bringing a source into AI Now.
+
+VIDEO SCRIPT — Bring a source
+Production target: ~2-minute edited screencast for YouTube; timestamps are edit targets, not product response-time promises.
+Preparation: Continue lesson 1. Save this locale’s exact practice document as atlas-planning-interviews.md and keep the text editor open beside AI Now.
+Recording: use the real app and fictional course data, with readable 16:9 framing and English captions. Match prompts and examples to this page. Cut typing and waiting only after showing the action; label time skips. Keep the actual results visible.
+
+00:00–00:10
+Visual/action: Show the checked context summary and the local interview document with its fictional-material label.
+Voiceover: "Bring one primary source into your Nowledge Mem task so you can check the answer against its wording."
+
+00:10–00:25
+Visual/action: Scroll through the document’s three interview sections, pausing at the preparation condition and evidence limits.
+Voiceover: "These practice interviews describe a dependency problem, a preparation constraint, and a question still untested."
+
+00:25–00:50
+Visual/action: Attach the file to the same AI Now conversation and send the source-reading instruction from step 3.
+Voiceover: "Ask AI Now to identify the document and cite its sections. Keep the notes separate from its interpretation."
+
+00:50–01:15
+Visual/action: Show the answer naming the correct document and sections, then select the finding attributed to Interview B.
+Voiceover: "Confirm that the file was actually read. A file name by itself is not evidence of that."
+
+01:15–01:45
+Visual/action: Place Interview B beside the answer and highlight the condition about reusing existing notes in both.
+Voiceover: "The interview permits a trial only if existing notes can be reused. It does not support adding another reporting process."
+
+01:45–02:00
+Visual/action: End on the matching passage and finding, retaining the same conversation.
+Voiceover: "You now have one finding you can trace to the source, including the condition attached to it."
+
+Production notes: If attachments are unavailable, record the documented Library import path and wait for Searchable before referring to the exact document name. Do not present the fictional interviews as customer evidence.
+*/}
+
+<Note>
+The demo video is coming soon. You can follow the written exercise below.
+</Note>
+
+## Before you start
+
+Continue the lesson 1 conversation with its checked context summary. Choose a source you can use with your configured AI provider.
 
 ## Your turn
 
 <Steps>
   <Step title="Choose one primary source">
-    Use a document that is directly relevant to the decision, such as customer interview notes, a CSV of support requests, or a project brief. Avoid uploading material you are not allowed to share with your configured AI provider.
+    Use interview notes, a retrospective, or another document directly relevant to the question. For the practice task, save the following as `atlas-planning-interviews.md` in a text editor:
+
+    ```markdown
+    # Atlas planning interviews — fictional practice material
+
+    These notes are invented for this course, not real customer evidence.
+
+    ## Interview A — dependency visibility
+    A team noticed a shared dependency only after committing to its quarterly plan.
+    The interviewee wants teams to compare longer-term plans before committing.
+
+    ## Interview B — preparation burden
+    Teams already write quarterly review notes.
+    The interviewee would try a joint review if those notes could be reused,
+    but does not want a second reporting process.
+
+    ## Interview C — unanswered question
+    No annual planning review has been tested by this team.
+    These interviews contain no measurement of time saved or dependencies avoided.
+    ```
   </Step>
   <Step title="Attach the file or use the Library">
-    Drop the file into the AI Now conversation. If it is already in the Library, refer to it by name instead.
+    Drop the file into the conversation and send it with the instruction below. For a document already in **Library**, wait until it is **Searchable** and use its exact name in the prompt.
   </Step>
   <Step title="Tell AI Now how to use it">
     Continue the Atlas task with a specific instruction:
 
     ```text
-    Use the attached customer interview notes with the Atlas context already found. Identify statements that support, challenge, or leave open the case for an annual planning review. Cite the interview or section when possible.
+    Read atlas-planning-interviews.md alongside the Atlas planning memories already found. First identify the document and its sections. Then list statements relevant to piloting an annual planning review, citing the interview heading for each. Separate what the notes say from your interpretation. Use only these sources; if you cannot read the file, say so.
     ```
+  </Step>
+  <Step title="Check one passage against the original">
+    Open the file and compare a cited passage with the answer. In the practice material, Interview B allows a trial only if existing notes can be reused. It does not support adding more reporting.
   </Step>
 </Steps>
 
 ## What you should see
 
 <Check>
-  AI Now uses the source and your saved context together, rather than answering only from a generic model response.
+  AI Now identifies the correct document and sections. You can trace one finding to its passage, including the condition attached to it.
 </Check>
 
 <Note>
-You can drop files directly into AI Now for analysis. If file attachment is unavailable in the current workspace, add the file to the Library and refer to it there.
+If attachments are unavailable, import the document through **Library** and refer to it by name after indexing. If AI Now cannot read it, resolve that first; a file name alone is not evidence that the contents were read.
 </Note>
 
 ## Why this matters
