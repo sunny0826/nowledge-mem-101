@@ -712,6 +712,15 @@ html[data-current-path="/zh/essentials"] h2#课程路线 {
   background: var(--course-blue);
 }
 
+/* Lesson progress: stages covered by earlier lessons */
+.learning-stage-done .learning-stage-mark {
+  border-color: var(--course-blue);
+}
+
+html.dark .learning-stage-active .learning-stage-mark {
+  background: var(--course-blue);
+}
+
 .learning-stage-title {
   position: relative;
   z-index: 1;

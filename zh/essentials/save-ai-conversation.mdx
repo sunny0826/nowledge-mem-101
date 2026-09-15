@@ -14,6 +14,25 @@ import Playground from "/snippets/playground.mdx"
   <span><Icon icon="user-round" /> 入门</span>
 </div>
 
+<div className="learning-stages" aria-label="课程进度">
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Capture</span>
+  </div>
+  <div className="learning-stage learning-stage-active" aria-current="step">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Recall</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Connect</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Reuse</span>
+  </div>
+</div>
+
 AI 对话里有一句话概括不了的上下文：你问了什么、AI 如何推理、答案怎样一步步得出。Mem 的 Threads 会保留整段会话，让你之后找得到它。
 
 ## 完成这一课后

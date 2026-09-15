@@ -38,7 +38,7 @@ Use `just drafts` to preview every unpublished draft at its final local URL with
 just drafts
 ```
 
-The current AI Workflow, AI Now, and Playground drafts are available at their final local URLs. See [`drafts/README.md`](drafts/README.md) for the full URL list and promotion checklist.
+The current AI Now, Knowledge System, and Playground drafts are available at their final local URLs. See [`drafts/README.md`](drafts/README.md) for the full URL list and promotion checklist.
 
 ## Validation
 

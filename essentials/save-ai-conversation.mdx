@@ -14,6 +14,25 @@ import Playground from "/snippets/playground.mdx"
   <span><Icon icon="user-round" /> Beginner</span>
 </div>
 
+<div className="learning-stages" aria-label="Course progress">
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Capture</span>
+  </div>
+  <div className="learning-stage learning-stage-active" aria-current="step">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Recall</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Connect</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Reuse</span>
+  </div>
+</div>
+
 AI conversations contain context a one-line summary loses: what you asked, how the tool reasoned, and the exchange that led to the answer. Mem's Threads keep the whole session so you can find it later.
 
 ## What you'll accomplish
