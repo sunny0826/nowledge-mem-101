@@ -1,43 +1,40 @@
 ---
 name: mintlify-api
-description: Interact with the Mintlify REST API to manage deployments, trigger builds, and query documentation site metadata programmatically.
+description: Trigger an authorized Mintlify deployment or branch preview and inspect deployment status. Use for platform API operations, not local course editing.
 license: MIT
-compatibility: Any HTTP client. Authentication via API key.
 metadata:
-  author: mintlify
-  version: "1.0"
+  author: nowledge-mem-101 maintainers
+  based-on: Mintlify API skill
 ---
 
-# Mintlify API
+# Mintlify deployment API
 
-Use the Mintlify API to manage documentation sites programmatically. This skill covers deployment management, build triggers, and site metadata queries.
+This project-maintained skill covers three deployment endpoints. Read the linked current reference before calling one. For local previews and builds, use repository commands instead; do not provision an API key or remote preview just to validate MDX.
 
-## Authentication
+## Scope and authentication
 
-All API requests require an API key passed in the `Authorization` header:
+Use the existing authorized project ID and an Admin API key from the user's configured credential source. Send it as a Bearer token in the Authorization header without exposing it in logs, command arguments, files committed to Git, or client code. Admin, Assistant, and Index keys serve different endpoints; see the [authentication reference](https://www.mintlify.com/docs/api/introduction).
 
-```
-Authorization: Bearer <your-api-key>
-```
+Before a POST, establish the target project and deployment branch or preview branch, and whether the user's request authorizes that action. Reuse existing authorization; do not ask again for an already approved deployment. A request to edit content does not itself request deployment.
 
-Generate API keys from the [Mintlify dashboard](https://app.mintlify.com) under Settings > API Keys.
+## Endpoints
 
-## Core capabilities
+Base URL: `https://api.mintlify.com/v1`.
 
-### Trigger deployments
+| Operation | Request | Result and source |
+| --- | --- | --- |
+| Deploy configured branch | `POST /project/update/{projectId}`; no JSON body required | `202` with `statusId`; [trigger deployment](https://www.mintlify.com/docs/api/update/trigger) |
+| Preview an existing branch | `POST /project/preview/{projectId}`; JSON `branch` field | `202` with `statusId` and `previewUrl`; [preview requirements](https://www.mintlify.com/docs/api/preview/trigger) |
+| Read deployment status | `GET /project/update-status/{statusId}` | `status`, `summary`, and logs; [status reference](https://www.mintlify.com/docs/api/update/status) |
 
-Programmatically trigger a documentation rebuild when your codebase changes outside of Git push events.
+The preview branch must exist in the connected repository; fork branches are not supported by this endpoint. A second preview request for the same branch redeploys it. Confirm preview visibility from the project settings rather than assuming it is private.
 
-### Query site metadata
+## Verify and handle failure
 
-Retrieve information about your documentation site including deployment status, configured domains, and navigation structure.
+- A `202` acknowledges a queued request, not a successful deployment. Preserve `statusId` and poll GET with bounded waits and backoff until `success`, `failure`, or a task-appropriate deadline. `queued` and `in_progress` are pending states.
+- On failure, inspect the earliest relevant error in the returned logs. Stop after identifying a blocker instead of triggering repeated builds.
+- Do not blindly retry POST after a timeout or ambiguous response; check existing deployment state first. For authentication, authorization, or invalid-branch errors, report the specific missing prerequisite; do not rotate credentials or change targets on your own.
+- Respect any rate-limit retry interval for GET requests. When the polling deadline is reached, report pending status and its ID, not success.
+- Do not infer generic domain/navigation administration endpoints from this skill. Read local `docs.json` for repository configuration and consult the specific official API reference for other requested operations.
 
-### Manage preview deployments
-
-Create and manage preview deployments for pull requests and branches to review documentation changes before they go live.
-
-## Resources
-
-- [API reference](https://mintlify.com/docs/api)
-- [Dashboard](https://app.mintlify.com)
-- [Deployment guide](https://mintlify.com/docs/deploy)
+This local adaptation is intentionally not recorded as an unchanged upstream download in `skills-lock.json`.

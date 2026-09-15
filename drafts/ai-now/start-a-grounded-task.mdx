@@ -11,7 +11,7 @@ icon: "circle-play"
   <span><Icon icon="user-round" /> Intermediate</span>
 </div>
 
-AI Now works best when the task begins with knowledge you already own. Start with one decision question and ask it to show the context it found before answering.
+Start an AI Now task in Nowledge Mem with one question about your own work. Before asking for a recommendation, check which saved facts and constraints it found.
 
 ## What you'll accomplish
 
@@ -21,30 +21,85 @@ AI Now works best when the task begins with knowledge you already own. Start wit
 
 ## Watch how it's done
 
-{/* TODO: Add the English YouTube demo for starting a grounded AI Now task. */}
+{/*
+TODO: Add the English YouTube demo for starting a grounded AI Now task.
+
+VIDEO SCRIPT — Start a grounded task
+Production target: ~2-minute edited screencast for YouTube; timestamps are edit targets, not product response-time promises.
+Preparation: Configure a working model before recording. Save the exact fictional planning context from this page in the demo Space; exclude the separate Knowledge System decision-history example.
+Recording: use the real app and fictional course data, with readable 16:9 framing and English captions. Match prompts and examples to this page. Cut typing and waiting only after showing the action; label time skips. Keep the actual results visible.
+
+00:00–00:10
+Visual/action: Show the saved fictional Atlas planning context in Mem, including Status: no pilot has been approved.
+Voiceover: "Start this Nowledge Mem AI Now task with a real question and the context you already saved."
+
+00:10–00:25
+Visual/action: Open AI Now from the sidebar and begin a conversation in the Space containing the practice memory.
+Voiceover: "Use the Space containing your task knowledge. We will keep this conversation through the analysis steps."
+
+00:25–00:50
+Visual/action: Paste and send the context-retrieval prompt from step 2; show the actual search activity.
+Voiceover: "Ask for saved facts, constraints, and open questions before requesting advice or public research."
+
+00:50–01:15
+Visual/action: Open the memory named in the response and compare the source with the context summary.
+Voiceover: "Check the record behind the summary. A fluent answer alone does not tell you which context was found."
+
+01:15–01:45
+Visual/action: Highlight quarterly reviews, reuse of existing notes, and the unapproved pilot. If needed, select the missing memory with @ and request a revision.
+Voiceover: "The summary must preserve existing quarterly reviews, avoid extra reporting, and keep the pilot undecided."
+
+01:45–02:00
+Visual/action: End on the checked context summary; keep the conversation open for the next lesson.
+Voiceover: "This checked context is the starting point for reading a source in the next lesson."
+
+Production notes: Show no API keys or server credentials. Do not claim that AI Now automatically approves the pilot. Keep @ recovery conditional on what the actual response omitted.
+*/}
+
+<Note>
+The demo video is coming soon. You can follow the written exercise below.
+</Note>
+
+## Before you start
+
+Configure a model in **Settings → Remote LLM** and keep Mem running. If you connect to a remote Mem server, AI Now uses that server's model configuration.
+
+Choose a real decision with at least one relevant saved memory. To practise with the course example, paste this fictional context into **Timeline** and press Enter first:
+
+```text
+Atlas planning context — fictional practice scenario
+
+Goal: decide whether to pilot an annual planning review next quarter.
+Current practice: each team already runs quarterly reviews.
+Constraint: reuse existing review notes; avoid a second reporting process.
+Open question: would a broader review reveal cross-team dependencies earlier?
+Status: no pilot has been approved.
+```
 
 ## Your turn
 
 <Steps>
   <Step title="Open AI Now">
-    In Mem, open the **AI Now** tab in the sidebar. You can also press `Cmd/Ctrl` + `5`.
+    In Mem, open **AI Now** from the sidebar and begin a new conversation. Keep this conversation for lessons 2–5. If you use Spaces, select the one containing your task memories.
   </Step>
   <Step title="Ask a question tied to your knowledge">
     Use a question with a specific decision and time frame. For example:
 
     ```text
-    We are considering an annual planning review for Atlas. What decisions, plans, or customer insights in Nowledge Mem are relevant? List the evidence first. Do not recommend a direction yet.
+    Search the saved Atlas planning memories in Nowledge Mem. We are considering a pilot annual planning review next quarter. List the relevant facts, constraints, and undecided questions, and identify the memories behind them. Use saved knowledge only; do not research the web or recommend a direction yet. Say which context is missing.
     ```
   </Step>
   <Step title="Check the context before moving on">
-    Confirm that the answer identifies material you recognize. If one important memory is missing, mention it with `@` or add it before continuing.
+    Open the memories behind the summary. For the practice example, check that it preserves quarterly reviews, the constraint against extra reporting, and the fact that the pilot is not approved.
+
+    If a memory is missing, type `@`, find it, and select it in the conversation. Ask AI Now to revise the context summary. If it cannot find the memory at all, confirm the memory was saved in the current Space.
   </Step>
 </Steps>
 
 ## What you should see
 
 <Check>
-  AI Now returns relevant saved knowledge and makes clear what it used as context for the task.
+  AI Now names the saved context it used and preserves the goal, constraints, and undecided status. Keep this checked summary for the source-reading step.
 </Check>
 
 ## Why this matters

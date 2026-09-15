@@ -1,36 +1,37 @@
-# Draft content
+# Drafts and staged publication
 
-These files are intentionally excluded from publication by `.mintignore`.
+`drafts/` and `*.draft.mdx` are excluded from publication by `.mintignore`. English drafts mirror their eventual root paths; Chinese drafts mirror `zh/` paths.
 
-## Preview every draft locally
-
-Run this from the repository root:
+## Preview and validate
 
 ```bash
 just drafts
+just check-drafts
 ```
 
-The preview automatically discovers every `.mdx` page under `drafts/`, maps it to its final site path, and adds draft-only navigation in both languages. Current overview routes include:
+The preview discovers draft MDX, merges it over a temporary copy of published content, and generates bilingual navigation at final paths such as `/ai-workflow`, `/zh/ai-now`, and `/knowledge-system`. Existing published pages remain available. Mixed courses use their existing tab, ordered by lesson number; fully draft courses get a separate draft-labeled tab.
 
-- English: `http://localhost:3000/ai-workflow`
-- Simplified Chinese: `http://localhost:3000/zh/ai-workflow`
-- AI Now: `http://localhost:3000/ai-now`
-- AI Now (Simplified Chinese): `http://localhost:3000/zh/ai-now`
-- Playground: `http://localhost:3000/playground`
-- Playground (Simplified Chinese): `http://localhost:3000/zh/playground`
-- Knowledge System: `http://localhost:3000/knowledge-system`
-- Knowledge System (Simplified Chinese): `http://localhost:3000/zh/knowledge-system`
+`just check-drafts` uses the same merged site without starting a server. It runs build, link, and accessibility checks, returns the first failure, and removes the temporary site. Root-level `mint` checks exclude the drafts. Select individual checks with `node scripts/preview-drafts.mjs --check validate` or `--check broken-links a11y`.
 
-The preview runs in a temporary directory. Changes under `drafts/`, `snippets/`, and the shared site assets synchronize while the preview is running. Stop the command to remove the temporary preview.
+During preview, changes under `drafts/`, `snippets/`, and shared site assets synchronize. Restart after other published-page edits. Stop the preview to remove its temporary directory. `just preview-drafts`, `just preview-ai-workflow`, and `just playground` remain aliases for the same full preview. A custom port can be passed to `node scripts/preview-drafts.mjs --port 3018`.
 
-`just preview-drafts` is an equivalent alias. `just preview-ai-workflow` and `just playground` remain available for existing local workflows; both now open the same complete preview.
+## Publication states
 
-## Promote a draft
+| State | Files and navigation | Cards, next links, and video |
+| --- | --- | --- |
+| Draft | Under `drafts/`; no production navigation entry | Course progression remains Coming soon / 即将上线; video TODO and script stay in comments |
+| Published text awaiting video | Matching root / `zh/` path, added to `docs.json`, draft tag removed | Sidebar page is reachable; course entry card and previous lesson's next link remain Coming soon / 即将上线; page explains that the demo is pending |
+| Fully available lesson | Published paths and bilingual navigation | Real locale-specific videos embedded; entry card and previous lesson's next link become available |
 
-When a draft is ready to publish:
+The next-lesson section of any page reflects the next lesson's own state, not the current page's state. A published text page awaiting video is intentionally reachable before its course progression entry is activated.
 
-1. Move its English and Chinese paths from `drafts/` to their matching publish paths, for example `drafts/ai-workflow/` to `ai-workflow/` and `drafts/zh/ai-workflow/` to `zh/ai-workflow/`.
-2. When promoting Playground, move `drafts/playground-assets/playground.css` and `drafts/playground-assets/playground.js` to the repository root.
-3. For a course, replace every video TODO with its localized iframe and change its status from `Coming soon` or `即将上线` to the matching link. Remove the draft `tag` (for example `tag: "Draft"` or `tag: "草稿"`) from each promoted lesson's frontmatter; the tag exists to mark draft pages in the sidebar of mixed published/draft courses.
-4. Add the published pages to `docs.json`, then make the matching home-page course cards available when applicable.
-5. Run `mint validate`, `mint broken-links`, and `mint a11y` before opening the PR.
+## Promote only the requested state
+
+1. Move the English and Chinese draft files to their matching published paths. Remove `tag: "Draft"` / `tag: "草稿"` when present, and add the published paths to the correct `docs.json` language branches.
+2. For a text-first release, keep the video TODO, hidden script, pending-video note, and muted course progression entry. Do not invent an iframe or activate all course cards just because a file moved.
+3. When the lesson and both demos are ready, insert the supplied YouTube/bilibili iframes and remove obsolete video-pending notices. Activate the corresponding course card and previous lesson's next link; update affected counts and availability in both languages.
+4. Review state parity and run the applicable checks in the [validation guide](../.agents/skills/nowledge-course/references/validation.md).
+
+Only draft lessons in a mixed published/draft course need a frontmatter `tag` (`Draft` / `草稿`). Fully draft courses already have a draft-labeled preview tab. Do not add a draft overview for a mixed course; its published overview remains the entry point.
+
+Playground demo pages use the existing root `playground.js` and `playground.css`. Promoting a host page does not move or duplicate these shared assets.
