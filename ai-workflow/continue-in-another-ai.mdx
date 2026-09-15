@@ -6,12 +6,12 @@ icon: "arrow-right-left"
 ---
 
 <div className="course-meta" aria-label="Lesson information">
-  <span><Icon icon="book-open" /> AI Workflow · Lesson 4 / 5</span>
+  <span><Icon icon="book-open" /> AI Workflow · Lesson 4 / 4</span>
   <span><Icon icon="clock-3" /> ~5 min</span>
   <span><Icon icon="user-round" /> Intermediate</span>
 </div>
 
-<div className="learning-stages" aria-label="Course progress">
+<div className="learning-stages learning-stages-progress" aria-label="Course progress">
   <div className="learning-stage learning-stage-done">
     <span className="learning-stage-mark" aria-hidden="true"></span>
     <span className="learning-stage-title">Work brief</span>
@@ -27,10 +27,6 @@ icon: "arrow-right-left"
   <div className="learning-stage learning-stage-active" aria-current="step">
     <span className="learning-stage-mark" aria-hidden="true"></span>
     <span className="learning-stage-title">Continue</span>
-  </div>
-  <div className="learning-stage">
-    <span className="learning-stage-mark" aria-hidden="true"></span>
-    <span className="learning-stage-title">Close the loop</span>
   </div>
 </div>
 
@@ -73,8 +69,8 @@ Visual/action: Submit the drafting prompt from step 4. Inspect the hero and sect
 Voiceover: "Now draft the next part. Missing customer quotes and metrics must stay marked as needing evidence."
 
 01:45–02:00
-Visual/action: End with the new copy and the brief and checkpoint open in Mem; retain the draft for lesson 5.
-Voiceover: "The second tool has continued from the saved task state. Keep this draft for the final update."
+Visual/action: End with the new copy and the brief and checkpoint open in Mem.
+Voiceover: "The second tool continued the task from the saved context. Any connected tool can pick it up from here."
 
 Production notes: Do not paste the first conversation into the second. If a record is missing, show the connection and scope checks from step 3 before proceeding; never stage a successful retrieval.
 */}
@@ -114,7 +110,7 @@ Save the work brief and lesson 3 checkpoint in Mem. Connect both AI tools to the
     Using the brief and checkpoint you found, draft the hero and section four copy. Keep the agreed call to action. Mark missing customer quotes or metrics as "needs evidence". Do not invent them.
     ```
 
-    Check the audience, wording, and evidence markers against the brief. Keep the draft for the final update in lesson 5.
+    Check the audience, wording, and evidence markers against the brief. Keep the draft accessible for the next session.
   </Step>
 </Steps>
 
@@ -132,6 +128,13 @@ Checking retrieved context before drafting catches missing decisions. The same b
 
 Read the [Context](https://mem.nowledge.co/docs/ai-context) guide for how connected tools receive and use Mem context.
 
-## Next lesson
+## You've completed AI Workflow
 
-<p className="course-status-line"><i aria-hidden="true"></i>Coming soon</p>
+<Check>
+  You saved a work brief, started with your first AI, saved a handoff checkpoint, and continued the task in another AI.
+</Check>
+
+A task can now move between AI tools from saved context instead of a chat history. For everything beyond this course, see the [Nowledge Mem Docs](https://mem.nowledge.co/docs).
+
+<Card title="Back to the course →" horizontal href="/ai-workflow">
+</Card>
