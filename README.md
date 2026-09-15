@@ -16,16 +16,16 @@ The site is built with [Mintlify](https://mintlify.com) and is bilingual: Englis
 
 ## Development
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) if you don't have it yet:
+The project pins its toolchain with [mise](https://mise.jdx.dev/); `mise.toml` declares the Node.js, Mintlify CLI, and just versions used here. Install them once:
 
 ```bash
-npm i -g mint
+mise install
 ```
 
 Run the dev server from the repository root (where `docs.json` lives):
 
 ```bash
-mint dev
+mise exec -- mint dev
 ```
 
 View your local preview at `http://localhost:3000`.
@@ -42,12 +42,12 @@ The current AI Workflow, AI Now, and Playground drafts are available at their fi
 
 ## Validation
 
-After changing MDX, navigation, or content, run the Mintlify checks:
+After changing MDX, navigation, or content, run the Mintlify checks through the mise-managed toolchain:
 
 ```bash
-mint validate
-mint broken-links
-mint a11y
+mise exec -- mint validate
+mise exec -- mint broken-links
+mise exec -- mint a11y
 ```
 
 ## Localization
