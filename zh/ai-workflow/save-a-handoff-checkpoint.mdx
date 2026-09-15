@@ -6,9 +6,28 @@ icon: "milestone"
 ---
 
 <div className="course-meta" aria-label="课程信息">
-  <span><Icon icon="book-open" /> AI Workflow · 第 3 课 / 共 5 课</span>
+  <span><Icon icon="book-open" /> AI Workflow · 第 3 课 / 共 4 课</span>
   <span><Icon icon="clock-3" /> 约 5 分钟</span>
   <span><Icon icon="user-round" /> 进阶</span>
+</div>
+
+<div className="learning-stages learning-stages-progress" aria-label="课程进度">
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">工作简报</span>
+  </div>
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">第一次产出</span>
+  </div>
+  <div className="learning-stage learning-stage-active" aria-current="step">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">交接检查点</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">继续工作</span>
+  </div>
 </div>
 
 离开第一个 AI 工具前，把下一次会话需要的内容保存到 Nowledge Mem：当前草稿、已确认的决定、待解决的问题和下一步。这条简短记忆就是交接检查点。
@@ -98,4 +117,4 @@ Mem 找回了检查点，包含大纲、已确定的行动引导、尚缺的证�
 
 ## 下一课
 
-<p className="course-status-line"><i aria-hidden="true"></i>即将上线</p>
+<Card title="换一个 AI 继续" horizontal href="/zh/ai-workflow/continue-in-another-ai">让新工具找到简报和检查点，再完成下一步。</Card>

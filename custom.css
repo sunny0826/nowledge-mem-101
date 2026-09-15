@@ -712,6 +712,33 @@ html[data-current-path="/zh/essentials"] h2#课程路线 {
   background: var(--course-blue);
 }
 
+html.dark .learning-stage-active .learning-stage-mark {
+  background: var(--course-blue);
+}
+
+/* Lesson progress timeline: larger marks, completed stages checked and linked in blue */
+.learning-stages-progress .learning-stage-mark {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.learning-stages-progress .learning-stage:not(:last-child)::after {
+  top: 0.375rem;
+}
+
+.learning-stages-progress .learning-stage-done:not(:last-child)::after {
+  background: var(--course-blue);
+}
+
+.learning-stages-progress .learning-stage-done .learning-stage-mark {
+  border-color: var(--course-blue);
+  background-color: var(--course-blue);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.8 8.6l2.8 2.8 5.6-6' fill='none' stroke='%23ffffff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 0.5rem 0.5rem;
+}
+
 .learning-stage-title {
   position: relative;
   z-index: 1;

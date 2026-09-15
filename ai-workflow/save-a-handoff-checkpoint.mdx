@@ -6,9 +6,28 @@ icon: "milestone"
 ---
 
 <div className="course-meta" aria-label="Lesson information">
-  <span><Icon icon="book-open" /> AI Workflow · Lesson 3 / 5</span>
+  <span><Icon icon="book-open" /> AI Workflow · Lesson 3 / 4</span>
   <span><Icon icon="clock-3" /> ~5 min</span>
   <span><Icon icon="user-round" /> Intermediate</span>
+</div>
+
+<div className="learning-stages learning-stages-progress" aria-label="Course progress">
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Work brief</span>
+  </div>
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">First pass</span>
+  </div>
+  <div className="learning-stage learning-stage-active" aria-current="step">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Handoff checkpoint</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Continue</span>
+  </div>
 </div>
 
 Before leaving the first AI tool, save what the next session needs: the current draft, confirmed decisions, open questions, and next action. This concise memory is the handoff checkpoint.
@@ -98,4 +117,4 @@ Read [Memories](https://mem.nowledge.co/docs/memories) for other ways to create,
 
 ## Next lesson
 
-<p className="course-status-line"><i aria-hidden="true"></i>Coming soon</p>
+<Card title="Continue in another AI" horizontal href="/ai-workflow/continue-in-another-ai">Let a fresh tool find the brief and checkpoint, then take the next step.</Card>

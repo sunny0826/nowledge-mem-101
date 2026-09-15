@@ -122,7 +122,8 @@
               "ai-workflow/index",
               "ai-workflow/create-a-work-brief",
               "ai-workflow/start-with-your-first-ai",
-              "ai-workflow/save-a-handoff-checkpoint"
+              "ai-workflow/save-a-handoff-checkpoint",
+              "ai-workflow/continue-in-another-ai"
             ]
           }
         ]
@@ -198,7 +199,8 @@
               "zh/ai-workflow/index",
               "zh/ai-workflow/create-a-work-brief",
               "zh/ai-workflow/start-with-your-first-ai",
-              "zh/ai-workflow/save-a-handoff-checkpoint"
+              "zh/ai-workflow/save-a-handoff-checkpoint",
+              "zh/ai-workflow/continue-in-another-ai"
             ]
           }
         ]

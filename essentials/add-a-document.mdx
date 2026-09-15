@@ -14,6 +14,25 @@ import Playground from "/snippets/playground.mdx"
   <span><Icon icon="user-round" /> Beginner</span>
 </div>
 
+<div className="learning-stages learning-stages-progress" aria-label="Course progress">
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Capture</span>
+  </div>
+  <div className="learning-stage learning-stage-active" aria-current="step">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Recall</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Connect</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Reuse</span>
+  </div>
+</div>
+
 So far, you have saved short memories. But knowledge often lives in longer material: reports, specs, PDFs, and web pages. Add the source itself instead of summarizing it by hand, then let Mem search it.
 
 ## What you'll accomplish
