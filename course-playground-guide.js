@@ -1,4 +1,4 @@
-/* Course-only guidance for the unchanged Playground app replica. */
+/* Course guidance outside the reusable Playground app replica. */
 (function () {
   "use strict";
 
@@ -80,6 +80,49 @@
     },
   };
 
+  // AI Now actions advance only on state changes emitted by the replica.
+  // Sends that report missing prerequisites never complete a lesson step.
+  var AI_TARGETS = {
+    ai: '[data-mp-view="ai-now"]', library: '[data-mp-view="library"]',
+    fill: '[data-mp-ai-input]', send: '[data-mp-ai-send]',
+    source: '[data-mp-ai-last] [data-mp-ai-ref="source"]',
+    memory: '[data-mp-ai-last] [data-mp-ai-ref="memory"]',
+    import: '[data-mp-lib-import]', document: '[data-mp-lib-open="0"]',
+    back: '[data-mp-pane]:not([hidden]) [data-mp-reader-back], [data-mp-lib-back]', research: '[data-mp-ai-research]',
+    fresh: '[data-mp-ai-new]'
+  };
+  function aiScenario(actions, source) {
+    var result = {steps:actions.length,fillSteps:[],targets:{},actions:actions,source:source,changed:actions[actions.length-1][0]==="source"||actions[actions.length-1][0]==="memory"?'[data-mp-reader-text]':'[data-mp-ai-last]'};
+    actions.forEach(function(action,i){result.targets[i+1]=AI_TARGETS[action[0]];if(action[0]==="fill")result.fillSteps.push(i+1);});
+    return result;
+  }
+  SCENARIOS["ai-context"] = aiScenario([["ai","view","ai-now"],["fill"],["send","reply","context"],["memory","read","memory"]], false);
+  SCENARIOS["ai-source"] = aiScenario([["library","view","library"],["import","imported","atlas-source"],["document","read","source"],["back","back"],["ai","view","ai-now"],["fill"],["send","reply","source"],["source","read","source"]], false);
+  SCENARIOS["ai-evidence"] = aiScenario([["ai","view","ai-now"],["fill"],["send","reply","brief"],["source","read","source"]], true);
+  SCENARIOS["ai-research"] = aiScenario([["ai","view","ai-now"],["research","research","on"],["fill"],["send","reply","research"]], true);
+  SCENARIOS["ai-save"] = aiScenario([["ai","view","ai-now"],["fill"],["send","reply","draft"],["source","read","source"],["back","back"],["fill"],["send","reply","save"],["memory","read","memory"],["back","back"],["fresh","new-task"],["fill"],["send","reply","recall"],["memory","read","memory"],["back","back"],["fill"],["send","reply","source"],["source","read","source"]], true);
+
+  function prepareAiPractice(state) {
+    if (!spec(state).actions || state.aiSeeded) return;
+    var mount=state.windowEl.querySelector('[data-mp-ai-ready]');
+    if (!mount) return;
+    state.aiSeeded=true;
+    mount.dispatchEvent(new CustomEvent('mp:ai-seed',{detail:{source:spec(state).source}}));
+  }
+  function handleAiAction(state,event) {
+    if (!spec(state).actions || !state.open) return;
+    if (event.detail.type === 'ai-ready') {prepareAiPractice(state);render(state);return;}
+    var action=spec(state).actions[state.step-1];
+    if (!action || action[1]!==event.detail.type || action[2] && action[2]!==event.detail.kind) return;
+    state.step+=1;
+    if(state.step>spec(state).steps){
+      markChange(state);
+      clearTimeout(state.doneTimer);
+      state.doneTimer=setTimeout(function(){if(state.open&&document.contains(state.rootEl))showDoneModal(state);},5000);
+    }
+    render(state);
+  }
+
   function spec(state) {
     return SCENARIOS[state.scenario] || SCENARIOS.save;
   }
@@ -112,43 +155,44 @@
 
     function reset() {
       playgroundWindow.style.left = "";
+      playgroundWindow.style.right = "";
       playgroundWindow.style.width = "";
+      html.removeAttribute("data-course-playground-split");
+      html.style.removeProperty("--course-practice-article-width");
+      html.style.removeProperty("--course-practice-article-offset");
       if (content) {
         content.style.marginLeft = "";
         content.style.maxWidth = "";
       }
     }
 
-    if (!state.open || state.minimized || window.innerWidth < 1024) {
-      reset();
-      return;
-    }
-
-    // Dock the window to the right of the course steps: move the article
-    // left into the slack next to the sidebar and narrow it slightly, so the
-    // replica keeps a readable width without covering the steps. Fall back to
-    // overlaying the article when the viewport is too narrow for both.
     reset();
-    var stepsRect = state.rootEl.getBoundingClientRect();
-    var vw = window.innerWidth;
-    // The sidebar is collapsed while docked, so the article can start near
-    // the viewport edge instead of clearing the sidebar.
-    var SIDEBAR_CLEAR = wantDocked ? 24 : 440;
-    var MIN_ARTICLE = 26 * 16;
-    var GAP = 24;
+    if (!wantDocked) return;
 
-    var width = Math.min(72 * 16, vw - SIDEBAR_CLEAR - MIN_ARTICLE - 2 * GAP - 16);
-    if (width < MIN_DOCK_WIDTH) return; // CSS default: overlay from the right
+    // Treat the entire article (including its header and pagination) and the
+    // replica as one centered workspace. Extra desktop space belongs outside
+    // that workspace, never in an expanding gap between the two columns.
+    var vw = document.documentElement.clientWidth;
+    var edge = 24;
+    var gap = vw >= 1600 ? 32 : 24;
+    var available = vw - edge * 2 - gap;
+    var articleWidth = Math.max(416, Math.min(704, available * 0.36));
+    var width = Math.min(1280, available - articleWidth);
+    var area = document.getElementById("content-area");
+    if (width < MIN_DOCK_WIDTH || !area) return; // narrow desktop: overlay
 
-    var articleLeft = Math.min(stepsRect.left, SIDEBAR_CLEAR + GAP);
-    var articleWidth = Math.min(stepsRect.width, vw - 16 - width - GAP - articleLeft);
-
-    if (content) {
-      content.style.marginLeft = articleLeft - stepsRect.left + "px";
-      content.style.maxWidth = articleWidth + "px";
-    }
-    playgroundWindow.style.left = vw - 16 - width + "px";
-    playgroundWindow.style.width = "auto";
+    var workspaceWidth = articleWidth + gap + width;
+    var articleLeft = (vw - workspaceWidth) / 2;
+    html.setAttribute("data-course-playground-split", "true");
+    html.style.setProperty("--course-practice-article-width", articleWidth + "px");
+    html.style.setProperty("--course-practice-article-offset", "0px");
+    // Measure after the split width applies; the host's flex layout and
+    // centered max-width may otherwise introduce an additional offset.
+    var areaLeft = area.getBoundingClientRect().left;
+    html.style.setProperty("--course-practice-article-offset", articleLeft - areaLeft + "px");
+    playgroundWindow.style.left = articleLeft + articleWidth + gap + "px";
+    playgroundWindow.style.right = "auto";
+    playgroundWindow.style.width = width + "px";
   }
 
   var FILL_ICON =
@@ -329,6 +373,7 @@
   }
 
   function setWindowOpen(state, open, restoreFocus) {
+    if(!open)clearTimeout(state.doneTimer);
     var playgroundWindow = state.windowEl;
     var launch = state.rootEl.querySelector("[data-course-guide-open]");
     if (!playgroundWindow || !launch) return;
@@ -525,8 +570,10 @@
       if (state.open) {
         setWindowOpen(state, false);
       } else {
-        if (state.step > spec(state).steps) state.step = 1;
+        if (state.step > spec(state).steps) {state.step = 1;state.aiSeeded=false;}
         hideDoneModal(state);
+        clearTimeout(state.doneTimer);
+        prepareAiPractice(state);
         setWindowOpen(state, true);
       }
       return;
@@ -549,6 +596,8 @@
       setMinimized(state, false);
       return;
     }
+
+    if (spec(state).actions) return;
 
     var viewNav = target.closest("[data-mp-view]");
     if (viewNav && state.windowEl.contains(viewNav)) {
@@ -655,6 +704,13 @@
   }
 
   function handleInput(state, event) {
+    if (spec(state).actions) {
+      if(!event.target.matches('[data-mp-ai-input]'))return;
+      var actions=spec(state).actions;
+      if(actions[state.step-1] && actions[state.step-1][0]==='fill' && event.target.value.trim()){state.step+=1;render(state);}
+      else if(actions[state.step-2] && actions[state.step-2][0]==='fill' && !event.target.value.trim()){state.step-=1;render(state);}
+      return;
+    }
     if (state.scenario === "threads") {
       if (!event.target.matches("[data-mp-thr-q]") || state.step < 2 || state.step > 3) return;
       state.step = event.target.value.trim() ? 3 : 2;
@@ -697,6 +753,7 @@
       setMinimized(state, false);
       return;
     }
+    if (spec(state).actions) return;
     if (
       state.scenario === "threads" &&
       state.step === 3 &&
@@ -804,11 +861,13 @@
     windowEl.addEventListener("input", onInput, true);
     root.addEventListener("keydown", onKeydown, true);
     windowEl.addEventListener("keydown", onKeydown, true);
+    windowEl.addEventListener("mp:action", function(event){handleAiAction(state,event);});
 
-    window.addEventListener("resize", function () {
+    state.onResize = function () {
       positionWindow(state);
       highlightTarget(state);
-    });
+    };
+    window.addEventListener("resize", state.onResize);
     // The ringed control can move when the window's own content scrolls.
     windowEl.addEventListener(
       "scroll",
@@ -826,6 +885,10 @@
     for (var i = tracked.length - 1; i >= 0; i -= 1) {
       var state = tracked[i];
       if (!document.contains(state.rootEl)) {
+        state.open = false;
+        clearTimeout(state.doneTimer);
+        window.removeEventListener("resize", state.onResize);
+        positionWindow(state);
         if (state.windowEl.parentNode) state.windowEl.parentNode.removeChild(state.windowEl);
         if (state.hintEl && state.hintEl.parentNode) state.hintEl.parentNode.removeChild(state.hintEl);
         if (state.modalEl && state.modalEl.parentNode) state.modalEl.parentNode.removeChild(state.modalEl);

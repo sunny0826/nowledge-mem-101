@@ -9,6 +9,7 @@ The site is built with [Mintlify](https://mintlify.com) and is bilingual: Englis
 - `docs.json` — Mintlify site configuration: language navigation, branding, and global links
 - `index.mdx` / `zh/index.mdx` — English and Chinese landing pages
 - `essentials/` / `zh/essentials/` — the beginner course (6 lessons, ~25 minutes)
+- `ai-now/` / `zh/ai-now/` — the AI Now course (5 interactive lessons, ~25 minutes; guided Playground simulations)
 - `custom.css` — site presentation and the course design system
 - `mem-video-loading.css` / `mem-video-loading.js` — YouTube and bilibili demo video embed behavior
 - `logo/`, `cover-image/` — static assets
@@ -38,7 +39,7 @@ Use `just drafts` to preview every unpublished draft at its final local URL with
 just drafts
 ```
 
-The current AI Now, Knowledge System, and Playground drafts are available at their final local URLs. See [`drafts/README.md`](drafts/README.md) for the full URL list and promotion checklist.
+The current Knowledge System and Playground drafts are available at their final local URLs. Published courses, including AI Now, remain available in the merged preview. See [`drafts/README.md`](drafts/README.md) for preview details and the promotion checklist.
 
 ## Validation
 

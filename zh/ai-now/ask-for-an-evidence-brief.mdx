@@ -1,0 +1,154 @@
+---
+title: 请求证据简报
+description: 让 AI Now 将证据、局限、假设和未知项清楚分开。
+sidebarTitle: 3. 请求证据简报
+icon: list-checks
+mode: "wide"
+---
+
+import Playground from "/snippets/playground.mdx"
+
+
+<div className="course-meta" aria-label="课程信息">
+  <span><Icon icon="book-open" /> AI Now · 第 3 课 / 共 5 课</span>
+  <span><Icon icon="clock-3" /> 约 5 分钟</span>
+  <span><Icon icon="user-round" /> 进阶</span>
+</div>
+
+<div className="learning-stages learning-stages-progress" aria-label="课程进度">
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">提出问题</span>
+  </div>
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">加入来源</span>
+  </div>
+  <div className="learning-stage learning-stage-active" aria-current="step">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">核查证据</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">调查缺口</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">保存结果</span>
+  </div>
+</div>
+
+利用 Nowledge Mem 的 AI Now 任务中的上下文和来源，比较试行的理由与暂缓的理由。让每项发现都有可核对的依据。
+
+## 你将完成什么
+
+<Check>
+  获得一份证据简报，将有依据的发现与仍待回答的问题分开。
+</Check>
+
+## 先在模拟中练习
+
+在电脑浏览器中，前往下方[轮到你了](#轮到你了)，点击**开始模拟**。跟随弹窗提示发送请求、阅读回答并核对结果。每课会准备好虚构的 Atlas 材料，无需先配置模型。
+
+<Note>
+模拟在浏览器本地运行，使用预设回答，不调用 AI 或联网搜索；刷新后练习重置。手机端可先阅读步骤，交互练习请使用电脑浏览器。
+</Note>
+
+## 在真实应用中练习前
+
+确认 AI Now 能读取第 2 课的来源后，继续同一段对话。打开原始文档，方便对照。
+
+## 轮到你了
+
+点击**开始模拟**，跟随弹窗提示练习。熟悉流程后，再按照下方真实应用步骤，在 Nowledge Mem 中处理自己的材料。
+
+<script src="/course-playground-guide.js?v=23" defer></script>
+
+<div className="course-playground-workflow"
+  data-course-playground-guide=""
+  data-course-guide-scenario="ai-evidence"
+  data-course-guide-current="1"
+  data-course-playground-open="false"
+  data-course-guide-replay-label="再练一次"
+  data-course-guide-close-label="关闭模拟"
+  data-course-guide-mini-label="Playground"
+  data-course-guide-fill-label="填入示例"
+  data-course-guide-done-message="证据已核对；没有测量的收益仍是缺口。"
+  data-course-guide-open-mem-label="打开 Nowledge Mem"
+  data-course-guide-confirm-label="知道了"
+  data-course-guide-mem-url="https://mem.nowledge.co"
+  data-course-guide-hint-1="打开 AI Now。前两课的记忆和来源已预置。"
+  data-course-guide-hint-2="请求一份证据简报。"
+  data-course-guide-hint-3="发送请求。"
+  data-course-guide-hint-4="打开来源，对照访谈 A–C 与简报结论。"
+  data-course-guide-hint-5="证据已核对；没有测量的收益仍是缺口。"
+  data-course-guide-fillable-2="只根据 Atlas 计划记忆和 atlas-planning-interviews.md，撰写一份证据简报，讨论是否在下季度进行一次跨团队计划评审，检查未来十二个月的依赖。保留今后评审频率未定的状态。不要搜索网络。 包含： 1. 支持试行的发现 2. 限制或质疑试行的发现 3. 开放问题，分别标为内部问题或公共研究问题 4. 假设，与证据分开 5. 一个能降低不确定性的小步骤 每项发现都说明来源名称和章节、能够证明什么、不能证明什么。没有依据时，不要为了填满分类而编造发现。">
+  <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-ai-3-zh" aria-expanded="false">
+    <Icon icon="panel-right-open" /> <span data-course-guide-open-label>开始模拟</span>
+  </button>
+
+<Steps>
+  <Step title="设定输出结构">
+    <span className="course-playground-step-anchor" data-course-guide-source="1" aria-hidden="true"></span>
+    <span className="course-playground-step-anchor" data-course-guide-source="2" aria-hidden="true"></span>
+    <span className="course-playground-step-anchor" data-course-guide-source="3" aria-hidden="true"></span>
+
+    要求简报使用便于核查的结构：
+
+    ```text
+    只根据 Atlas 计划记忆和 atlas-planning-interviews.md，撰写一份证据简报，讨论是否在下季度进行一次跨团队计划评审，检查未来十二个月的依赖。保留今后评审频率未定的状态。不要搜索网络。
+
+    包含：
+    1. 支持试行的发现
+    2. 限制或质疑试行的发现
+    3. 开放问题，分别标为内部问题或公共研究问题
+    4. 假设，与证据分开
+    5. 一个能降低不确定性的小步骤
+
+    每项发现都说明来源名称和章节、能够证明什么、不能证明什么。没有依据时，不要为了填满分类而编造发现。
+    ```
+  </Step>
+  <Step title="先读证据，再看建议">
+    <span className="course-playground-step-anchor" data-course-guide-source="4" aria-hidden="true"></span>
+
+    在原文中核查一项发现。练习材料可以按下面的边界检查：
+
+    | 来源 | 支持什么 | 不能证明什么 |
+    | --- | --- | --- |
+    | 访谈 A | 需要更早发现依赖 | 一次跨团队评审一定能解决问题 |
+    | 访谈 B | 复用现有记录开展试行 | 接受额外汇报工作 |
+    | 访谈 C | 存在缺口：没有试行或实测结果的记录 | 评审有效或无效 |
+
+    让 AI Now 修正超出这些边界的主张。缺少测量属于证据缺口，不是反对评审的证据。三段访谈是虚构练习证据，不是市场样本。
+  </Step>
+  <Step title="让开放问题保持开放">
+
+    为第 4 课选择一项不确定性。“团队能承担多少准备工作？”需要内部回答；“有哪些有记录的方法，能帮助团队在承诺计划前发现跨团队依赖？”可以通过公共研究调查。找不到证据，也是一项有效发现。
+  </Step>
+</Steps>
+
+  <p className="course-playground-workflow-status" data-course-guide-ready>准备好后开始模拟；提示会出现在弹窗中。</p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>证据已核对；没有测量的收益仍是缺口。</p>
+  <div id="course-playground-ai-3-zh" className="course-playground-window" data-course-playground-window role="region" aria-label="AI Now 交互练习" aria-hidden="true">
+    <Playground />
+  </div>
+</div>
+
+## 你应该看到
+
+<Check>
+  简报区分了值得试行的理由与证明方案有效的证据。每项发现都有来源，下一个不确定问题也有明确的调查方式。
+</Check>
+
+## 为什么这很重要
+
+一个通用建议很容易掩盖证据不足。明确的结构会让后续讨论聚焦在需要验证的部分。
+
+## 深入了解
+
+阅读 Nowledge Mem Docs 的 [AI Now](https://mem.nowledge.co/zh/docs/ai-now) 页面，了解文件分析和有依据的任务示例。
+
+## 下一课
+
+<Card title="研究仍然缺少的部分 →" horizontal href="/zh/ai-now/research-what-is-missing">
+</Card>

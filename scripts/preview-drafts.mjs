@@ -38,6 +38,7 @@ const sharedFiles = [
   "mem-video-loading.js",
   "playground.css",
   "playground.js",
+  "playground-ai-now.js",
 ];
 let synchronizedDestinations = new Set();
 const watchedFileMtimes = new Map();

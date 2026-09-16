@@ -11,9 +11,9 @@
 ## Repository map
 
 - `docs.json`: branding and bilingual navigation. English pages live at the root; Chinese pages mirror them under `zh/`.
-- `essentials/` and `ai-workflow/`: published courses. `drafts/` and `drafts/zh/`: unpublished additions, including AI Now and Knowledge System. `.mintignore` excludes drafts from publication and root-level checks.
+- `essentials/`, `ai-workflow/`, and `ai-now/`: published courses. AI Now is available as five guided interactive lessons; videos are not required for this course. `drafts/` and `drafts/zh/`: unpublished additions, including Knowledge System and Playground host pages. `.mintignore` excludes drafts from publication and root-level checks.
 - `custom.css`: shared presentation and course tokens. `mem-video-loading.js` and `.css`: video frames, loading states, and fallback links.
-- Root `playground.js` and `.css`: shared simulated app. `course-playground-guide.js`: course-side guidance. `snippets/playground.mdx`: mount point. Demo host pages remain under `drafts/playground/` and `drafts/zh/playground/`.
+- Root `playground.js`, `playground-ai-now.js`, and `playground.css`: shared simulated app. `course-playground-guide.js`: course-side guidance. `snippets/playground.mdx`: mount point. Demo host pages remain under `drafts/playground/` and `drafts/zh/playground/`.
 - `scripts/preview-drafts.mjs`: merged draft preview and checks. `prompts/`: production material, not tutorial pages.
 - Reuse purpose-specific asset directories such as `logo/` and `cover-image/`; use descriptive kebab-case names.
 

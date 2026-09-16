@@ -125,6 +125,18 @@
               "ai-workflow/save-a-handoff-checkpoint",
               "ai-workflow/continue-in-another-ai"
             ]
+          },
+          {
+            "tab": "AI Now",
+            "icon": "sparkles",
+            "pages": [
+              "ai-now/index",
+              "ai-now/start-a-grounded-task",
+              "ai-now/bring-a-source",
+              "ai-now/ask-for-an-evidence-brief",
+              "ai-now/research-what-is-missing",
+              "ai-now/save-the-result"
+            ]
           }
         ]
       },
@@ -201,6 +213,18 @@
               "zh/ai-workflow/start-with-your-first-ai",
               "zh/ai-workflow/save-a-handoff-checkpoint",
               "zh/ai-workflow/continue-in-another-ai"
+            ]
+          },
+          {
+            "tab": "AI Now",
+            "icon": "sparkles",
+            "pages": [
+              "zh/ai-now/index",
+              "zh/ai-now/start-a-grounded-task",
+              "zh/ai-now/bring-a-source",
+              "zh/ai-now/ask-for-an-evidence-brief",
+              "zh/ai-now/research-what-is-missing",
+              "zh/ai-now/save-the-result"
             ]
           }
         ]

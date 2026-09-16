@@ -124,20 +124,25 @@ html[data-current-path^="/zh/knowledge-system/"] #content {
   max-width: 42rem;
 }
 
-/* Simulation lesson pages: the article shifts and narrows while the docked
-   Playground window is open. */
-html[data-current-path="/essentials/first-memory"] #content,
-html[data-current-path="/zh/essentials/first-memory"] #content,
-html[data-current-path="/essentials/recall-memory"] #content,
-html[data-current-path="/zh/essentials/recall-memory"] #content,
-html[data-current-path="/essentials/add-a-document"] #content,
-html[data-current-path="/zh/essentials/add-a-document"] #content,
-html[data-current-path="/essentials/save-ai-conversation"] #content,
-html[data-current-path="/zh/essentials/save-ai-conversation"] #content,
-html[data-current-path="/ai-workflow/create-a-work-brief"] #content,
-html[data-current-path="/zh/ai-workflow/create-a-work-brief"] #content {
-  isolation: auto;
-  transition: margin-left 260ms ease, max-width 260ms ease;
+/* Course practice shares one centered desktop workspace with the full article. */
+html[data-course-playground-split="true"] #content-area {
+  flex: none;
+  width: var(--course-practice-article-width) !important;
+  min-width: 0 !important;
+  max-width: none;
+  margin: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  left: var(--course-practice-article-offset);
+}
+
+html[data-course-playground-split="true"] #content,
+html[data-course-playground-split="true"] #header,
+html[data-course-playground-split="true"] #pagination {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 /* Lesson 1: fused real-app instructions and an on-demand Playground window. */
@@ -443,6 +448,19 @@ html[data-current-path="/zh/ai-workflow/create-a-work-brief"] #content {
   border: 0;
   border-radius: 0;
   box-shadow: none;
+}
+
+.course-playground-window .mp-ai:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.course-playground-window .mp-ai-layout {
+  flex: 1;
+  height: auto;
+  min-height: 16rem;
 }
 
 .course-playground-window > [data-mem-playground],
