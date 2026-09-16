@@ -56,6 +56,29 @@ const { createTask } = require('../playground-ai-now.js');
 const { aiPracticeSeed } = require('../course-playground-guide.js');
 const lessonSequence = ['start-a-grounded-task','bring-a-source','ask-for-an-evidence-brief','research-what-is-missing','save-the-result'];
 const scenarioSequence = ['ai-context','ai-source','ai-evidence','ai-research','ai-save'];
+test('completion destinations follow published lesson order and only auto-start available simulations',()=>{
+  const docs=JSON.parse(readFileSync(resolve(__dirname,'..','docs.json'),'utf8'));
+  for(const locale of docs.navigation.languages){
+    const pages=locale.tabs.find(tab=>tab.tab==='AI Now').pages;
+    for(let i=1;i<pages.length;i++){
+      const page=readFileSync(resolve(__dirname,'..',pages[i]+'.mdx'),'utf8');
+      const href=page.match(/data-course-guide-confirm-href="([^"]+)"/)[1];
+      const next=i<pages.length-1;
+      const expected=next?'/'+pages[i+1]+'#simulation':'/'+pages[0].replace(/\/index$/,'');
+      assert.equal(href,expected);
+      if(next){
+        const target=readFileSync(resolve(__dirname,'..',pages[i+1]+'.mdx'),'utf8');
+        assert.match(target,/data-course-playground-guide=""/);
+      }
+      const label=page.match(/data-course-guide-confirm-label="([^"]+)"/)[1];
+      assert.equal(label,locale.language==='zh'?(next?'下一课':'返回课程'):(next?'Next lesson':'Back to course'));
+      const message=page.match(/data-course-guide-done-message="([^"]+)"/)[1];
+      const hints=[...page.matchAll(/data-course-guide-hint-\d+="([^"]+)"/g)];
+      assert.equal(hints.at(-1)[1],message);
+      assert.ok(page.includes('data-course-guide-done role="status" hidden>'+message+'</p>'));
+    }
+  }
+});
 for (const lang of ['en','zh']) {
   test(lang+': each lesson resumes the cumulative earlier conversation without completing current work',()=>{
     const prompts=lessonSequence.map(slug=>{

@@ -33,7 +33,8 @@ Each scenario supplies its fill step, completion mode (`cleared`, `answer`, or `
 ## Completion and asset changes
 
 - After the final action, highlight the changed element and show `.course-playground-done` after the guide's delay (currently five seconds). This is simulation behavior, not a product response-time promise.
-- The localized confirm button only dismisses the dialog so practice can continue. The Open Nowledge Mem button closes the simulation, attempts `nowledgemem://`, and uses the configured web URL in a new tab only if the app did not take focus.
+- `data-course-guide-confirm-href` makes the localized completion button navigate to the configured page. AI Now lessons 1–4 say **Next lesson** / **下一课** and use the next lesson's locale-specific URL with `#simulation`; after its Playground is ready, the guide consumes this fragment, prepares cumulative context, and opens practice once. Below 1024px it does not auto-open. The final lesson says **Back to course** / **返回课程** and links to the overview without auto-start. Completion copy, final hints, and inline status stay synchronized.
+- Exercises without a completion URL keep the dismiss-only confirm action. AI Now dialogs keep the option to practise in the real app alongside the next lesson or course overview. Open Nowledge Mem closes the simulation, attempts `nowledgemem://`, and uses the configured web URL in a new tab only if the app did not take focus.
 - When changing `course-playground-guide.js`, bump its `?v=` query in every English/Chinese lesson that loads it. Find current callers with `rg`, rather than keeping a version or exhaustive page list in instructions.
 - Verify affected scenarios, hint fill clicks, close/restore, sidebar restoration, both locales and color modes, and desktop/mobile boundaries. Keep root asset locations unchanged when promoting a demo host page.
 
