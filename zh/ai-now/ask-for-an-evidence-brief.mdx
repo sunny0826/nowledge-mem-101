@@ -48,7 +48,7 @@ import Playground from "/snippets/playground.mdx"
 
 ## 先在模拟中练习
 
-在电脑浏览器中，前往下方[轮到你了](#轮到你了)，点击**开始模拟**。跟随弹窗提示发送请求、阅读回答并核对结果。每课会准备好虚构的 Atlas 材料，无需先配置模型。
+在电脑浏览器中进入本课后，模拟会自动打开。跟随弹窗提示发送请求、阅读回答并核对结果。关闭后，可在下方[轮到你了](#轮到你了)点击**开始模拟**重新打开。每课会准备好虚构的 Atlas 材料，无需先配置模型。
 
 <Note>
 模拟在浏览器本地运行，使用预设回答，不调用 AI 或联网搜索；刷新后练习重置。手机端可先阅读步骤，交互练习请使用电脑浏览器。
@@ -60,12 +60,13 @@ import Playground from "/snippets/playground.mdx"
 
 ## 轮到你了
 
-点击**开始模拟**，跟随弹窗提示练习。熟悉流程后，再按照下方真实应用步骤，在 Nowledge Mem 中处理自己的材料。
+跟随自动打开的模拟弹窗提示练习。熟悉流程后，再按照下方真实应用步骤，在 Nowledge Mem 中处理自己的材料。
 
-<script src="/course-playground-guide.js?v=25" defer></script>
+<script src="/course-playground-guide.js?v=26" defer></script>
 
 <div className="course-playground-workflow"
   data-course-playground-guide=""
+  data-course-guide-autostart="true"
   data-course-guide-scenario="ai-evidence"
   data-course-guide-current="1"
   data-course-playground-open="false"
@@ -128,7 +129,7 @@ import Playground from "/snippets/playground.mdx"
   </Step>
 </Steps>
 
-  <p className="course-playground-workflow-status" data-course-guide-ready>准备好后开始模拟；提示会出现在弹窗中。</p>
+  <p className="course-playground-workflow-status" data-course-guide-ready>跟随弹窗提示练习；关闭后可重新打开模拟。</p>
   <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>本课已完成，请进入下一课。也可以继续在 Nowledge Mem 中尝试。</p>
   <div id="course-playground-ai-3-zh" className="course-playground-window" data-course-playground-window role="region" aria-label="AI Now 交互练习" aria-hidden="true">
     <Playground />

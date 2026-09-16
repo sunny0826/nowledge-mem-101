@@ -613,6 +613,7 @@
 
   function startPractice(state) {
     if (window.innerWidth < 1024) return;
+    state.autoStarted = true;
     if (state.step > spec(state).steps) {state.step = 1;state.aiSeeded=false;}
     hideDoneModal(state);
     clearTimeout(state.doneTimer);
@@ -621,11 +622,13 @@
   }
 
   function autoStartPractice(state) {
-    if (window.location.hash !== "#simulation" || window.innerWidth < 1024) return;
+    var handoff = window.location.hash === "#simulation";
+    var onEntry = state.rootEl.getAttribute("data-course-guide-autostart") === "true" && !state.autoStarted;
+    if ((!handoff && !onEntry) || window.innerWidth < 1024) return;
     var mount = state.windowEl.querySelector('[data-mem-playground]');
     if (!mount || !mount.mpAPI || (spec(state).actions && !mount.hasAttribute('data-mp-ai-ready'))) return;
-    // Consume the handoff once, after the app can receive prerequisite context.
-    window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
+    // Consume explicit handoffs only; preserve ordinary section links on entry.
+    if (handoff) window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
     startPractice(state);
     var target = targetForStep(state, state.step);
     if (target) target.focus();
