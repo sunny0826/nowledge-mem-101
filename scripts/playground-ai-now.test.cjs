@@ -70,7 +70,7 @@ test('English and Chinese lessons expose identical simulation controls and autom
   for(const slug of lessonSequence){
     const en=contract(readFileSync(resolve(__dirname,'..','ai-now',slug+'.mdx'),'utf8'));
     const zh=contract(readFileSync(resolve(__dirname,'..','zh/ai-now',slug+'.mdx'),'utf8'));
-    assert.equal(en.autoStart,'true');
+    assert.equal(en.autoStart,slug==='start-a-grounded-task'?'false':'true');
     assert.deepEqual(en,zh,slug+' has the same interaction contract in both locales');
   }
 });

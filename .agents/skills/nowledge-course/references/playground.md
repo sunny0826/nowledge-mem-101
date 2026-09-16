@@ -21,7 +21,7 @@ Each scenario supplies its fill step, completion mode (`cleared`, `answer`, or `
 
 ## Interaction invariants
 
-- AI Now lessons in both locales set `data-course-guide-autostart="true"` and open once on desktop entry after the app is ready, including direct visits and language switches. Closing the window keeps it closed until the learner reopens it; other courses remain on demand. Highlight the current existing control using `data-course-guide-target` and the localized `.course-playground-hint`; do not restore historical connecting lines.
+- AI Now lesson 1 (`start-a-grounded-task`) sets `data-course-guide-autostart="false"` in both locales and waits for the learner to click Start the simulation. Lessons 2–5 set it to `true` and open once on desktop entry after the app is ready, including direct visits and language switches. Closing the window keeps it closed until the learner reopens it; other courses remain on demand. Highlight the current existing control using `data-course-guide-target` and the localized `.course-playground-hint`; do not restore historical connecting lines.
 - Keep the fill button inside the fill-step hint, using the root fill attributes. Cache hint content by key: replacing the button between mousedown and mouseup swallows clicks.
 - Only the red titlebar dot closes the window. Yellow and green dots are decorative (`aria-hidden`, no interactive role). Do not wire minimize/maximize to them.
 - Programmatic minimization may leave the icon-only `.course-playground-mini` restore button. The close glyph uses CSS `::after` with the `.mp-dots` ancestor for specificity; colors use `--course-dot-*`.
