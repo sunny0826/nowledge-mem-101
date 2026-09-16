@@ -52,6 +52,41 @@ for(const lang of ['en','zh']) {
 
 const { readFileSync } = require('node:fs');
 const { resolve } = require('node:path');
+const { createTask } = require('../playground-ai-now.js');
+const { aiPracticeSeed } = require('../course-playground-guide.js');
+const lessonSequence = ['start-a-grounded-task','bring-a-source','ask-for-an-evidence-brief','research-what-is-missing','save-the-result'];
+const scenarioSequence = ['ai-context','ai-source','ai-evidence','ai-research','ai-save'];
+for (const lang of ['en','zh']) {
+  test(lang+': each lesson resumes the cumulative earlier conversation without completing current work',()=>{
+    const prompts=lessonSequence.map(slug=>{
+      const page=readFileSync(resolve(__dirname,'..',lang==='zh'?'zh':'','ai-now',slug+'.mdx'),'utf8');
+      return page.match(/data-course-guide-fillable-\d+="([^"]+)"/)[1];
+    });
+    const kinds=['context','source','brief','research'];
+    scenarioSequence.forEach((scenario,index)=>{
+      const f=setup(lang), seed=aiPracticeSeed(scenario,lang);
+      if(seed.source)f.setSource({status:'indexed',text:fixtures[lang].source});
+      const task=createTask(lang,f.store,seed.history);
+      assert.equal(task.messages.length,index*2);
+      assert.deepEqual(task.messages.filter(m=>m.role==='user').map(m=>m.text),prompts.slice(0,index),'history follows the actual earlier lesson prompts');
+      assert.deepEqual(task.messages.filter(m=>m.role==='assistant').map(m=>m.kind),kinds.slice(0,index));
+      for(const m of task.messages)for(const ref of m.refs||[]){
+        assert.ok(ref==='atlas-source'?f.store.source():f.memories.has(ref),'historical citations resolve');
+      }
+      assert.equal(f.memories.has('atlas-result'),false,'no result is saved before the learner completes lesson 5');
+      assert.equal(task.research,false,'prior research does not leave Research on for drafting');
+      assert.deepEqual(createTask(lang,f.store,seed.history).messages,task.messages,'replay restores a stable starting conversation');
+      if(index===1)assert.equal(f.store.source(),null,'lesson 2 still requires importing the source');
+      if(index===4){
+        assert.match(task.messages.at(-1).text,lang==='en'?/No web search has run/:/未执行联网搜索/);
+        assert.equal(task.model.send(prompts[4],false).kind,'draft','continue the same task with a draft');
+        const fresh=createTask(lang,f.store);
+        assert.equal(fresh.messages.length,0);
+        assert.equal(fresh.model.send(lang==='en'?'Save the version we just checked':'将刚刚核对的版本保存为记忆',false).kind,'missing','New Task does not inherit the draft');
+      }
+    });
+  });
+}
 for (const lang of ['en','zh']) {
   test(lang+': the actual final-lesson prompts save, recall, then reread the original source',()=>{
     const text=readFileSync(resolve(__dirname,'..',lang==='zh'?'zh':'','ai-now/save-the-result.mdx'),'utf8');

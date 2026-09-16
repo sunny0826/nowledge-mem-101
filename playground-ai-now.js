@@ -104,6 +104,19 @@
     };
   }
 
+  // Rebuild a local conversation from caller-provided prerequisite turns.
+  // The same model instance continues the task; hydration emits no live actions.
+  function createTask(lang, store, history) {
+    var task = {title:COPY[lang].newTask,messages:[],research:false,input:"",model:createModel(lang,store)};
+    (history || []).forEach(function(turn) {
+      var reply = task.model.send(turn.text, !!turn.research);
+      if (!reply) return;
+      if (!task.messages.length) task.title=turn.text.slice(0,42);
+      task.messages.push({role:'user',text:turn.text},Object.assign({role:'assistant'},reply));
+    });
+    return task;
+  }
+
   // Delay all model work (including writes) until completion. Cancellation and
   // detached mounts must never produce a stale reply or a late memory save.
   function startResponse(options) {
@@ -156,9 +169,10 @@
       current.pending.stopped=true;
       current.pending=null;
     }
-    function newTask() {
+    function newTask(history) {
       cancelPending();
-      current = {id:++taskId,title:C.newTask,messages:[],research:false,input:"",model:createModel(lang, modelStore)};
+      current = createTask(lang,modelStore,history);
+      current.id=++taskId;
       tasks.unshift(current); input.value=""; send.disabled=true; render();
     }
     function render() {
@@ -246,7 +260,7 @@
       if(memory("atlas-result"))state.counts.memories-=1;
       state.mem.list=state.mem.list.filter(function(m){return m.id!=="atlas-result";});
       state.memories=state.memories.filter(function(m){return m.id!=="atlas-result";});
-      tasks=[];newTask();api.renderLibrary();api.rerender();api.setView("timeline");
+      tasks=[];newTask(options.history);api.renderLibrary();api.rerender();api.setView("timeline");
       emit("seeded");
     });
     newTask();
@@ -260,7 +274,7 @@
     });
     emit("ai-ready");
   }
-  if (typeof module !== "undefined" && module.exports) module.exports={createModel:createModel,fixtures:FIXTURES,startResponse:startResponse};
+  if (typeof module !== "undefined" && module.exports) module.exports={createModel:createModel,createTask:createTask,fixtures:FIXTURES,startResponse:startResponse};
   if (typeof window === "undefined") return;
   if (window.MemPlaygroundAI) return;
   window.MemPlaygroundAI={init:init};
