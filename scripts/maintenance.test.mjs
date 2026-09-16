@@ -68,7 +68,7 @@ function previewFixture(t) {
   });
   write(repo, "docs.json", JSON.stringify({ navigation: { languages } }));
   write(repo, ".mintignore", "drafts/\n");
-  for (const file of ["custom.css", "course-playground-guide.js", "mem-video-loading.css", "mem-video-loading.js", "playground.css", "playground.js"]) write(repo, file, "");
+  for (const file of ["custom.css", "course-playground-guide.js", "mem-video-loading.css", "mem-video-loading.js", "playground.css", "playground.js", "playground-ai-now.js"]) write(repo, file, "");
   write(root, "bin/mint", `#!/usr/bin/env node
 const fs = require('node:fs');
 const args = process.argv.slice(2);

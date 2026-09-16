@@ -31,7 +31,8 @@ Read for lesson content, metadata, cards, or course styling. Publication states 
 - These classes are overview-only: `.course-intro`, `.course-cta`, `.course-grid`, and `.course-card*`. Do not reuse them inside lesson bodies.
 - Render course-level progression sequences (the Capture → Recall → Connect → Reuse loop, a course's workflow stages, and similar step flows) with the `.learning-stages` component, not a fenced `text` code block. One `.learning-stage` per step; the grid auto-sizes to the stage count — do not hardcode a column count. Localize the `aria-label` (`Learning stages`, `Workflow stages`, `学习阶段`, `工作流程`). Course overviews mark the first available stage with `.learning-stage-active`.
 - Every published lesson repeats its course's stage sequence directly under `.course-meta` as a progress indicator. Mark earlier stages `.learning-stage-done` (blue fill with a check and blue connectors), the lesson's own stage `.learning-stage-active` (blue fill) with `aria-current="step"`, and leave later stages unstyled. Localize the `aria-label` as `Course progress` / `课程进度`.
-- End an available lesson's **Next lesson** section with `<Card title="..." horizontal href="...">`, which the global `.card` rules restyle to match the course cards. When the next lesson is not yet available, use the muted status line instead of a link or badge:
+- AI Now uses Mintlify's bottom previous/next navigation for lesson progression. Do not add a duplicate **Next lesson** heading or card in the article; the final lesson may retain its distinct back-to-course link.
+- For courses with an in-article progression section, end an available lesson's **Next lesson** section with `<Card title="..." horizontal href="...">`, which the global `.card` rules restyle to match the course cards. When the next lesson is not yet available, use the muted status line instead of a link or badge:
 
   ```mdx
   <p className="course-status-line"><i aria-hidden="true"></i>Coming soon</p>

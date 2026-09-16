@@ -1,0 +1,148 @@
+---
+title: 开始一个有依据的任务
+description: 让 AI Now 先找出与当前判断有关的已保存知识。
+sidebarTitle: 1. 开始有依据的任务
+icon: circle-play
+mode: "wide"
+---
+
+import Playground from "/snippets/playground.mdx"
+
+
+<div className="course-meta" aria-label="课程信息">
+  <span><Icon icon="book-open" /> AI Now · 第 1 课 / 共 5 课</span>
+  <span><Icon icon="clock-3" /> 约 5 分钟</span>
+  <span><Icon icon="user-round" /> 进阶</span>
+</div>
+
+<div className="learning-stages learning-stages-progress" aria-label="课程进度">
+  <div className="learning-stage learning-stage-active" aria-current="step">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">提出问题</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">加入来源</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">核查证据</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">调查缺口</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">保存结果</span>
+  </div>
+</div>
+
+在 Nowledge Mem 的 AI Now 中，围绕自己的工作提出一个问题。请求建议前，先检查它找到了哪些已保存的事实和约束。
+
+## 你将完成什么
+
+<Check>
+  在 AI Now 中开始一个真实任务，并确认它找到了与问题相关的已保存上下文。
+</Check>
+
+## 先在模拟中练习
+
+在电脑浏览器中，前往下方[轮到你了](#轮到你了)，点击**开始模拟**。跟随弹窗提示发送请求、阅读回答并核对结果。每课会准备好虚构的 Atlas 材料，无需先配置模型。
+
+<Note>
+模拟在浏览器本地运行，使用预设回答，不调用 AI 或联网搜索；刷新后练习重置。手机端可先阅读步骤，交互练习请使用电脑浏览器。
+</Note>
+
+## 在真实应用中练习前
+
+按照[模型提供商指南](https://mem.nowledge.co/zh/docs/llm-providers)，为 AI Now 配置并测试支持工具调用的模型，可以使用受支持的本地或托管提供商。保持 Mem 服务器运行。如果连接的是远程 Mem 服务器，AI Now 使用该服务器上的模型配置。
+
+选择一项真实判断，并准备至少一条相关记忆。使用课程案例练习时，先把以下虚构背景粘贴到 **Timeline**，按 Enter 保存：
+
+```text
+Atlas 计划背景 — 虚构练习场景
+
+目标：判断是否在下个季度进行一次跨团队计划评审。
+范围：用现有季度记录检查未来十二个月的依赖。
+本次不决定：今后的评审频率。
+现有做法：各团队已经进行季度复盘。
+约束：复用现有复盘记录，避免增加一套汇报流程。
+待回答：扩大复盘范围，能否更早发现跨团队依赖？
+状态：试行尚未获批。
+```
+
+## 轮到你了
+
+点击**开始模拟**，跟随弹窗提示练习。熟悉流程后，再按照下方真实应用步骤，在 Nowledge Mem 中处理自己的材料。
+
+<script src="/course-playground-guide.js?v=24" defer></script>
+
+<div className="course-playground-workflow"
+  data-course-playground-guide=""
+  data-course-guide-scenario="ai-context"
+  data-course-guide-current="1"
+  data-course-playground-open="false"
+  data-course-guide-replay-label="再练一次"
+  data-course-guide-close-label="关闭模拟"
+  data-course-guide-mini-label="Playground"
+  data-course-guide-fill-label="填入示例"
+  data-course-guide-done-message="背景已核对。请到真实应用中用自己的记忆练习。"
+  data-course-guide-open-mem-label="打开 Nowledge Mem"
+  data-course-guide-confirm-label="知道了"
+  data-course-guide-mem-url="https://mem.nowledge.co"
+  data-course-guide-hint-1="打开 AI Now。虚构的 Atlas 背景记忆已准备好。"
+  data-course-guide-hint-2="请求找回已保存的计划背景。"
+  data-course-guide-hint-3="发送问题。"
+  data-course-guide-hint-4="打开引用的记忆，对照限制条件。"
+  data-course-guide-hint-5="背景已核对。请到真实应用中用自己的记忆练习。"
+  data-course-guide-fillable-2="在 Nowledge Mem 中搜索已保存的 Atlas 计划相关记忆。我们正在考虑下个季度进行一次跨团队计划评审，检查未来十二个月的依赖，本次不决定定期评审安排。列出相关事实、约束和待定问题，并说明各自来自哪些记忆。只使用已保存的知识，先不要搜索网络或给出建议。如果缺少上下文，请说明。">
+  <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-ai-1-zh" aria-expanded="false">
+    <Icon icon="panel-right-open" /> <span data-course-guide-open-label>开始模拟</span>
+  </button>
+
+<Steps>
+  <Step title="打开 AI Now">
+    <span className="course-playground-step-anchor" data-course-guide-source="1" aria-hidden="true"></span>
+
+    从 Mem 侧边栏打开 **AI Now**，开始新对话。第 2–5 课继续使用这段对话。如果使用了 Spaces，请选中存放任务记忆的分区；否则保持 Default 即可。
+  </Step>
+  <Step title="提出与你的知识有关的问题">
+    <span className="course-playground-step-anchor" data-course-guide-source="2" aria-hidden="true"></span>
+    <span className="course-playground-step-anchor" data-course-guide-source="3" aria-hidden="true"></span>
+
+    问题需要包含一项具体判断和时间范围。例如：
+
+    ```text
+    在 Nowledge Mem 中搜索已保存的 Atlas 计划相关记忆。我们正在考虑下个季度进行一次跨团队计划评审，检查未来十二个月的依赖，本次不决定定期评审安排。列出相关事实、约束和待定问题，并说明各自来自哪些记忆。只使用已保存的知识，先不要搜索网络或给出建议。如果缺少上下文，请说明。
+    ```
+  </Step>
+  <Step title="继续前先检查上下文">
+    <span className="course-playground-step-anchor" data-course-guide-source="4" aria-hidden="true"></span>
+
+    打开摘要所依据的记忆。使用练习案例时，确认它保留了十二个月的计划范围、已有季度复盘、避免额外汇报的约束，以及试行尚未获批的状态。不要把计划覆盖一年改写成每年开一次会。
+
+    如果遗漏了记忆，输入 `@`，找到并选中该记忆，再让 AI Now 修正上下文摘要。如果完全找不到它，先确认记忆已经保存在当前 Space 中。
+  </Step>
+</Steps>
+
+  <p className="course-playground-workflow-status" data-course-guide-ready>准备好后开始模拟；提示会出现在弹窗中。</p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>背景已核对。请到真实应用中用自己的记忆练习。</p>
+  <div id="course-playground-ai-1-zh" className="course-playground-window" data-course-playground-window role="region" aria-label="AI Now 交互练习" aria-hidden="true">
+    <Playground />
+  </div>
+</div>
+
+## 你应该看到
+
+<Check>
+  AI Now 说明了所用记忆，并保留目标、约束和待定状态。留下核对过的摘要，下一课继续阅读来源资料。
+</Check>
+
+## 为什么这很重要
+
+先核对保存的背景，能让任务建立在自己的工作经历上，也比泛泛地征求建议更容易得到明确的调查问题。
+
+## 深入了解
+
+阅读 Nowledge Mem Docs 的 [AI Now](https://mem.nowledge.co/zh/docs/ai-now) 页面，了解配置和上下文行为。

@@ -146,7 +146,7 @@
         ["home", "Timeline", "timeline"],
         ["lightbulb", "Memories", "memories"],
         ["msgtext", "Threads", "threads"],
-        ["asterisk", "AI Now", null],
+        ["asterisk", "AI Now", "ai-now"],
         ["share", "Graph", null],
         ["library", "Library", "library"],
         ["network", "Knowledge Tree", null],
@@ -533,11 +533,12 @@
       libView: {
         title: "Library",
         badge: "Remote",
-        subtitle: "Documents and sources Mem can search inside.",
+        subtitle: "A living wiki, derived from everything you save.",
+        tabs: ["Wiki", "Artifacts", "Entities", "Crystals"], search: "Search library…", files: "Files", urlType: "URL", noteType: "Notes", allTypes: "All types", allStatus: "All statuses", newest: "Newest", oldest: "Oldest", selectDoc: "Select a document", selectHint: "Choose a source from the list to read it", noResults: "No matching sources", sources: "sources", back: "Back", unsupported: "Not available in this simulation",
         importBtn: "Import document",
         importEvent: "Document imported",
         indexing: "Indexing…",
-        indexed: "Indexed",
+        indexed: "Searchable",
         importDoc: {
           name: "Atlas architecture review.pdf",
           kind: "PDF",
@@ -576,7 +577,7 @@
         ["home", "时间线", "timeline"],
         ["lightbulb", "记忆", "memories"],
         ["msgtext", "会话记录", "threads"],
-        ["asterisk", "AI Now", null],
+        ["asterisk", "AI Now", "ai-now"],
         ["share", "知识图谱", null],
         ["library", "资料库", "library"],
         ["network", "知识树", null],
@@ -933,11 +934,12 @@
       libView: {
         title: "资料库",
         badge: "远程",
-        subtitle: "Mem 可以检索内容的文档与资料。",
+        subtitle: "由你保存的每一份资料实时派生而成的 Wiki。",
+        tabs: ["Wiki", "产物", "实体", "结晶"], search: "搜索资料库…", files: "文件", urlType: "URL", noteType: "笔记", allTypes: "全部类型", allStatus: "全部状态", newest: "最新", oldest: "最早", selectDoc: "选择一个文档", selectHint: "从列表中选择一份来源，查看原文", noResults: "没有匹配的来源", sources: "个来源", back: "返回", unsupported: "此模拟暂不支持",
         importBtn: "导入文档",
         importEvent: "已导入文档",
         indexing: "索引中…",
-        indexed: "已索引",
+        indexed: "可搜索",
         importDoc: {
           name: "Atlas 架构评审.pdf",
           kind: "PDF",
@@ -1965,66 +1967,33 @@
 
   function libPaneHtml(L) {
     var V = L.libView;
-    return (
-      '<div class="mp-pane" data-mp-pane="library" hidden>' +
-      '<div class="mp-head"><span class="mp-side-toggle" aria-hidden="true">' +
-      icon("panelleft") +
-      '</span><h2 class="mp-title">' +
-      esc(V.title) +
-      '</h2><span class="mp-space-pill">' +
-      icon("broadcast") +
-      esc(V.badge) +
-      "</span></div>" +
-      '<div class="mp-subtitle">' +
-      esc(V.subtitle) +
-      "</div>" +
-      '<div class="mp-mem-bar">' +
-      '<span class="mp-mem-bar-gap"></span>' +
-      '<button type="button" class="mp-mem-btn" data-mp-lib-import>' +
-      icon("upload") +
-      "<span>" +
-      esc(V.importBtn) +
-      "</span></button>" +
-      "</div>" +
-      '<div data-mp-lib-list></div>' +
-      "</div>"
-    );
+    return '<div class="mp-pane mp-library" data-mp-pane="library" hidden>' +
+      '<div class="mp-head"><span class="mp-side-toggle" aria-hidden="true">'+icon("panelleft")+'</span><h2 class="mp-title">'+esc(V.title)+'</h2><span class="mp-space-pill">'+icon("broadcast")+esc(V.badge)+'</span></div><div class="mp-subtitle">'+esc(V.subtitle)+'</div>' +
+      '<div class="mp-lib-layout"><aside class="mp-lib-sidebar"><div class="mp-lib-tools"><div class="mp-lib-tabs" role="tablist" aria-label="'+esc(V.title)+'">'+V.tabs.map(function(tab,i){return '<button type="button" role="tab" aria-selected="'+(i===1)+'"'+(i===1?'':' disabled title="'+esc(V.unsupported)+'"')+'>'+esc(tab)+'</button>';}).join('')+'</div>' +
+      '<div class="mp-lib-searchbar"><label class="mp-lib-search">'+icon("search")+'<input type="search" data-mp-lib-q aria-label="'+esc(V.search)+'" placeholder="'+esc(V.search)+'" /></label><button type="button" class="mp-lib-add" data-mp-lib-import aria-label="'+esc(V.importBtn)+'" title="'+esc(V.importBtn)+'">'+icon("plus")+'</button></div>' +
+      '<div class="mp-lib-filters"><select data-mp-lib-type aria-label="'+esc(V.allTypes)+'"><option value="all">'+esc(V.allTypes)+'</option><option value="file">'+esc(V.files)+'</option><option value="url">'+esc(V.urlType)+'</option><option value="note">'+esc(V.noteType)+'</option></select><select data-mp-lib-status-filter aria-label="'+esc(V.allStatus)+'"><option value="all">'+esc(V.allStatus)+'</option><option value="indexed">'+esc(V.indexed)+'</option><option value="indexing">'+esc(V.indexing)+'</option></select><select data-mp-lib-sort aria-label="'+esc(V.newest)+'"><option value="newest">'+esc(V.newest)+'</option><option value="oldest">'+esc(V.oldest)+'</option></select></div></div>' +
+      '<div class="mp-lib-scroll"><details open><summary>'+esc(V.files)+' <span data-mp-lib-group-count></span></summary><div data-mp-lib-list></div></details></div><div class="mp-lib-footer" data-mp-lib-count aria-live="polite"></div></aside><section class="mp-lib-detail" data-mp-lib-detail aria-label="'+esc(V.selectDoc)+'"></section></div></div>';
   }
 
-  function libRowHtml(L, doc) {
-    var V = L.libView;
-    var indexing = doc.status !== "indexed";
-    return (
-      '<div class="mp-thr-row mp-lib-row">' +
-      '<span class="mp-thr-avatar mp-lib-icon">' +
-      icon("note") +
-      "</span>" +
-      '<div class="mp-thr-main">' +
-      '<h3 class="mp-thr-title">' +
-      esc(doc.name) +
-      '</h3><div class="mp-thr-meta">' +
-      icon("library") +
-      "<span>" +
-      esc(doc.kind) +
-      "</span><em>•</em><span>" +
-      esc(doc.size) +
-      "</span></div></div>" +
-      '<span class="mp-lib-status' +
-      (indexing ? " mp-lib-indexing" : "") +
-      '" data-mp-lib-status="' +
-      (indexing ? "indexing" : "indexed") +
-      '">' +
-      esc(indexing ? V.indexing : V.indexed) +
-      "</span></div>"
-    );
+  function libRowHtml(L, doc, index, selected) {
+    var V=L.libView, indexing=doc.status!=="indexed";
+    return '<button type="button" class="mp-lib-row'+(selected?' mp-on':'')+'" data-mp-lib-open="'+index+'" aria-pressed="'+selected+'"'+(indexing?' disabled':'')+'><span class="mp-lib-icon">'+icon("note")+'</span><span class="mp-lib-rowmain"><span class="mp-lib-name">'+esc(doc.name)+'</span><span class="mp-lib-excerpt">'+esc(doc.excerpt||'')+'</span><span class="mp-lib-meta"><span class="mp-lib-status'+(indexing?' mp-lib-indexing':'')+'" data-mp-lib-status="'+(indexing?'indexing':'indexed')+'">'+esc(indexing?V.indexing:V.indexed)+'</span><span>· '+esc(doc.kind)+' · '+esc(doc.size)+'</span></span></span></button>';
   }
 
   function renderLibList(mount, L, state) {
-    mount.querySelector("[data-mp-lib-list]").innerHTML = state.library.list
-      .map(function (doc) {
-        return libRowHtml(L, doc);
-      })
-      .join("");
+    var V=L.libView, lib=state.library;
+    var q=mount.querySelector('[data-mp-lib-q]').value.toLowerCase().trim();
+    var type=mount.querySelector('[data-mp-lib-type]').value;
+    var status=mount.querySelector('[data-mp-lib-status-filter]').value;
+    var rows=lib.list.map(function(doc,index){return {doc:doc,index:index};}).filter(function(row){return (!q||(row.doc.name+' '+row.doc.excerpt).toLowerCase().indexOf(q)!==-1)&&(type==='all'||(row.doc.kind==='URL'?'url':row.doc.kind==='Note'?'note':'file')===type)&&(status==='all'||row.doc.status===status);});
+    if(mount.querySelector('[data-mp-lib-sort]').value==='oldest') rows.reverse();
+    mount.querySelector('[data-mp-lib-list]').innerHTML=rows.length?rows.map(function(row){return libRowHtml(L,row.doc,row.index,lib.selected===row.doc);}).join(''):'<p class="mp-lib-noresults">'+esc(V.noResults)+'</p>';
+    mount.querySelector('[data-mp-lib-group-count]').textContent=rows.length;
+    mount.querySelector('[data-mp-lib-count]').textContent=rows.length+' '+V.sources;
+    var doc=lib.selected;
+    if(lib.list.indexOf(doc)===-1) doc=lib.selected=null;
+    mount.querySelector('[data-mp-lib-detail]').innerHTML=doc?'<div class="mp-lib-detailhead"><span class="mp-lib-icon">'+icon('note')+'</span><div><h3>'+esc(doc.name)+'</h3><p>'+esc(doc.kind)+' · '+esc(doc.size)+' · '+esc(V.indexed)+'</p></div><button type="button" class="mp-mem-btn" data-mp-lib-back>'+esc(V.back)+'</button></div><div class="mp-lib-tags">'+doc.tags.map(function(tag){return '<span>'+esc(tag)+'</span>';}).join('')+'</div><div class="mp-lib-document">'+esc(doc.text||doc.excerpt)+'</div>':'<div class="mp-lib-empty"><span class="mp-lib-icon">'+icon('note')+'</span><h3>'+esc(V.selectDoc)+'</h3><p>'+esc(V.selectHint)+'</p></div>';
+    mount.querySelector('.mp-lib-layout').classList.toggle('mp-lib-selected',!!doc);
   }
 
   /* --- Mount and wire -------------------------------------------------------- */
@@ -2231,7 +2200,16 @@
       if (main) {
         main.scrollTop = 0;
       }
+      mount.dispatchEvent(new CustomEvent("mp:action", {bubbles:true, detail:{type:"view",kind:view}}));
     }
+
+    mount.querySelector('[data-mp-lib-q]').addEventListener('input',function(){renderLibList(mount,L,state);});
+    ['type','status-filter','sort'].forEach(function(key){mount.querySelector('[data-mp-lib-'+key+']').addEventListener('change',function(){renderLibList(mount,L,state);});});
+    mount.addEventListener('click',function(event){
+      var open=event.target.closest('[data-mp-lib-open]'), back=event.target.closest('[data-mp-lib-back]');
+      if(open&&!open.disabled){state.library.selected=state.library.list[Number(open.getAttribute('data-mp-lib-open'))];renderLibList(mount,L,state);mount.dispatchEvent(new CustomEvent('mp:action',{bubbles:true,detail:{type:'read',kind:'source'}}));}
+      if(back){state.library.selected=null;renderLibList(mount,L,state);mount.dispatchEvent(new CustomEvent('mp:action',{bubbles:true,detail:{type:'back'}}));}
+    });
 
     var memQ = mount.querySelector("[data-mp-mem-q]");
     var memGo = mount.querySelector("[data-mp-mem-go]");
@@ -2429,14 +2407,18 @@
         if (state.library.imported) {
           return;
         }
+        var sample = state.library.sampleDoc || L.libView.importDoc;
+        if (sample.id && state.library.list.some(function (doc) { return doc.id === sample.id; })) return;
         state.library.imported = true;
         var doc = {
-          name: L.libView.importDoc.name,
-          kind: L.libView.importDoc.kind,
-          size: L.libView.importDoc.size,
-          page: L.libView.importDoc.page,
-          excerpt: L.libView.importDoc.excerpt,
-          tags: L.libView.importDoc.tags.slice(),
+          id: sample.id,
+          text: sample.text,
+          name: sample.name,
+          kind: sample.kind,
+          size: sample.size,
+          page: sample.page,
+          excerpt: sample.excerpt,
+          tags: sample.tags.slice(),
           status: "indexing",
         };
         state.library.list.unshift(doc);
@@ -2444,6 +2426,7 @@
         setTimeout(function () {
           doc.status = "indexed";
           renderLibList(mount, L, state);
+          mount.dispatchEvent(new CustomEvent("mp:action", {bubbles:true, detail:{type:"imported",kind:doc.id || "document"}}));
         }, 2500);
         return;
       }
@@ -2458,6 +2441,8 @@
     }
 
     rerenderAll();
+    mount.mpAPI = {mount:mount,state:state,L:L,zh:isZh(),esc:esc,icon:icon,nowHM:nowHM,setView:setView,rerender:rerenderAll,renderLibrary:function(){renderLibList(mount,L,state);}};
+    mount.dispatchEvent(new CustomEvent("mp:ready", {bubbles:true,detail:mount.mpAPI}));
   }
 
   function scan() {

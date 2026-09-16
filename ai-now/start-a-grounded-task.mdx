@@ -1,0 +1,148 @@
+---
+title: "Start a grounded task"
+description: "Begin an AI Now task with a question your saved knowledge can help answer."
+sidebarTitle: "1. Start a grounded task"
+icon: "circle-play"
+mode: "wide"
+---
+
+import Playground from "/snippets/playground.mdx"
+
+
+<div className="course-meta" aria-label="Lesson information">
+  <span><Icon icon="book-open" /> AI Now · Lesson 1 / 5</span>
+  <span><Icon icon="clock-3" /> ~5 min</span>
+  <span><Icon icon="user-round" /> Intermediate</span>
+</div>
+
+<div className="learning-stages learning-stages-progress" aria-label="Course progress">
+  <div className="learning-stage learning-stage-active" aria-current="step">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Question</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Source</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Evidence</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Investigate</span>
+  </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Save</span>
+  </div>
+</div>
+
+Start an AI Now task in Nowledge Mem with one question about your own work. Before asking for a recommendation, check which saved facts and constraints it found.
+
+## What you'll accomplish
+
+<Check>
+  You'll start an AI Now task that identifies the saved context relevant to one real question.
+</Check>
+
+## Learn with the simulation
+
+On a desktop browser, go to [Your turn](#your-turn) and click **Start the simulation**. Follow the popup hints to send a request, read its reply, and check the result. Each lesson prepares its fictional Atlas materials; no model setup is needed.
+
+<Note>
+The simulation runs locally with preset replies. It does not call AI or search the web, and refreshing resets the practice. On mobile, read the steps first and use a desktop browser for the interactive exercise.
+</Note>
+
+## Before practising in the real app
+
+Configure and test a tool-capable model for AI Now using the [LLM Providers guide](https://mem.nowledge.co/docs/llm-providers). You can use a supported local or hosted provider. Keep the Mem server running. If you connect to a remote Mem server, AI Now uses that server's model configuration.
+
+Choose a real decision with at least one relevant saved memory. To practise with the course example, paste this fictional context into **Timeline** and press Enter first:
+
+```text
+Atlas planning context — fictional practice scenario
+
+Goal: decide whether to hold one cross-team planning review next quarter.
+Scope: use existing quarterly notes to check dependencies over the next twelve months.
+Not decided here: how often future reviews should happen.
+Current practice: each team already runs quarterly reviews.
+Constraint: reuse existing review notes; avoid a second reporting process.
+Open question: would a broader review reveal cross-team dependencies earlier?
+Status: no pilot has been approved.
+```
+
+## Your turn
+
+Click **Start the simulation** and follow the popup hints. After practising, use the steps below to repeat the workflow with your own material in Nowledge Mem.
+
+<script src="/course-playground-guide.js?v=24" defer></script>
+
+<div className="course-playground-workflow"
+  data-course-playground-guide=""
+  data-course-guide-scenario="ai-context"
+  data-course-guide-current="1"
+  data-course-playground-open="false"
+  data-course-guide-replay-label="Practise again"
+  data-course-guide-close-label="Close simulation"
+  data-course-guide-mini-label="Playground"
+  data-course-guide-fill-label="Fill the example"
+  data-course-guide-done-message="Context checked. Use your own saved memory in the real app."
+  data-course-guide-open-mem-label="Open Nowledge Mem"
+  data-course-guide-confirm-label="Got it"
+  data-course-guide-mem-url="https://mem.nowledge.co"
+  data-course-guide-hint-1="Open AI Now. The fictional Atlas context is already saved."
+  data-course-guide-hint-2="Ask for the saved planning context."
+  data-course-guide-hint-3="Send the question."
+  data-course-guide-hint-4="Open the cited memory and compare its limits."
+  data-course-guide-hint-5="Context checked. Use your own saved memory in the real app."
+  data-course-guide-fillable-2="Search the saved Atlas planning memories in Nowledge Mem. We are considering one cross-team planning review next quarter, covering dependencies over the next twelve months. We are not deciding a recurring review schedule. List the relevant facts, constraints, and undecided questions, and identify the memories behind them. Use saved knowledge only; do not research the web or recommend a direction yet. Say which context is missing.">
+  <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-ai-1-en" aria-expanded="false">
+    <Icon icon="panel-right-open" /> <span data-course-guide-open-label>Start the simulation</span>
+  </button>
+
+<Steps>
+  <Step title="Open AI Now">
+    <span className="course-playground-step-anchor" data-course-guide-source="1" aria-hidden="true"></span>
+
+    In Mem, open **AI Now** from the sidebar and begin a new conversation. Keep this conversation for lessons 2–5. If you use Spaces, select the one containing your task memories. Otherwise, stay in Default.
+  </Step>
+  <Step title="Ask a question tied to your knowledge">
+    <span className="course-playground-step-anchor" data-course-guide-source="2" aria-hidden="true"></span>
+    <span className="course-playground-step-anchor" data-course-guide-source="3" aria-hidden="true"></span>
+
+    Use a question with a specific decision and time frame. For example:
+
+    ```text
+    Search the saved Atlas planning memories in Nowledge Mem. We are considering one cross-team planning review next quarter, covering dependencies over the next twelve months. We are not deciding a recurring review schedule. List the relevant facts, constraints, and undecided questions, and identify the memories behind them. Use saved knowledge only; do not research the web or recommend a direction yet. Say which context is missing.
+    ```
+  </Step>
+  <Step title="Check the context before moving on">
+    <span className="course-playground-step-anchor" data-course-guide-source="4" aria-hidden="true"></span>
+
+    Open the memories behind the summary. For the practice example, check that it preserves the twelve-month planning scope, existing quarterly reviews, the constraint against extra reporting, and the unapproved status. It must not turn the planning horizon into a yearly meeting schedule.
+
+    If a memory is missing, type `@`, find it, and select it in the conversation. Ask AI Now to revise the context summary. If it cannot find the memory at all, confirm the memory was saved in the current Space.
+  </Step>
+</Steps>
+
+  <p className="course-playground-workflow-status" data-course-guide-ready>Start when ready; practice hints appear in the popup.</p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>Context checked. Use your own saved memory in the real app.</p>
+  <div id="course-playground-ai-1-en" className="course-playground-window" data-course-playground-window role="region" aria-label="AI Now practice" aria-hidden="true">
+    <Playground />
+  </div>
+</div>
+
+## What you should see
+
+<Check>
+  AI Now names the saved context it used and preserves the goal, constraints, and undecided status. Keep this checked summary for the source-reading step.
+</Check>
+
+## Why this matters
+
+Starting with grounded context keeps the task connected to your actual history. It gives you a better question to investigate than a broad request for advice.
+
+## Go deeper
+
+Read [AI Now](https://mem.nowledge.co/docs/ai-now) in the Nowledge Mem Docs for setup and context behavior.

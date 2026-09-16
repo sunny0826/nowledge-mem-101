@@ -9,7 +9,7 @@ just drafts
 just check-drafts
 ```
 
-The preview discovers draft MDX, merges it over a temporary copy of published content, and generates bilingual navigation at final paths such as `/ai-workflow`, `/zh/ai-now`, and `/knowledge-system`. Existing published pages remain available. Mixed courses use their existing tab, ordered by lesson number; fully draft courses get a separate draft-labeled tab.
+The preview discovers draft MDX, merges it over a temporary copy of published content, and generates bilingual navigation at final paths such as `/knowledge-system` and `/zh/knowledge-system`. Existing published pages, including AI Now, remain available. Mixed courses use their existing tab, ordered by lesson number; fully draft courses get a separate draft-labeled tab.
 
 `just check-drafts` uses the same merged site without starting a server. It runs build, link, and accessibility checks, returns the first failure, and removes the temporary site. Root-level `mint` checks exclude the drafts. Select individual checks with `node scripts/preview-drafts.mjs --check validate` or `--check broken-links a11y`.
 
@@ -21,7 +21,9 @@ During preview, changes under `drafts/`, `snippets/`, and shared site assets syn
 | --- | --- | --- |
 | Draft | Under `drafts/`; no production navigation entry | Course progression remains Coming soon / 即将上线; video TODO and script stay in comments |
 | Published text awaiting video | Matching root / `zh/` path, added to `docs.json`, draft tag removed | Sidebar page is reachable; course entry card and previous lesson's next link remain Coming soon / 即将上线; page explains that the demo is pending |
-| Fully available lesson | Published paths and bilingual navigation | Real locale-specific videos embedded; entry card and previous lesson's next link become available |
+| Fully available lesson | Published paths and bilingual navigation | Real locale-specific videos or an explicitly chosen interactive learning path; entry card and previous lesson's next link become available |
+
+AI Now uses guided Playground simulations as its learning path. Its five lessons, course cards, and next links are available without videos or pending-video notices. Earlier recording drafts are archived in `prompts/ai-now-recording-notes.md`, excluded from publication and draft previews by `.mintignore`.
 
 The next-lesson section of any page reflects the next lesson's own state, not the current page's state. A published text page awaiting video is intentionally reachable before its course progression entry is activated.
 
