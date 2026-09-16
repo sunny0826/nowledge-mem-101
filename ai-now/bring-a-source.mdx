@@ -48,7 +48,7 @@ Add one primary source to the AI Now task in Nowledge Mem. Use its exact wording
 
 ## Learn with the simulation
 
-On a desktop browser, go to [Your turn](#your-turn) and click **Start the simulation**. Follow the popup hints to send a request, read its reply, and check the result. Each lesson prepares its fictional Atlas materials; no model setup is needed.
+On desktop, the simulation opens automatically when you enter this lesson. Follow the popup hints to send a request, read its reply, and check the result. If you close it, click **Start the simulation** under [Your turn](#your-turn) to reopen it. Each lesson prepares its fictional Atlas materials; no model setup is needed.
 
 <Note>
 The simulation runs locally with preset replies. It does not call AI or search the web, and refreshing resets the practice. On mobile, read the steps first and use a desktop browser for the interactive exercise.
@@ -60,12 +60,13 @@ Continue the lesson 1 conversation with its checked context summary. Choose a so
 
 ## Your turn
 
-Click **Start the simulation** and follow the popup hints. After practising, use the steps below to repeat the workflow with your own material in Nowledge Mem.
+Follow the hints in the automatically opened simulation. After practising, use the steps below to repeat the workflow with your own material in Nowledge Mem.
 
-<script src="/course-playground-guide.js?v=24" defer></script>
+<script src="/course-playground-guide.js?v=26" defer></script>
 
 <div className="course-playground-workflow"
   data-course-playground-guide=""
+  data-course-guide-autostart="true"
   data-course-guide-scenario="ai-source"
   data-course-guide-current="1"
   data-course-playground-open="false"
@@ -73,9 +74,10 @@ Click **Start the simulation** and follow the popup hints. After practising, use
   data-course-guide-close-label="Close simulation"
   data-course-guide-mini-label="Playground"
   data-course-guide-fill-label="Fill the example"
-  data-course-guide-done-message="Source checked. No extra reporting was approved."
+  data-course-guide-done-message="Lesson complete. Continue to the next lesson, or try it in Nowledge Mem."
   data-course-guide-open-mem-label="Open Nowledge Mem"
-  data-course-guide-confirm-label="Got it"
+  data-course-guide-confirm-label="Next lesson"
+  data-course-guide-confirm-href="/ai-now/ask-for-an-evidence-brief#simulation"
   data-course-guide-mem-url="https://mem.nowledge.co"
   data-course-guide-hint-1="Open Library. The fictional interview file is ready to import."
   data-course-guide-hint-2="Import the sample file and wait for indexing."
@@ -85,7 +87,7 @@ Click **Start the simulation** and follow the popup hints. After practising, use
   data-course-guide-hint-6="Ask AI Now to read the interview file."
   data-course-guide-hint-7="Send the source-reading request."
   data-course-guide-hint-8="Open the cited source and check Interview B."
-  data-course-guide-hint-9="Source checked. No extra reporting was approved."
+  data-course-guide-hint-9="Lesson complete. Continue to the next lesson, or try it in Nowledge Mem."
   data-course-guide-fillable-6="Find and read atlas-planning-interviews.md in Library alongside the Atlas planning memories already found. First identify the document and its sections. Then list statements relevant to holding one cross-team planning review of the next twelve months, citing the interview heading for each. Separate what the notes say from your interpretation. Use only these sources; if you cannot read the file, say so.">
   <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-ai-2-en" aria-expanded="false">
     <Icon icon="panel-right-open" /> <span data-course-guide-open-label>Start the simulation</span>
@@ -141,8 +143,8 @@ Click **Start the simulation** and follow the popup hints. After practising, use
   </Step>
 </Steps>
 
-  <p className="course-playground-workflow-status" data-course-guide-ready>Start when ready; practice hints appear in the popup.</p>
-  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>Source checked. No extra reporting was approved.</p>
+  <p className="course-playground-workflow-status" data-course-guide-ready>Follow the popup hints; reopen the simulation if you closed it.</p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>Lesson complete. Continue to the next lesson, or try it in Nowledge Mem.</p>
   <div id="course-playground-ai-2-en" className="course-playground-window" data-course-playground-window role="region" aria-label="AI Now practice" aria-hidden="true">
     <Playground />
   </div>

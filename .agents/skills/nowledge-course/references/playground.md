@@ -21,7 +21,7 @@ Each scenario supplies its fill step, completion mode (`cleared`, `answer`, or `
 
 ## Interaction invariants
 
-- The window opens on demand. Highlight the current existing control using `data-course-guide-target` and the localized `.course-playground-hint`; do not restore historical connecting lines.
+- AI Now lesson 1 (`start-a-grounded-task`) sets `data-course-guide-autostart="false"` in both locales and waits for the learner to click Start the simulation. Lessons 2–5 set it to `true` and open once on desktop entry after the app is ready, including direct visits and language switches. Closing the window keeps it closed until the learner reopens it; other courses remain on demand. Highlight the current existing control using `data-course-guide-target` and the localized `.course-playground-hint`; do not restore historical connecting lines.
 - Keep the fill button inside the fill-step hint, using the root fill attributes. Cache hint content by key: replacing the button between mousedown and mouseup swallows clicks.
 - Only the red titlebar dot closes the window. Yellow and green dots are decorative (`aria-hidden`, no interactive role). Do not wire minimize/maximize to them.
 - Programmatic minimization may leave the icon-only `.course-playground-mini` restore button. The close glyph uses CSS `::after` with the `.mp-dots` ancestor for specificity; colors use `--course-dot-*`.
@@ -33,7 +33,8 @@ Each scenario supplies its fill step, completion mode (`cleared`, `answer`, or `
 ## Completion and asset changes
 
 - After the final action, highlight the changed element and show `.course-playground-done` after the guide's delay (currently five seconds). This is simulation behavior, not a product response-time promise.
-- The localized confirm button only dismisses the dialog so practice can continue. The Open Nowledge Mem button closes the simulation, attempts `nowledgemem://`, and uses the configured web URL in a new tab only if the app did not take focus.
+- `data-course-guide-confirm-href` makes the localized completion button navigate to the configured page. AI Now lessons 1–4 say **Next lesson** / **下一课** and use the next lesson's locale-specific URL with `#simulation`; after its Playground is ready, the guide consumes this fragment, prepares cumulative context, and opens practice once. Below 1024px it does not auto-open. The final lesson says **Back to course** / **返回课程** and links to the overview without auto-start. Completion copy, final hints, and inline status stay synchronized.
+- Exercises without a completion URL keep the dismiss-only confirm action. AI Now dialogs keep the option to practise in the real app alongside the next lesson or course overview. Open Nowledge Mem closes the simulation, attempts `nowledgemem://`, and uses the configured web URL in a new tab only if the app did not take focus.
 - When changing `course-playground-guide.js`, bump its `?v=` query in every English/Chinese lesson that loads it. Find current callers with `rg`, rather than keeping a version or exhaustive page list in instructions.
 - Verify affected scenarios, hint fill clicks, close/restore, sidebar restoration, both locales and color modes, and desktop/mobile boundaries. Keep root asset locations unchanged when promoting a demo host page.
 

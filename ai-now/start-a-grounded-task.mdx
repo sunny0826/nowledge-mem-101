@@ -48,7 +48,7 @@ Start an AI Now task in Nowledge Mem with one question about your own work. Befo
 
 ## Learn with the simulation
 
-On a desktop browser, go to [Your turn](#your-turn) and click **Start the simulation**. Follow the popup hints to send a request, read its reply, and check the result. Each lesson prepares its fictional Atlas materials; no model setup is needed.
+On desktop, click **Start the simulation** under [Your turn](#your-turn) when you are ready. Follow the popup hints to send a request, read its reply, and check the result. Each lesson prepares its fictional Atlas materials; no model setup is needed.
 
 <Note>
 The simulation runs locally with preset replies. It does not call AI or search the web, and refreshing resets the practice. On mobile, read the steps first and use a desktop browser for the interactive exercise.
@@ -76,10 +76,11 @@ Status: no pilot has been approved.
 
 Click **Start the simulation** and follow the popup hints. After practising, use the steps below to repeat the workflow with your own material in Nowledge Mem.
 
-<script src="/course-playground-guide.js?v=24" defer></script>
+<script src="/course-playground-guide.js?v=26" defer></script>
 
 <div className="course-playground-workflow"
   data-course-playground-guide=""
+  data-course-guide-autostart="false"
   data-course-guide-scenario="ai-context"
   data-course-guide-current="1"
   data-course-playground-open="false"
@@ -87,15 +88,16 @@ Click **Start the simulation** and follow the popup hints. After practising, use
   data-course-guide-close-label="Close simulation"
   data-course-guide-mini-label="Playground"
   data-course-guide-fill-label="Fill the example"
-  data-course-guide-done-message="Context checked. Use your own saved memory in the real app."
+  data-course-guide-done-message="Lesson complete. Continue to the next lesson, or try it in Nowledge Mem."
   data-course-guide-open-mem-label="Open Nowledge Mem"
-  data-course-guide-confirm-label="Got it"
+  data-course-guide-confirm-label="Next lesson"
+  data-course-guide-confirm-href="/ai-now/bring-a-source#simulation"
   data-course-guide-mem-url="https://mem.nowledge.co"
   data-course-guide-hint-1="Open AI Now. The fictional Atlas context is already saved."
   data-course-guide-hint-2="Ask for the saved planning context."
   data-course-guide-hint-3="Send the question."
   data-course-guide-hint-4="Open the cited memory and compare its limits."
-  data-course-guide-hint-5="Context checked. Use your own saved memory in the real app."
+  data-course-guide-hint-5="Lesson complete. Continue to the next lesson, or try it in Nowledge Mem."
   data-course-guide-fillable-2="Search the saved Atlas planning memories in Nowledge Mem. We are considering one cross-team planning review next quarter, covering dependencies over the next twelve months. We are not deciding a recurring review schedule. List the relevant facts, constraints, and undecided questions, and identify the memories behind them. Use saved knowledge only; do not research the web or recommend a direction yet. Say which context is missing.">
   <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-ai-1-en" aria-expanded="false">
     <Icon icon="panel-right-open" /> <span data-course-guide-open-label>Start the simulation</span>
@@ -127,7 +129,7 @@ Click **Start the simulation** and follow the popup hints. After practising, use
 </Steps>
 
   <p className="course-playground-workflow-status" data-course-guide-ready>Start when ready; practice hints appear in the popup.</p>
-  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>Context checked. Use your own saved memory in the real app.</p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>Lesson complete. Continue to the next lesson, or try it in Nowledge Mem.</p>
   <div id="course-playground-ai-1-en" className="course-playground-window" data-course-playground-window role="region" aria-label="AI Now practice" aria-hidden="true">
     <Playground />
   </div>

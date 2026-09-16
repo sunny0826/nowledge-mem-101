@@ -56,6 +56,47 @@ const { createTask } = require('../playground-ai-now.js');
 const { aiPracticeSeed } = require('../course-playground-guide.js');
 const lessonSequence = ['start-a-grounded-task','bring-a-source','ask-for-an-evidence-brief','research-what-is-missing','save-the-result'];
 const scenarioSequence = ['ai-context','ai-source','ai-evidence','ai-research','ai-save'];
+test('English and Chinese lessons expose identical simulation controls and automatic entry',()=>{
+  const contract=page=>({
+    scenario:page.match(/data-course-guide-scenario="([^"]+)"/)[1],
+    autoStart:page.match(/data-course-guide-autostart="([^"]+)"/)[1],
+    hints:[...page.matchAll(/data-course-guide-hint-(\d+)=/g)].map(m=>Number(m[1])),
+    fills:[...page.matchAll(/data-course-guide-fillable-(\d+)=/g)].map(m=>Number(m[1])),
+    steps:[...page.matchAll(/data-course-guide-source="(\d+)"/g)].map(m=>Number(m[1])),
+    next:page.match(/data-course-guide-confirm-href="([^"]+)"/)[1].replace(/^\/zh\//,'/'),
+    guide:page.match(/src="(\/course-playground-guide.js[^\"]+)"/)[1],
+    realApp:page.match(/data-course-guide-mem-url="([^"]+)"/)[1]
+  });
+  for(const slug of lessonSequence){
+    const en=contract(readFileSync(resolve(__dirname,'..','ai-now',slug+'.mdx'),'utf8'));
+    const zh=contract(readFileSync(resolve(__dirname,'..','zh/ai-now',slug+'.mdx'),'utf8'));
+    assert.equal(en.autoStart,slug==='start-a-grounded-task'?'false':'true');
+    assert.deepEqual(en,zh,slug+' has the same interaction contract in both locales');
+  }
+});
+test('completion destinations follow published lesson order and only auto-start available simulations',()=>{
+  const docs=JSON.parse(readFileSync(resolve(__dirname,'..','docs.json'),'utf8'));
+  for(const locale of docs.navigation.languages){
+    const pages=locale.tabs.find(tab=>tab.tab==='AI Now').pages;
+    for(let i=1;i<pages.length;i++){
+      const page=readFileSync(resolve(__dirname,'..',pages[i]+'.mdx'),'utf8');
+      const href=page.match(/data-course-guide-confirm-href="([^"]+)"/)[1];
+      const next=i<pages.length-1;
+      const expected=next?'/'+pages[i+1]+'#simulation':'/'+pages[0].replace(/\/index$/,'');
+      assert.equal(href,expected);
+      if(next){
+        const target=readFileSync(resolve(__dirname,'..',pages[i+1]+'.mdx'),'utf8');
+        assert.match(target,/data-course-playground-guide=""/);
+      }
+      const label=page.match(/data-course-guide-confirm-label="([^"]+)"/)[1];
+      assert.equal(label,locale.language==='zh'?(next?'下一课':'返回课程'):(next?'Next lesson':'Back to course'));
+      const message=page.match(/data-course-guide-done-message="([^"]+)"/)[1];
+      const hints=[...page.matchAll(/data-course-guide-hint-\d+="([^"]+)"/g)];
+      assert.equal(hints.at(-1)[1],message);
+      assert.ok(page.includes('data-course-guide-done role="status" hidden>'+message+'</p>'));
+    }
+  }
+});
 for (const lang of ['en','zh']) {
   test(lang+': each lesson resumes the cumulative earlier conversation without completing current work',()=>{
     const prompts=lessonSequence.map(slug=>{

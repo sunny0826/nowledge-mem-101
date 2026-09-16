@@ -576,12 +576,12 @@
     var open = modal.querySelector(".course-playground-done-open");
     open.href = url;
     open.textContent = root.getAttribute("data-course-guide-open-mem-label") || url;
+    var confirmHref = root.getAttribute("data-course-guide-confirm-href");
     modal.querySelector("[data-course-guide-done-confirm]").textContent =
       root.getAttribute("data-course-guide-confirm-label") || "OK";
 
     modal.addEventListener("click", function (event) {
-      // "Open Nowledge Mem" ends the simulation; the confirm button only
-      // dismisses the dialog and leaves the window open for more practise.
+      // Courses can provide a next lesson; other exercises keep dismiss behavior.
       if (event.target.closest(".course-playground-done-open")) {
         event.preventDefault();
         openMemApp(state);
@@ -591,6 +591,10 @@
       }
       if (event.target.closest("[data-course-guide-done-confirm]")) {
         hideDoneModal(state);
+        if (confirmHref) {
+          setWindowOpen(state, false, false);
+          window.location.assign(confirmHref);
+        }
         return;
       }
       if (event.target.closest("[data-course-guide-done-dismiss]")) {
@@ -607,6 +611,29 @@
     return modal;
   }
 
+  function startPractice(state) {
+    if (window.innerWidth < 1024) return;
+    state.autoStarted = true;
+    if (state.step > spec(state).steps) {state.step = 1;state.aiSeeded=false;}
+    hideDoneModal(state);
+    clearTimeout(state.doneTimer);
+    prepareAiPractice(state);
+    setWindowOpen(state, true);
+  }
+
+  function autoStartPractice(state) {
+    var handoff = window.location.hash === "#simulation";
+    var onEntry = state.rootEl.getAttribute("data-course-guide-autostart") === "true" && !state.autoStarted;
+    if ((!handoff && !onEntry) || window.innerWidth < 1024) return;
+    var mount = state.windowEl.querySelector('[data-mem-playground]');
+    if (!mount || !mount.mpAPI || (spec(state).actions && !mount.hasAttribute('data-mp-ai-ready'))) return;
+    // Consume explicit handoffs only; preserve ordinary section links on entry.
+    if (handoff) window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
+    startPractice(state);
+    var target = targetForStep(state, state.step);
+    if (target) target.focus();
+  }
+
   function handleClick(state, event) {
     var target = event.target;
     if (!target.closest) return;
@@ -617,11 +644,7 @@
       if (state.open) {
         setWindowOpen(state, false);
       } else {
-        if (state.step > spec(state).steps) {state.step = 1;state.aiSeeded=false;}
-        hideDoneModal(state);
-        clearTimeout(state.doneTimer);
-        prepareAiPractice(state);
-        setWindowOpen(state, true);
+        startPractice(state);
       }
       return;
     }
@@ -946,6 +969,7 @@
 
     var roots = document.querySelectorAll(ROOT_SELECTOR);
     for (var j = 0; j < roots.length; j += 1) init(roots[j]);
+    tracked.forEach(autoStartPractice);
   }
 
   function scheduleScan() {
@@ -957,6 +981,7 @@
   }
 
   window.addEventListener("resize", scheduleScan);
+  window.addEventListener("hashchange", scheduleScan);
   new MutationObserver(scheduleScan).observe(document.documentElement, {
     childList: true,
     subtree: true,
