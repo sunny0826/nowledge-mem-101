@@ -1,0 +1,67 @@
+---
+title: "来自社区"
+description: "阅读社区文章与 X 原帖，看看大家如何用 Nowledge Mem 搭建自己的知识地图。"
+sidebarTitle: "社区"
+icon: "users"
+mode: "center"
+---
+
+import { CommunityTweet } from "/snippets/community-tweet.jsx"
+
+<div className="community-hero">
+  <p className="community-eyebrow">经验分享 · 不是一节课</p>
+  <h1 className="community-display">大家如何用 Nowledge Mem 搭建自己的知识地图。</h1>
+  <p className="community-lede">阅读完整的经验文章，或看看大家在 X 上的日常分享。</p>
+</div>
+
+<div className="community-jump-links" role="navigation" aria-label="社区内容">
+  <a href="#articles">文章 <span>03</span></a>
+  <a href="#x-posts">X 推文 <span>06</span></a>
+</div>
+
+<section className="community-section" aria-labelledby="articles">
+  <div className="community-section-heading">
+    <h2 id="articles">文章</h2>
+    <p>搭建方式、工作流程与长期使用心得。</p>
+  </div>
+  <div className="community-articles">
+    <a className="community-share-card" href="https://x.com/guoxudong_/status/2092604004245332474" target="_blank" rel="noopener noreferrer">
+      <span className="community-share-source"><Icon icon="newspaper" /> X 文章</span>
+      <span className="community-share-author">Xudong Guo · 中文 · 2026-08-26</span>
+      <span className="community-share-title" role="heading" aria-level="3">让 Agent 不再从头开始：用 Nowledge Mem 搭建统一记忆中枢</span>
+      <p className="community-share-excerpt" lang="zh-CN">把 Mac mini 作为常开的 Nowledge Mem 中枢，让 MacBook、Linux 服务器、手机和接入的 Agent 使用同一份长期记忆。</p>
+      <span className="community-share-footer"><span>x.com</span><span>阅读全文 <span aria-hidden="true">↗</span></span></span>
+    </a>
+    <a className="community-share-card" href="https://x.com/HaraAmami/status/2091523661077561348" target="_blank" rel="noopener noreferrer">
+      <span className="community-share-source"><Icon icon="newspaper" /> X 文章</span>
+      <span className="community-share-author">Amami Hara · 日文 · 2026-08-23</span>
+      <span className="community-share-title" role="heading" aria-level="3">世界首位用户眼中的 AI 项目记忆</span>
+      <p className="community-share-excerpt" lang="ja">私は Nowledge Mem の世界初のユーザーだ。…分断された記憶は、長期プロジェクトにおいては記憶がないのとほとんど変わらない。</p>
+      <span className="community-share-footer"><span>x.com</span><span>阅读全文 <span aria-hidden="true">↗</span></span></span>
+    </a>
+    <a className="community-share-card" href="https://x.com/hbyxabc/status/2093326775862599708" target="_blank" rel="noopener noreferrer">
+      <span className="community-share-source"><Icon icon="newspaper" /> X 文章</span>
+      <span className="community-share-author">HB · 中文 · 2026-08-28</span>
+      <span className="community-share-title" role="heading" aria-level="3">Agent 时代，用户需要怎样的记忆产品？</span>
+      <p className="community-share-excerpt" lang="zh-CN">「数字记忆」会成为下一代知识工作的基础设施。每个人都应该尽可能早地搭建自己的数字记忆系统。</p>
+      <span className="community-share-footer"><span>x.com</span><span>阅读全文 <span aria-hidden="true">↗</span></span></span>
+    </a>
+  </div>
+</section>
+
+<section className="community-section" aria-labelledby="x-posts">
+  <div className="community-section-heading">
+    <h2 id="x-posts">X 推文</h2>
+    <p>直接呈现原帖，保留原文、图片与视频。</p>
+  </div>
+  <div className="community-posts">
+    <CommunityTweet id="2024709980474224830" author="海拉鲁编程客" handle="hylarucoder" locale="zh" />
+    <CommunityTweet id="2087498315478991214" author="Asada-Yuki" handle="AsadaYuki_Art" locale="zh" />
+    <CommunityTweet id="2088491404326801734" author="Amami Hara" handle="HaraAmami" locale="zh" />
+    <CommunityTweet id="2094954769374978414" author="Xudong Guo" handle="guoxudong_" locale="zh" />
+    <CommunityTweet id="2095446709790982626" author="Otter" handle="otterpal24" locale="zh" />
+    <CommunityTweet id="2098395942001238493" author="YAYOI の 夢" handle="Yayoi_no_yume" locale="zh" />
+  </div>
+</section>
+
+<p className="community-foot">写过自己的搭建方式或使用经验？分享到 <a href="https://x.com/NowledgeMem">X</a>，就有机会被收录。 · 回到学习 → <a href="/zh/essentials">Essentials</a></p>

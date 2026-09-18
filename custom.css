@@ -908,8 +908,9 @@ html.dark .learning-stage-active .learning-stage-mark {
   transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
-/* Card titles stay compact (16px) — the prose h2 scale must not inflate them */
-.card h2 {
+/* All linked card titles share the compact 16px scale. */
+.card h2,
+.community-share-title {
   font-size: 1rem !important;
   font-weight: 700;
   line-height: 1.4;
@@ -1189,5 +1190,262 @@ html.dark .course-cta:hover {
   .card:hover,
   .course-cta:hover {
     transform: none;
+  }
+}
+
+/* --- Introduction and community: centered overview layout -------------- */
+
+/* Keep center mode's sidebar-free layout, with room for cards and X embeds.
+   The shell includes Mintlify's 2rem desktop gutters on each side. */
+html:is(
+    [data-current-path="/"],
+    [data-current-path="/zh"],
+    [data-current-path="/community"],
+    [data-current-path="/zh/community"]
+  ) div:has(> #content-container) {
+  max-width: 76rem;
+}
+
+/* --- Community: articles and original X posts --------------------------- */
+
+/* The standard doc header (title, description, page actions) is replaced
+   by the page's own display hero. */
+html[data-current-path="/community"] #header,
+html[data-current-path="/zh/community"] #header {
+  display: none;
+}
+
+/* The community hero replaces the header, so it needs no post-header gap. */
+html[data-current-path="/community"] #content,
+html[data-current-path="/zh/community"] #content {
+  margin-top: 0;
+}
+
+.community-hero {
+  margin: 0;
+  padding: 0 0 2.6rem;
+  border-bottom: 1px solid var(--course-border);
+}
+
+.community-eyebrow {
+  margin: 0 !important;
+  color: var(--course-faint);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+/* Inherit the site's .prose h1 typography rather than a separate hero scale. */
+.community-display {
+  max-width: 44rem;
+  margin: 1rem 0 0 !important;
+  color: var(--course-ink);
+}
+
+.community-lede {
+  max-width: 35rem;
+  margin: 1.35rem 0 0 !important;
+  color: var(--course-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.community-jump-links {
+  display: flex;
+  gap: 0.75rem;
+  margin: 1.5rem 0 2.5rem;
+}
+
+.community-jump-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--course-border);
+  border-radius: 999px;
+  color: var(--course-ink) !important;
+  text-decoration: none !important;
+  font-size: 0.8rem;
+}
+
+.community-jump-links span {
+  color: var(--course-muted);
+  font-size: inherit;
+}
+
+.community-section {
+  margin-top: 3rem;
+}
+
+.community-section-heading {
+  margin-bottom: 1.4rem;
+}
+
+.community-section-heading h2 {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  scroll-margin-top: 8rem;
+}
+
+.community-section-heading p {
+  margin: 0.5rem 0 0 !important;
+  color: var(--course-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.community-articles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.community-share-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.35rem;
+  border: 1px solid var(--course-border);
+  border-radius: 16px;
+  background: var(--course-surface);
+  color: var(--course-ink) !important;
+  font-weight: 400;
+  text-decoration: none !important;
+  overflow-wrap: anywhere;
+}
+
+.community-share-card:hover,
+.community-jump-links a:hover {
+  border-color: var(--course-blue);
+  background: var(--course-surface-muted);
+}
+
+.community-share-card:focus-visible,
+.community-jump-links a:focus-visible,
+.community-tweet-fallback a:focus-visible {
+  outline: 2px solid var(--course-blue);
+  outline-offset: 4px;
+}
+
+.community-share-source {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--course-muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.community-share-source svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.community-share-author {
+  margin-top: 1.5rem;
+  color: var(--course-muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.community-share-title {
+  margin: 0.65rem 0 0 !important;
+}
+
+.community-share-excerpt {
+  margin: 0.8rem 0 1.5rem !important;
+  color: var(--course-muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.community-share-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--course-border-soft);
+  color: var(--course-muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.community-share-footer > span:last-child {
+  color: var(--course-blue);
+}
+
+.community-posts {
+  column-count: 3;
+  column-gap: 1.25rem;
+}
+
+/* Keep each original embed intact and let the next post follow its height.
+   Columns reflow naturally when X finishes loading or resizes its iframe. */
+.community-tweet {
+  display: inline-block;
+  min-width: 0;
+  width: 100%;
+  margin-bottom: 1.25rem;
+  break-inside: avoid;
+  vertical-align: top;
+}
+
+.community-tweet-embed .twitter-tweet {
+  margin: 0 auto !important;
+}
+
+.community-tweet-embed iframe {
+  border-radius: 12px;
+  background: transparent;
+}
+
+.community-tweet-fallback {
+  padding: 1.35rem;
+  border: 1px solid var(--course-border);
+  border-radius: 16px;
+  background: var(--course-surface);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.community-tweet-author {
+  color: var(--course-ink);
+  font-weight: 600;
+}
+
+.community-tweet-author span,
+.community-tweet-fallback p {
+  color: var(--course-muted);
+  font-weight: 400;
+}
+
+.community-foot {
+  margin: 2.6rem 0 0 !important;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--course-border-soft);
+  color: var(--course-faint);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+@media (max-width: 1023px) {
+  .community-articles {
+    grid-template-columns: 1fr;
+  }
+
+  .community-posts {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 767px) {
+  .community-hero {
+    padding: 0 0 1.8rem;
+  }
+
+  .community-posts {
+    column-count: 1;
   }
 }

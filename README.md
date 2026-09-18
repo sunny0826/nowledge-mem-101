@@ -51,6 +51,12 @@ mise exec -- mint broken-links
 mise exec -- mint a11y
 ```
 
+## Community
+
+Community is a collection of external articles, posts, and websites where people share how they build their own knowledge map with Nowledge Mem — separate from the courses. Entries link directly to their original URLs; do not create local article pages or copy article bodies into this repository.
+
+To add an entry, update the Community menu in both language sections of `docs.json`, the community pages (`community.mdx` and `zh/community.mdx`), and the community section on both landing pages (`index.mdx` and `zh/index.mdx`). Keep the URL and order consistent across locales, localize the title and short summary, and identify the source platform and original language.
+
 ## Localization
 
 - English and Simplified Chinese pages are updated in the same change, preserving meaning, order, links, and structure across locales.
