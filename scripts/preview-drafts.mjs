@@ -87,10 +87,6 @@ function draftMappings() {
 
 function copyDraft(source, destination) {
   mkdirSync(dirname(destination), { recursive: true });
-  // Merge, do not wipe the destination: a course may have both published pages
-  // and draft additions living in the same destination directory. Only files
-  // the draft actually provides overwrite their published counterparts, so
-  // published pages the draft does not touch stay available in the preview.
   cpSync(source, destination, { recursive: true });
 }
 
@@ -208,8 +204,6 @@ function coursePathLessonNumber(pagePath, prefix) {
   return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
 }
 
-// Sort a list of site page paths (e.g. "ai-workflow/index") with the overview
-// first, then by the sidebarTitle lesson number, then alphabetically.
 function sortCoursePagePaths(pagePaths, prefix) {
   const position = (pagePath) => {
     const localPage = localPageOf(pagePath, prefix);
@@ -226,10 +220,6 @@ function sortCoursePagePaths(pagePaths, prefix) {
     });
 }
 
-// Merge a draft course's pages into an already-published tab for the same course.
-// Unifies both published and draft pages under one sidebar, keeping the overview
-// first and ordering the rest by lesson number. Pages that belong to a different
-// course in the same tab are left untouched in place.
 function mergeDraftCourseIntoExistingTab(tab, course, draftPages, prefix) {
   const pages = tab.pages ?? [];
   const sortedCoursePaths = sortCoursePagePaths(
@@ -250,16 +240,10 @@ function mergeDraftCourseIntoExistingTab(tab, course, draftPages, prefix) {
 
   const matched = pages.some((pagePath) => courseOfPage(pagePath, prefix) === course);
   if (!matched) {
-    // A draft course can exist without any published page for it; append its
-    // own sorted overview-led pages at the end of the tab.
     tab.pages.push(...sortedCoursePaths);
   }
 }
 
-// Decide where each draft course should live in the navigation. A course that
-// already has a published tab is merged into that tab; a course that has no
-// published counterpart gets its own "(draft)" tab. Returns the fully built
-// tab array for a single language.
 function buildLanguageTabs(language, languageCodes, pageFiles) {
   const languageCode = language.language;
   const prefix = languagePrefix(languageCode);
@@ -345,15 +329,11 @@ function syncDraftChange(event, filename) {
     synchronizedDestinations.delete(mappingKey);
   }
 
-  // Lesson sidebar titles determine the generated order, so any MDX change may
-  // affect draft navigation, not only overview-page or rename events.
   if (event === "rename" || filename.toString().endsWith(".mdx")) {
     writePreviewConfig();
   }
 }
 
-// Atomic saves briefly remove the path being replaced; retry once after the gap
-// instead of crashing on a transient ENOENT or a half-written JSON file.
 function withRaceRetry(action) {
   try {
     action();

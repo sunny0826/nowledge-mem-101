@@ -8,7 +8,6 @@ export const CommunityTweet = ({ id, author, handle, locale = "en" }) => {
     let generation = 0;
     let timer;
 
-    // Share the official loader across posts and client-side page navigation.
     if (!window.__communityXWidgets) {
       window.__communityXWidgets = new Promise((resolve, reject) => {
         if (window.twttr?.widgets) {
@@ -45,7 +44,6 @@ export const CommunityTweet = ({ id, author, handle, locale = "en" }) => {
       const version = ++generation;
       clearTimeout(timer);
       setStatus("loading");
-      // A fresh target prevents a late response from restoring an older theme.
       const target = document.createElement("div");
       host.replaceChildren(target);
       const current = () => !disposed && generation === version;

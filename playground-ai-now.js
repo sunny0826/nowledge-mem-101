@@ -1,7 +1,3 @@
-/* Local AI Now replica. Preset fictional data only; no model or network calls.
- * UI structure checked against the app DOM on 2026-09-16.
- * Course sequences live in course-playground-guide.js, not this component.
- */
 (function () {
   "use strict";
   var FIXTURES = {
@@ -63,7 +59,6 @@
     }
   };
 
-  // Store-backed deterministic responses: missing data must never be invented.
   function createModel(lang, store) {
     var C = COPY[lang], F = FIXTURES[lang];
     var draft = null;
@@ -104,8 +99,6 @@
     };
   }
 
-  // Rebuild a local conversation from caller-provided prerequisite turns.
-  // The same model instance continues the task; hydration emits no live actions.
   function createTask(lang, store, history) {
     var task = {title:COPY[lang].newTask,messages:[],research:false,input:"",model:createModel(lang,store)};
     (history || []).forEach(function(turn) {
@@ -117,8 +110,6 @@
     return task;
   }
 
-  // Delay all model work (including writes) until completion. Cancellation and
-  // detached mounts must never produce a stale reply or a late memory save.
   function startResponse(options) {
     var schedule=options.schedule||setTimeout, unschedule=options.unschedule||clearTimeout;
     var active=true, timer=null, stage=0;
@@ -246,7 +237,6 @@
         input.dispatchEvent(new Event("input",{bubbles:true}));mount.querySelector("[data-mp-ai-context]").hidden=true;input.focus();
       }
     });
-    // Generic demo fixture API; caller chooses prerequisites, never lesson URLs.
     mount.addEventListener("mp:ai-seed",function(e){
       cancelPending();
       var options=e.detail||{};
@@ -256,7 +246,6 @@
       if(!memory("atlas-context"))save("atlas-context",C.contextTitle,F.context);
       state.library.list=state.library.list.filter(function(d){return d.id!=="atlas-source";});
       if(options.source)state.library.list.unshift(Object.assign({},sampleDoc));
-      // Replaying a practice starts with no result, but ordinary new tasks keep it.
       if(memory("atlas-result"))state.counts.memories-=1;
       state.mem.list=state.mem.list.filter(function(m){return m.id!=="atlas-result";});
       state.memories=state.memories.filter(function(m){return m.id!=="atlas-result";});
@@ -264,7 +253,6 @@
       emit("seeded");
     });
     newTask();
-    // Seed standalone practice only when AI Now is actually opened.
     mount.addEventListener("mp:action", function(e){
       if(e.detail.type === "view" && e.detail.kind === "ai-now" && !seeded) {
         seeded=true;
