@@ -40,7 +40,8 @@
   "navbar": {
     "links": [
       {
-        "type": "github",
+        "label": "GitHub",
+        "icon": "github",
         "href": "https://github.com/nowledge-co"
       }
     ]
@@ -159,7 +160,8 @@
         "navbar": {
           "links": [
             {
-              "type": "github",
+              "label": "GitHub",
+              "icon": "github",
               "href": "https://github.com/nowledge-co"
             }
           ]
