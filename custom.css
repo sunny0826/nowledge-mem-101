@@ -1,15 +1,3 @@
-/* ==========================================================================
-   Notion Help Center style
-   Reference: https://www.notion.com/help/category/new-to-notion
-   - Font: Inter (Notion's font is Inter-based)
-   - Text: neutral near-black rgba(0,0,0,0.95), headings 42/26/22px at weight 700
-   - Cards: white, 1px rgba(0,0,0,0.1) border, 12px radius, no shadow
-   - Accent: Notion link blue #0075DE
-   ========================================================================== */
-
-/* Language switcher pinned to the navbar right (desktop only).
-   On mobile, this container belongs to the navigation drawer and must remain
-   in normal flow so the language and section controls do not overlap. */
 @media (min-width: 1024px) {
   div:has(> #localization-select-trigger) {
     position: absolute;
@@ -19,26 +7,27 @@
     transform: translateY(-50%);
   }
 
-  /* Reserve space for the pinned EN/ZH switcher beside the navbar links. */
   #navbar nav:has(.navbar-link) {
     margin-right: 7.5rem;
   }
 }
 
-/* --- Notion typography --------------------------------------------------- */
 
 :root {
-  --course-blue: #0075de; /* Notion link blue (light) */
+  --course-blue: #0075de;
   --course-blue-soft: rgba(0, 117, 222, 0.08);
-  --course-ink: rgba(0, 0, 0, 0.95); /* Notion near-black text */
+  --course-ink: rgba(0, 0, 0, 0.95);
   --course-muted: rgba(0, 0, 0, 0.6);
   --course-faint: rgba(0, 0, 0, 0.45);
   --course-border: rgba(0, 0, 0, 0.1);
   --course-border-soft: rgba(0, 0, 0, 0.07);
-  --course-surface: #ffffff; /* Notion white card */
-  --course-surface-muted: #f7f7f5; /* Notion light gray callout */
+  --course-surface: #ffffff;
+  --course-surface-muted: #f7f7f5;
+  --course-cover-base: #071522;
+  --course-cover-grid: rgba(95, 183, 239, 0.1);
+  --course-cover-trace: rgba(102, 207, 255, 0.6);
+  --course-cover-glow: rgba(0, 117, 222, 0.3);
   --course-nav-shadow: rgba(0, 0, 0, 0.12);
-  /* macOS traffic lights for the Playground window chrome */
   --course-dot-close: #ff5f57;
   --course-dot-minimize: #febc2e;
   --course-dot-maximize: #28c840;
@@ -52,7 +41,6 @@
     "Segoe UI Emoji";
 }
 
-/* Neutral prose palette (Mintlify defaults to a cool gray-blue) */
 .prose {
   --tw-prose-body: rgba(0, 0, 0, 0.95);
   --tw-prose-headings: rgba(0, 0, 0, 0.95);
@@ -70,21 +58,19 @@
   --tw-prose-td-borders: rgba(0, 0, 0, 0.1);
 }
 
-/* Notion ink for body text (directly on the prose container, so it inherits) */
 .prose {
   color: rgba(0, 0, 0, 0.95);
 }
 
-/* Notion heading scale (compact): h1 28 / h2 20 / h3 17, weight 700 */
 .prose h1 {
-  font-size: 1.75rem; /* 28px */
+  font-size: 1.75rem;
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.025em;
 }
 
 h1#page-title {
-  font-size: 1.75rem; /* 28px */
+  font-size: 1.75rem;
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.025em;
@@ -92,14 +78,14 @@ h1#page-title {
 }
 
 .prose h2 {
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: -0.015em;
 }
 
 .prose h3 {
-  font-size: 1.0625rem; /* 17px */
+  font-size: 1.0625rem;
   font-weight: 700;
   line-height: 1.4;
   letter-spacing: -0.01em;
@@ -109,7 +95,6 @@ h1#page-title {
   font-weight: 700;
 }
 
-/* Course prose and footer navigation share the same readable column. */
 html[data-current-path="/essentials"] :is(#content, #pagination),
 html[data-current-path="/zh/essentials"] :is(#content, #pagination),
 html[data-current-path^="/essentials/"] :is(#content, #pagination),
@@ -130,7 +115,6 @@ html[data-current-path^="/zh/knowledge-system/"] :is(#content, #pagination) {
   padding-inline: 0;
 }
 
-/* Course practice shares one centered desktop workspace with the full article. */
 html[data-course-playground-split="true"] #content-area {
   flex: none;
   width: var(--course-practice-article-width) !important;
@@ -151,7 +135,6 @@ html[data-course-playground-split="true"] #pagination {
   margin-right: 0;
 }
 
-/* Lesson 1: fused real-app instructions and an on-demand Playground window. */
 .course-playground-workflow {
   margin: 1.25rem 0 1.75rem;
 }
@@ -209,8 +192,6 @@ html[data-course-playground-split="true"] #pagination {
   display: none;
 }
 
-/* The current step's Playground control gets a strong pulsing ring plus a
-   small floating caption. */
 [data-course-guide-target] {
   box-shadow:
     0 0 0 2.5px var(--course-blue),
@@ -263,8 +244,6 @@ html[data-course-playground-split="true"] #pagination {
   display: none;
 }
 
-/* One-click fill button lives inside the step-2 hint, right where the
-   learner is looking. */
 .course-playground-hint-fill {
   display: inline-flex;
   align-items: center;
@@ -287,8 +266,6 @@ html[data-course-playground-split="true"] #pagination {
   filter: brightness(1.12);
 }
 
-/* After the send step, the newly saved timeline entry flashes so the
-   learner can see exactly what changed. */
 [data-course-guide-changed] {
   box-shadow: 0 0 0 2px var(--course-blue-soft) !important;
 }
@@ -309,7 +286,6 @@ html[data-course-playground-split="true"] #pagination {
   }
 }
 
-/* Completion dialog shown once the simulation finishes. */
 .course-playground-done {
   position: fixed;
   z-index: 130;
@@ -445,8 +421,6 @@ html[data-course-playground-split="true"] #pagination {
 }
 
 .course-playground-window .mp-shell {
-  /* Override the replica's fixed height so the shell ends exactly at the
-     window's inner bottom edge (titlebar + shell = window height). */
   flex: 1 1 auto;
   height: auto;
   min-height: 0;
@@ -485,8 +459,6 @@ html[data-course-playground-split="true"] #pagination {
   flex-direction: column;
 }
 
-/* Window chrome: the three titlebar dots act as macOS-style close /
-   minimize / maximize buttons, with glyphs appearing on hover. */
 .course-playground-window .mp-dots i {
   position: relative;
 }
@@ -536,8 +508,6 @@ html[data-course-playground-split="true"] #pagination {
   outline-offset: 2px;
 }
 
-/* Minimized: the window slides away and a small floating chip stays on the
-   right edge to restore it. */
 .course-playground-window[data-course-playground-open="true"][data-course-playground-minimized="true"] {
   visibility: hidden;
   opacity: 0;
@@ -582,14 +552,10 @@ html[data-course-playground-split="true"] #pagination {
   pointer-events: auto;
 }
 
-/* While the Playground is docked, the docs sidebar collapses so the steps
-   and the window share the page without crowding. */
 html[data-course-playground-docked="true"] #sidebar {
   display: none;
 }
 
-/* The simulation is desktop-only: on small screens the launch button, the
-   window, and all its companions stay hidden. */
 @media (max-width: 1023px) {
   .course-playground-launch,
   .course-playground-workflow-status,
@@ -740,7 +706,6 @@ html.dark .learning-stage-active .learning-stage-mark {
   background: var(--course-blue);
 }
 
-/* Lesson progress timeline: larger marks, completed stages checked and linked in blue */
 .learning-stages-progress .learning-stage-mark {
   width: 0.75rem;
   height: 0.75rem;
@@ -779,7 +744,6 @@ html.dark .learning-stage-active .learning-stage-mark {
   margin-top: 0;
 }
 
-/* --- Notion cards -------------------------------------------------------- */
 
 .course-card {
   position: relative;
@@ -794,7 +758,6 @@ html.dark .learning-stage-active .learning-stage-mark {
   text-decoration: none !important;
 }
 
-/* Available lessons: white Notion help-card (border, no shadow) */
 .course-card-featured {
   min-height: 11.7rem;
   border-color: var(--course-border);
@@ -812,7 +775,6 @@ html.dark .learning-stage-active .learning-stage-mark {
   transform: translateY(0) scale(0.99);
 }
 
-/* Coming soon: flat Notion gray callout */
 .course-card-upcoming {
   min-height: 8.85rem;
   border-color: rgba(0, 0, 0, 0.06);
@@ -904,7 +866,6 @@ html.dark .learning-stage-active .learning-stage-mark {
   content: "";
 }
 
-/* Mintlify <Card> → Notion help card */
 .card {
   border-radius: 12px !important;
   border-color: var(--course-border) !important;
@@ -913,7 +874,6 @@ html.dark .learning-stage-active .learning-stage-mark {
   transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
-/* All linked card titles share the compact 16px scale. */
 .card h2,
 .community-share-title {
   font-size: 1rem !important;
@@ -928,7 +888,6 @@ html.dark .learning-stage-active .learning-stage-mark {
   transform: translateY(-1px);
 }
 
-/* Non-clickable cards (coming soon): muted Notion gray */
 .card:not(:has(a[href])) {
   border-style: dashed;
   border-color: rgba(0, 0, 0, 0.16) !important;
@@ -952,7 +911,6 @@ html.dark .learning-stage-active .learning-stage-mark {
   line-height: 1;
 }
 
-/* --- Dark mode (Notion dark palette) ------------------------------------ */
 
 html.dark {
   --course-blue: #2383e2;
@@ -962,8 +920,12 @@ html.dark {
   --course-faint: rgba(255, 255, 255, 0.45);
   --course-border: rgba(255, 255, 255, 0.1);
   --course-border-soft: rgba(255, 255, 255, 0.07);
-  --course-surface: rgb(32, 32, 32); /* Notion dark card */
-  --course-surface-muted: rgba(255, 255, 255, 0.05); /* Notion dark callout */
+  --course-surface: rgb(32, 32, 32);
+  --course-surface-muted: rgba(255, 255, 255, 0.05);
+  --course-cover-base: #09131e;
+  --course-cover-grid: rgba(95, 183, 239, 0.08);
+  --course-cover-trace: rgba(102, 207, 255, 0.5);
+  --course-cover-glow: rgba(35, 131, 226, 0.24);
   --course-nav-shadow: rgba(0, 0, 0, 0.48);
 }
 
@@ -1040,11 +1002,8 @@ html.dark .course-cta:hover {
   background: #2f7cf6;
 }
 
-/* --- Mobile navigation -------------------------------------------------- */
 
 @media (max-width: 1023px) {
-  /* Reuse the native GitHub link in the mobile action slot. Keep its text
-     accessible, and reserve the old trigger's space without exposing it. */
   #navbar div:has(> nav .navbar-link) {
     display: flex;
     position: absolute;
@@ -1097,7 +1056,6 @@ html.dark .course-cta:hover {
     border: 0;
   }
 
-  /* Fold Mintlify's separate mobile navigation row into the main top bar. */
   #navbar button:has(> div:first-child > .sr-only) {
     position: absolute;
     z-index: 1;
@@ -1130,7 +1088,6 @@ html.dark .course-cta:hover {
     padding-top: 6.5rem;
   }
 
-  /* Keep the drawer roomy while leaving a visible edge of the current page. */
   #mobile-nav {
     width: calc(min(92dvw, 22rem) + var(--bleed));
     min-width: 0;
@@ -1139,7 +1096,6 @@ html.dark .course-cta:hover {
     box-shadow: 12px 0 32px var(--course-nav-shadow);
   }
 
-  /* Mintlify hides this control until keyboard focus; mobile needs it visible. */
   #mobile-nav > button[aria-label="Close navigation"] {
     top: 0.75rem;
     right: 0.75rem;
@@ -1252,29 +1208,34 @@ html.dark .course-cta:hover {
   }
 }
 
-/* --- Introduction and community: centered overview layout -------------- */
 
-/* Keep center mode's sidebar-free layout, with room for cards and X embeds.
-   The shell includes Mintlify's 2rem desktop gutters on each side. */
 html:is(
     [data-current-path="/"],
     [data-current-path="/zh"],
     [data-current-path="/community"],
     [data-current-path="/zh/community"]
   ) div:has(> #content-container) {
-  max-width: 76rem;
+  max-width: 92rem;
+  padding-inline: 1.5rem;
 }
 
-/* --- Community: articles and original X posts --------------------------- */
+@media (min-width: 1024px) {
+  html:is(
+      [data-current-path="/"],
+      [data-current-path="/zh"],
+      [data-current-path="/community"],
+      [data-current-path="/zh/community"]
+    ) div:has(> #content-container) {
+    padding-inline: 3rem;
+  }
+}
 
-/* The standard doc header (title, description, page actions) is replaced
-   by the page's own display hero. */
+
 html[data-current-path="/community"] #header,
 html[data-current-path="/zh/community"] #header {
   display: none;
 }
 
-/* The community hero replaces the header, so it needs no post-header gap. */
 html[data-current-path="/community"] #content,
 html[data-current-path="/zh/community"] #content {
   margin-top: 0;
@@ -1282,7 +1243,7 @@ html[data-current-path="/zh/community"] #content {
 
 .community-hero {
   margin: 0;
-  padding: 0 0 2.6rem;
+  padding: 0 0 1.75rem;
   border-bottom: 1px solid var(--course-border);
 }
 
@@ -1293,16 +1254,16 @@ html[data-current-path="/zh/community"] #content {
   line-height: 1.6;
 }
 
-/* Inherit the site's .prose h1 typography rather than a separate hero scale. */
 .community-display {
   max-width: 44rem;
   margin: 1rem 0 0 !important;
   color: var(--course-ink);
+  text-wrap: balance;
 }
 
 .community-lede {
   max-width: 35rem;
-  margin: 1.35rem 0 0 !important;
+  margin: 1rem 0 0 !important;
   color: var(--course-muted);
   font-size: 0.95rem;
   line-height: 1.7;
@@ -1310,8 +1271,9 @@ html[data-current-path="/zh/community"] #content {
 
 .community-jump-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
-  margin: 1.5rem 0 2.5rem;
+  margin: 1.25rem 0 2rem;
 }
 
 .community-jump-links a {
@@ -1336,6 +1298,10 @@ html[data-current-path="/zh/community"] #content {
   margin-top: 3rem;
 }
 
+.community-jump-links + .community-section {
+  margin-top: 0;
+}
+
 .community-section-heading {
   margin-bottom: 1.4rem;
 }
@@ -1357,7 +1323,7 @@ html[data-current-path="/zh/community"] #content {
 .community-articles {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .community-share-card {
@@ -1376,9 +1342,10 @@ html[data-current-path="/zh/community"] #content {
   transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
-/* X article header image: full-bleed 2.5:1 cover at the top of the card */
-.community-share-cover {
+.community-share-cover,
+.community-share-card:not(:has(.community-share-cover))::before {
   display: block;
+  flex-shrink: 0;
   width: calc(100% + 2.7rem);
   max-width: none;
   margin: -1.35rem -1.35rem 1.1rem;
@@ -1389,8 +1356,28 @@ html[data-current-path="/zh/community"] #content {
   transition: transform 240ms ease;
 }
 
+.community-share-card:not(:has(.community-share-cover))::before {
+  content: "";
+  background-color: var(--course-cover-base);
+  background-image:
+    url("/logo/nowledge-mem-logo-128.png"),
+    radial-gradient(circle, var(--course-cover-base) 39px, transparent 40px),
+    radial-gradient(circle at 24% 50%, var(--course-cover-trace) 2px, transparent 3px),
+    radial-gradient(circle at 76% 50%, var(--course-cover-trace) 2px, transparent 3px),
+    radial-gradient(circle, transparent 51px, var(--course-cover-trace) 52px, transparent 53px 67px, var(--course-cover-grid) 68px, transparent 69px),
+    linear-gradient(90deg, transparent, var(--course-cover-trace) 20% 80%, transparent),
+    linear-gradient(var(--course-cover-grid), var(--course-cover-grid)),
+    radial-gradient(ellipse at center, var(--course-cover-glow), transparent 70%),
+    linear-gradient(var(--course-cover-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--course-cover-grid) 1px, transparent 1px);
+  background-position: center;
+  background-size: 4rem, cover, cover, cover, cover, 76% 1px, 1px 78%, cover, 24px 24px, 24px 24px;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat;
+}
+
 .community-share-card:hover .community-share-cover,
-.community-share-card:focus-visible .community-share-cover {
+.community-share-card:focus-visible .community-share-cover,
+.community-share-card:not(:has(.community-share-cover)):is(:hover, :focus-visible)::before {
   transform: scale(1.03);
 }
 
@@ -1489,8 +1476,6 @@ html[data-current-path="/zh/community"] #content {
   column-gap: 1.25rem;
 }
 
-/* Keep each original embed intact and let the next post follow its height.
-   Columns reflow naturally when X finishes loading or resizes its iframe. */
 .community-tweet {
   display: inline-block;
   min-width: 0;
@@ -1574,7 +1559,8 @@ html.dark .community-share-card:hover {
     transform: none;
   }
 
-  .community-share-card:hover .community-share-cover {
+  .community-share-card:hover .community-share-cover,
+  .community-share-card:not(:has(.community-share-cover)):hover::before {
     transform: none;
   }
 }
@@ -1582,12 +1568,14 @@ html.dark .community-share-card:hover {
 @media (prefers-reduced-motion: reduce) {
   .community-share-card,
   .community-share-cover,
+  .community-share-card:not(:has(.community-share-cover))::before,
   .community-share-footer span[aria-hidden="true"] {
     transition: none;
   }
 
   .community-share-card:hover .community-share-cover,
-  .community-share-card:focus-visible .community-share-cover {
+  .community-share-card:focus-visible .community-share-cover,
+  .community-share-card:not(:has(.community-share-cover)):is(:hover, :focus-visible)::before {
     transform: none;
   }
 }

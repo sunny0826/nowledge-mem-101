@@ -1,16 +1,3 @@
-/* ==========================================================================
-   Playground component: windowed Nowledge Mem app replica (pure front-end)
-   - Mounted via <div data-mem-playground></div> (see snippets/playground.mdx);
-     these styles only affect elements inside that mount point
-   - .mp-window gives the replica an app-window frame (titlebar, dots, shadow)
-     so it reads as a window floating on the page, not as page content
-   - Same Notion-derived palette as custom.css: only --course-* variables,
-     so light and dark modes stay correct without extra overrides
-   ========================================================================== */
-
-/* The component needs more room than the 42rem course column. `mode: wide`
-   in the page frontmatter drops the TOC; these rules reclaim the remaining
-   gutter so the three-column replica can breathe. */
 html[data-current-path="/playground"] #content,
 html[data-current-path="/zh/playground"] #content {
   max-width: 68rem;
@@ -18,8 +5,6 @@ html[data-current-path="/zh/playground"] #content {
 
 html[data-current-path="/playground"] #content-area,
 html[data-current-path="/zh/playground"] #content-area {
-  /* Only reclaim the TOC gutter on desktop; on mobile the base layout
-     padding must stay intact or the page overflows horizontally. */
   @media (min-width: 1024px) {
     width: 100%;
     margin-left: 0;
@@ -32,7 +17,6 @@ html[data-current-path="/zh/playground"] #content-area {
   margin: 1.2rem 0 1.5rem;
   font-size: 0.82rem;
   line-height: 1.5;
-  /* Star rating amber, per mode — same role as the --course-* palette */
   --course-star: #d99a06;
 }
 
@@ -40,7 +24,6 @@ html.dark [data-mem-playground] {
   --course-star: #f0b429;
 }
 
-/* --- Window chrome: the component reads as an app window, not page content --- */
 
 .mp-window {
   overflow: hidden;
@@ -91,7 +74,6 @@ html.dark .mp-window {
   margin-left: auto;
 }
 
-/* --- App shell ------------------------------------------------------------ */
 
 .mp-shell {
   display: grid;
@@ -102,7 +84,6 @@ html.dark .mp-window {
   color: var(--course-ink);
 }
 
-/* Memories view spans the full width: no right rail, like the real app */
 .mp-shell.mp-norail {
   grid-template-columns: 180px minmax(0, 1fr);
 }
@@ -111,7 +92,6 @@ html.dark .mp-window {
   flex-shrink: 0;
 }
 
-/* --- Left rail ------------------------------------------------------------ */
 
 .mp-rail-left {
   display: flex;
@@ -168,7 +148,6 @@ html.dark .mp-window {
   font-weight: 600;
 }
 
-/* Clickable nav items (view switching) reset their button chrome */
 button.mp-nav-item {
   width: 100%;
   border: 0;
@@ -224,7 +203,6 @@ button.mp-nav-item.mp-active:hover {
   height: 0.75rem;
 }
 
-/* --- Center column --------------------------------------------------------- */
 
 .mp-main {
   min-width: 0;
@@ -263,9 +241,6 @@ button.mp-nav-item.mp-active:hover {
   font-size: 0.75rem;
 }
 
-/* Capture box: matches the real app — borderless gray rounded-2xl card whose
-   background deepens on hover/focus, tool buttons on the left, ⌘⏎ hint and a
-   rounded-square send button on the right, no mode controls inside */
 
 .mp-capture {
   margin-top: 0.95rem;
@@ -357,7 +332,6 @@ button.mp-nav-item.mp-active:hover {
   cursor: default;
 }
 
-/* Filter tabs */
 
 .mp-tabs {
   display: flex;
@@ -406,7 +380,6 @@ button.mp-nav-item.mp-active:hover {
   height: 0.62rem;
 }
 
-/* Today's focus banner */
 
 .mp-focus {
   margin-top: 0.75rem;
@@ -468,7 +441,6 @@ button.mp-nav-item.mp-active:hover {
   height: 0.7rem;
 }
 
-/* Review inbox card ("需要留意") */
 
 .mp-review {
   margin-top: 0.85rem;
@@ -612,7 +584,6 @@ button.mp-nav-item.mp-active:hover {
   height: 0.62rem;
 }
 
-/* Recall answer card */
 
 .mp-answer {
   margin-top: 0.85rem;
@@ -684,7 +655,6 @@ button.mp-nav-item.mp-active:hover {
   height: 0.75rem;
 }
 
-/* Library: compact source list and persistent document detail, matching the app. */
 [data-mem-playground] .mp-library svg { width: .875rem; height: .875rem; }
 [data-mem-playground] .mp-library { height: 100%; min-height: 28rem; }
 [data-mem-playground] .mp-lib-layout { display: grid; grid-template-columns: minmax(15rem, 42%) minmax(0, 1fr); height: calc(100% - 3.5rem); min-height: 25rem; margin-top: .8rem; }
@@ -750,8 +720,6 @@ button.mp-nav-item.mp-active:hover {
   }
 }
 
-/* Timeline: hairline day separators, soft capture cards, light event rows —
-   mirrors the real app feed */
 
 .mp-day {
   display: flex;
@@ -948,10 +916,6 @@ button.mp-nav-item.mp-active:hover {
   text-align: center;
 }
 
-/* --- Memories view -----------------------------------------------------------
-   Replica of the app's Memories screen: borderless search row with an inline
-   Normal/Deep segmented control, a result bar with tier tabs and soft-pill
-   actions, then a whitespace-separated list of memory rows. */
 
 .mp-side-toggle {
   display: inline-flex;
@@ -1322,7 +1286,6 @@ button.mp-nav-item.mp-active:hover {
   display: none;
 }
 
-/* --- Threads pane ------------------------------------------------------------ */
 
 .mp-thr-go {
   display: inline-flex;
@@ -1629,7 +1592,6 @@ button.mp-nav-item.mp-active:hover {
   font-size: 0.75rem;
 }
 
-/* --- Right rail ------------------------------------------------------------ */
 
 .mp-rail-right {
   min-width: 0;
@@ -1842,7 +1804,6 @@ button.mp-nav-item.mp-active:hover {
   font-size: 0.625rem;
 }
 
-/* --- Responsive ------------------------------------------------------------ */
 
 @media (max-width: 1100px) {
   .mp-shell,
@@ -1887,8 +1848,6 @@ button.mp-nav-item.mp-active:hover {
 }
 
 
-/* --- CJK readability floor: mirrors the real app's data-script=cjk rule,
-   which lifts text-[10px]/[11px]/text-xs to 12px with looser leading -------- */
 
 html[lang^="zh"] .mp-space-pill,
 html[lang^="zh"] .mp-tab,
@@ -1933,7 +1892,6 @@ html[lang^="zh"] .mp-event-sub {
   line-height: 1.6;
 }
 
-/* AI Now: task list, chat composer and source reader. */
 [data-mem-playground] .mp-ai-notice {
   margin: 0.5rem 0 0.8rem;
   color: var(--course-muted);
@@ -2078,7 +2036,6 @@ html[lang^="zh"] .mp-event-sub {
   [data-mem-playground] .mp-ai-chat { height: 28rem; }
 }
 
-/* Simulated processing channel: concise progress, never fabricated reasoning. */
 [data-mem-playground] .mp-ai-process {
   margin: .55rem 0;
   border-left: 2px solid var(--course-border-soft);

@@ -1,15 +1,8 @@
-/* mem-video-loading.css
-   教程视频 <iframe>（bilibili / YouTube）加载状态与兜底样式（frame 包裹式）：
-   - .mem-video-frame：视频外框（圆角 + 溢出裁剪），内含 16:9 播放区与底部兜底链接
-   - .mem-video-stage：16:9 播放区；加载中显示暖色占位 + 居中旋转指示器
-   - 就绪：轻微淡入；兜底链接常驻，无法播放时可直接前往 bilibili / YouTube
-   - 浅色 / 深色模式分别适配；动画只用 opacity 与 transform */
-
 .mem-video-frame {
   position: relative;
   display: block;
   width: 100%;
-  margin: 32px 0; /* 与正文段落节奏一致 */
+  margin: 32px 0;
   overflow: hidden;
   border-radius: 8px;
   background: #f4f3f0;
@@ -31,12 +24,11 @@ html.dark .mem-video-frame {
   inset: 0;
   width: 100%;
   height: 100%;
-  margin: 0; /* 覆盖 Mintlify 默认 iframe 样式，保证与播放区完全对齐 */
+  margin: 0;
   border: 0;
   background: #000;
 }
 
-/* 加载中：隐藏黑底播放器，占位背景接管高度与观感 */
 .mem-video-frame[data-state="loading"] iframe {
   visibility: hidden;
 }
@@ -44,12 +36,10 @@ html.dark .mem-video-frame {
   opacity: 1;
 }
 
-/* 就绪：轻微淡入，不打断阅读 */
 .mem-video-frame[data-state="ready"] iframe {
   animation: mem-video-fade-in 0.3s ease;
 }
 
-/* 旋转指示器：加载中可见，其余时间透明且不占交互 */
 .mem-video-spinner {
   position: absolute;
   top: 50%;
@@ -69,7 +59,6 @@ html.dark .mem-video-spinner {
   border-top-color: #2383e2;
 }
 
-/* 兜底链接：一行低调的灰字，常驻于播放区下方 */
 .mem-video-fallback {
   margin: 0;
   padding: 8px 14px 10px;

@@ -1,24 +1,9 @@
-/**
- * playground.js
- * 可在任意课程页嵌入的 Nowledge Mem 界面组件（纯前端演示）：
- * 页面中放一个 <div data-mem-playground></div> 即可挂载一个 Mem Timeline
- * 复刻界面（推荐通过 snippets/playground.mdx 引入）。支持 Capture 保存、
- * 提问式 Recall、全部/已保存/事件筛选、时间线 ↔ 记忆视图切换（记忆视图
- * 支持搜索、活跃/已归档/全部切换、评分与收藏），以及右侧统计、活动日历、
- * 最近事件的联动。全部数据为内置示例，仅存内存，刷新即重置；不发起任何网络请求。
- *
- * 与 React 共存（同 mem-video-loading.js 的策略）：
- *   a) 初始扫描推迟到水合结束之后（DOMContentLoaded + 延迟补偿 + load 兜底）
- *   b) MutationObserver 持续观察并统一防抖（150ms），等 React 当前渲染批次
- *      稳定后再挂载，避免在 React 挂载中途改动其管理的 DOM
- *   c) 仅处理带 [data-mem-playground] 且未初始化的挂载点；其他页面完全惰性
- */
 (function () {
   "use strict";
 
   var MOUNT_ATTR = "data-mem-playground";
   var INIT_ATTR = "data-mem-playground-init";
-  var DEFER_MS = 1200; // 水合补偿窗口
+  var DEFER_MS = 1200;
   var SCAN_DEBOUNCE_MS = 150;
   var scanTimer = null;
 
@@ -34,7 +19,6 @@
       .replace(/"/g, "&quot;");
   }
 
-  /* --- Icons (lucide-style, stroke-based) ---------------------------------- */
 
   var ICON_PATHS = {
     home: '<path fill="currentColor" stroke="none" fill-rule="evenodd" d="M12 2.7 3 10v9.5A1.5 1.5 0 0 0 4.5 21h15a1.5 1.5 0 0 0 1.5-1.5V10zM9.8 21v-5.5h4.4V21z"/>',
@@ -114,7 +98,6 @@
     copy: '<rect x="9" y="9" width="11.5" height="11.5" rx="2"/><path d="M5.5 15h-1a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"/>',
   };
 
-  /* Unit type -> icon, mirroring the app's memory-unit-type-icon mapping */
   var UNIT_ICONS = {
     fact: "info",
     preference: "faders",
@@ -136,7 +119,6 @@
     );
   }
 
-  /* --- Locale data ---------------------------------------------------------- */
 
   var LOCALES = {
     en: {
@@ -973,7 +955,6 @@
     },
   };
 
-  /* --- Recall: keyword matching over mock memories -------------------------- */
 
   function tokenize(query) {
     var tokens = [];
@@ -1023,7 +1004,6 @@
     });
   }
 
-  // Same keyword matching over indexed Library documents.
   function searchDocuments(docs, query) {
     var tokens = tokenize(query);
     if (!tokens.length) {
@@ -1054,7 +1034,6 @@
     });
   }
 
-  /* --- Rendering ------------------------------------------------------------ */
 
   function nowHM() {
     var now = new Date();
@@ -1063,9 +1042,6 @@
     return h + ":" + m;
   }
 
-  // Intentional demo behavior: copying a thread writes a harmless fake
-  // reference (nowledgemem://thread/demo-N) to the real clipboard so the
-  // interaction feels like the app. Nothing else leaves the browser.
   function copyText(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       return navigator.clipboard.writeText(text);
@@ -1366,7 +1342,7 @@
     if (isFuture) {
       return 0;
     }
-    return (day * 7 + month * 3) % 5; // 稳定的伪随机强度，仅作演示
+    return (day * 7 + month * 3) % 5;
   }
 
   function renderCalendar(mount, L, state) {
@@ -1374,7 +1350,7 @@
     var year = now.getFullYear();
     var month = now.getMonth();
     var today = now.getDate();
-    var firstOffset = (new Date(year, month, 1).getDay() + 6) % 7; // 周一为一周起点
+    var firstOffset = (new Date(year, month, 1).getDay() + 6) % 7;
     var daysInMonth = new Date(year, month + 1, 0).getDate();
 
     var html = L.dow
@@ -1571,7 +1547,6 @@
       "</div>";
   }
 
-  /* --- Memories view -------------------------------------------------------- */
 
   function memPaneHtml(L) {
     var V = L.memView;
@@ -1963,7 +1938,6 @@
       : "";
   }
 
-  /* --- Library view --------------------------------------------------------- */
 
   function libPaneHtml(L) {
     var V = L.libView;
@@ -1996,7 +1970,6 @@
     mount.querySelector('.mp-lib-layout').classList.toggle('mp-lib-selected',!!doc);
   }
 
-  /* --- Mount and wire -------------------------------------------------------- */
 
   function init(mount) {
     if (mount.hasAttribute(INIT_ATTR)) {
@@ -2076,8 +2049,6 @@
       if (!text) {
         return;
       }
-      // 粘贴文件链接或文档名（.pdf/.md 等）视为导入资料：进入 Library，
-      // 先显示索引中，片刻后可被提问引用——与真实应用的流水线一致。
       var isDocument =
         /^https?:\/\/\S+/i.test(text) ||
         /\.(pdf|md|markdown|txt|docx?)\b/i.test(text);
@@ -2113,7 +2084,6 @@
         }, 2500);
         return;
       }
-      // 与真实应用一致：输入框不做模式切换，以 ? 结尾的内容视为提问
       if (!/[?？]\s*$/.test(text)) {
         state.memories.unshift({
           day: "today",
@@ -2402,8 +2372,6 @@
         return;
       }
       if (target.hasAttribute("data-mp-lib-import")) {
-        // Import the sample document: it lands as "indexing" and flips to
-        // searchable a moment later, like the real app's pipeline.
         if (state.library.imported) {
           return;
         }
@@ -2463,7 +2431,6 @@
   }
 
   function boot() {
-    // 初始扫描推迟到页面完成加载之后，避免在 React 挂载中途改 DOM。
     setTimeout(function () {
       scan();
       observer.observe(document.documentElement, {

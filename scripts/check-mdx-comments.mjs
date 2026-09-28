@@ -30,8 +30,6 @@ function readPages(directory, prefix = "") {
 async function mdxParser() {
   const requireHere = createRequire(import.meta.url);
   const candidates = [() => requireHere.resolve("@mdx-js/mdx")];
-  // Mintlify already supplies MDX. Locate it through the installed CLI without
-  // relying on a developer-specific global node_modules path or installing it.
   for (const directory of (process.env.PATH ?? "").split(delimiter)) {
     candidates.push(() => {
       const mintPath = realpathSync(join(directory, "mint"));
@@ -51,7 +49,7 @@ function renderedStructure(value) {
   if (Array.isArray(value)) return value.map(renderedStructure).filter((node) => node !== null);
   if (!value || typeof value !== "object") return value;
   if (["mdxFlowExpression", "mdxTextExpression"].includes(value.type) && value.data?.estree?.body?.length === 0) {
-    return null; // Valid empty/comment-only MDX expressions have no output.
+    return null;
   }
   return Object.fromEntries(Object.entries(value)
     .filter(([key]) => !["position", "data"].includes(key))

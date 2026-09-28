@@ -44,6 +44,7 @@ Read for lesson content, metadata, cards, or course styling. Publication states 
 
 ## MDX and reuse
 
+- Community article cards share the `.community-share-card` layout. Add `.community-share-cover` only when an article has its own cover; otherwise, CSS automatically supplies a decorative default cover using the Mem logo. Keep the same card width and vertical structure in both cases.
 - Published and draft lessons need YAML frontmatter with `title` and `description`; follow nearby `sidebarTitle` and Lucide `icon` conventions.
 - Use built-in Mintlify components when they fit, while retaining the site's custom course classes.
 - Every discoverable published page belongs in the correct language navigation. Draft navigation is generated only in the temporary preview; do not add unpublished paths to production `docs.json`.

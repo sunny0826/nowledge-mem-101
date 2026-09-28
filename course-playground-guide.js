@@ -1,25 +1,17 @@
-/* Course guidance outside the reusable Playground app replica. */
 (function () {
   "use strict";
 
   var ROOT_SELECTOR = "[data-course-playground-guide]";
-  var MIN_DOCK_WIDTH = 40 * 16; // rem-based minimum width for the docked window
+  var MIN_DOCK_WIDTH = 40 * 16;
   var states = new WeakMap();
   var tracked = [];
   var scanTimer = null;
 
-  // Per-lesson simulation flows. The course root picks one with
-  // data-course-guide-scenario; "save" (lesson 1) is the default. Each
-  // scenario maps its steps to Playground controls, names the steps that
-  // carry the one-click fill button, declares how completion is verified,
-  // and selects what changed when the flow completes. Lessons 5 and 6 have
-  // no scenario: AI-tool connections happen outside the Mem UI the replica
-  // shows.
   var SCENARIOS = {
     save: {
       steps: 3,
       fillSteps: [2],
-      completion: "cleared", // a save clears the input
+      completion: "cleared",
       targets: {
         1: '[data-mp-view="timeline"]',
         2: "[data-mp-input]",
@@ -30,7 +22,7 @@
     recall: {
       steps: 2,
       fillSteps: [1],
-      completion: "answer", // a question produces an answer card
+      completion: "answer",
       targets: {
         1: "[data-mp-input]",
         2: "[data-mp-send]",
@@ -40,7 +32,7 @@
     threads: {
       steps: 3,
       fillSteps: [2],
-      completion: "query", // a thread search keeps its query
+      completion: "query",
       targets: {
         1: '[data-mp-view="threads"]',
         2: "[data-mp-thr-q]",
@@ -48,8 +40,6 @@
       },
       changed: "[data-mp-thr-list] .mp-thr-row",
     },
-    // AI Workflow lesson 1: save a work brief, then ask Mem to bring it
-    // back. Two sends — the brief (input clears) and the question (answer).
     "save-ask": {
       steps: 4,
       fillSteps: [1, 3],
@@ -62,9 +52,6 @@
       },
       changed: ".mp-answer",
     },
-    // Lesson 3 mirrors the real app: paste a document link into Timeline to
-    // import it, ask about its content right there, then find the document
-    // in Library. Completion is the final nav click, not a send.
     library: {
       steps: 5,
       fillSteps: [1, 3],
@@ -80,8 +67,6 @@
     },
   };
 
-  // AI Now actions advance only on state changes emitted by the replica.
-  // Sends that report missing prerequisites never complete a lesson step.
   var AI_TARGETS = {
     ai: '[data-mp-view="ai-now"]', library: '[data-mp-view="library"]',
     fill: '[data-mp-ai-input]', send: '[data-mp-ai-send]',
@@ -102,8 +87,6 @@
   SCENARIOS["ai-research"] = aiScenario([["ai","view","ai-now"],["research","research","on"],["fill"],["send","reply","research"]]);
   SCENARIOS["ai-save"] = aiScenario([["ai","view","ai-now"],["fill"],["send","reply","draft"],["source","read","source"],["back","back"],["fill"],["send","reply","save"],["memory","read","memory"],["back","back"],["fresh","new-task"],["fill"],["send","reply","recall"],["memory","read","memory"],["back","back"],["fill"],["send","reply","source"],["source","read","source"]]);
 
-  // Earlier lesson turns are sample context, not a learner's persisted session.
-  // Keep the sequence and prompts here, outside the reusable app replica.
   var AI_HISTORY = {
   "en": [
     {
@@ -177,8 +160,6 @@
   function targetForStep(state, step) {
     var selector = spec(state).targets[step];
     var el = state.windowEl.querySelector(selector);
-    // A step that points at the Timeline textarea rings the whole capture
-    // box instead; the threads search step rings the whole search box.
     if (el && selector === "[data-mp-input]") el = el.closest(".mp-capture") || el;
     if (el && selector === "[data-mp-thr-q]") el = el.closest(".mp-mem-search") || el;
     return el;
@@ -189,8 +170,6 @@
     var content = document.getElementById("content");
     var html = document.documentElement;
 
-    // While the window is docked, collapse the docs sidebar so the page has
-    // room; it comes back as soon as the window closes or minimizes.
     var wantDocked = state.open && !state.minimized && window.innerWidth >= 1024;
     if (wantDocked !== html.hasAttribute("data-course-playground-docked")) {
       if (wantDocked) {
@@ -216,9 +195,6 @@
     reset();
     if (!wantDocked) return;
 
-    // Treat the entire article (including its header and pagination) and the
-    // replica as one centered workspace. Extra desktop space belongs outside
-    // that workspace, never in an expanding gap between the two columns.
     var vw = document.documentElement.clientWidth;
     var edge = 24;
     var gap = vw >= 1600 ? 32 : 24;
@@ -226,15 +202,13 @@
     var articleWidth = Math.max(416, Math.min(704, available * 0.36));
     var width = Math.min(1280, available - articleWidth);
     var area = document.getElementById("content-area");
-    if (width < MIN_DOCK_WIDTH || !area) return; // narrow desktop: overlay
+    if (width < MIN_DOCK_WIDTH || !area) return;
 
     var workspaceWidth = articleWidth + gap + width;
     var articleLeft = (vw - workspaceWidth) / 2;
     html.setAttribute("data-course-playground-split", "true");
     html.style.setProperty("--course-practice-article-width", articleWidth + "px");
     html.style.setProperty("--course-practice-article-offset", "0px");
-    // Measure after the split width applies; the host's flex layout and
-    // centered max-width may otherwise introduce an additional offset.
     var areaLeft = area.getBoundingClientRect().left;
     html.style.setProperty("--course-practice-article-offset", articleLeft - areaLeft + "px");
     playgroundWindow.style.left = articleLeft + articleWidth + gap + "px";
@@ -245,11 +219,6 @@
   var FILL_ICON =
     '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>';
 
-  // Rebuild the floating caption. On the scenario's fill step it also
-  // carries the one-click fill button, so the action sits right where the
-  // learner is looking.
-  // Content is cached: rebuilding between mousedown and mouseup (e.g. while
-  // the window scrolls) would swap the button node and swallow the click.
   function renderHint(state, text, withFill) {
     var hint = state.hintEl;
     var key = text + "|" + (withFill ? "fill" : "");
@@ -284,7 +253,6 @@
     center = Math.max(windowRect.left + half + 8, Math.min(center, windowRect.right - half - 8));
     hint.style.left = center + "px";
     var top = targetRect.bottom + 10;
-    // Flip above the target when there is no room below inside the window.
     if (top + hint.offsetHeight > windowRect.bottom - 8) {
       top = targetRect.top - hint.offsetHeight - 10;
     }
@@ -301,8 +269,6 @@
       return;
     }
 
-    // After the final step, point at what changed: the new entry, the
-    // answer card, or the found thread.
     if (state.step > spec(state).steps) {
       var changedText =
         state.changedEl &&
@@ -348,8 +314,6 @@
       state.changedEl.removeAttribute("data-course-guide-changed");
       state.changedEl = null;
     }
-    // Keep the article in sync: when the simulation advances the step, bring
-    // the matching course step into view.
     if (state.open && state.renderedStep !== undefined && state.step !== state.renderedStep) {
       var syncAnchor = root.querySelector(
         '[data-course-guide-source="' + Math.min(state.step, stepCount) + '"]'
@@ -385,8 +349,6 @@
     });
   }
 
-  // Map the macOS-style titlebar dots: only red (close) is interactive; the
-  // yellow and green dots stay decorative.
   function prepareWindowControl(state) {
     var dots = state.windowEl.querySelectorAll(".mp-dots i");
     if (!dots.length) return;
@@ -449,10 +411,6 @@
     render(state);
   }
 
-  // Mark what the last action just changed: the new timeline entry, the
-  // answer card, or the found thread — whatever the scenario names. The
-  // completion dialog appears a beat later so the learner sees the change
-  // first.
   function markChange(state) {
     var entry = state.windowEl.querySelector(spec(state).changed);
     state.changedEl = entry || null;
@@ -476,8 +434,6 @@
 
   function tryComplete(state, input) {
     setTimeout(function () {
-      // Verify the action landed the way the scenario expects (see
-      // SCENARIOS completion modes).
       var mode = spec(state).completion;
       if (mode === "answer") {
         if (!state.windowEl.querySelector(".mp-answer")) return;
@@ -489,7 +445,6 @@
       state.step = spec(state).steps + 1;
       markChange(state);
       render(state);
-      // Give the learner a moment to see the change before the dialog.
       setTimeout(function () {
         showDoneModal(state);
       }, 5000);
@@ -497,12 +452,10 @@
   }
 
   function fillExample(state, value) {
-    // The fill button only appears on fill steps, whose target is an input.
     var input = state.windowEl.querySelector(spec(state).targets[state.step]);
     if (!input || !value) return;
     if (!state.open) setWindowOpen(state, true);
     input.value = value;
-    // handleInput advances the step when the dispatched input event lands.
     input.dispatchEvent(new Event("input", { bubbles: true }));
     render(state);
     setTimeout(function () {
@@ -511,10 +464,6 @@
     }, 320);
   }
 
-  // Open the Nowledge Mem desktop app through its registered URL scheme
-  // (nowledgemem://, macOS and Windows). If nothing takes focus within a
-  // short window the app is probably not installed, so fall back to the
-  // website.
   function openMemApp(state) {
     var site = state.rootEl.getAttribute("data-course-guide-mem-url") || "https://mem.nowledge.co";
     var handled = false;
@@ -551,7 +500,6 @@
     }, 2500);
   }
 
-  // Completion dialog built from the course root's localized data attributes.
   function createDoneModal(state) {
     var root = state.rootEl;
     var message = root.getAttribute("data-course-guide-done-message");
@@ -581,7 +529,6 @@
       root.getAttribute("data-course-guide-confirm-label") || "OK";
 
     modal.addEventListener("click", function (event) {
-      // Courses can provide a next lesson; other exercises keep dismiss behavior.
       if (event.target.closest(".course-playground-done-open")) {
         event.preventDefault();
         openMemApp(state);
@@ -627,7 +574,6 @@
     if ((!handoff && !onEntry) || window.innerWidth < 1024) return;
     var mount = state.windowEl.querySelector('[data-mem-playground]');
     if (!mount || !mount.mpAPI || (spec(state).actions && !mount.hasAttribute('data-mp-ai-ready'))) return;
-    // Consume explicit handoffs only; preserve ordinary section links on entry.
     if (handoff) window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
     startPractice(state);
     var target = targetForStep(state, state.step);
@@ -640,7 +586,7 @@
 
     var launch = target.closest("[data-course-guide-open]");
     if (launch && state.rootEl.contains(launch)) {
-      if (window.innerWidth < 1024) return; // simulation is desktop-only
+      if (window.innerWidth < 1024) return;
       if (state.open) {
         setWindowOpen(state, false);
       } else {
@@ -675,9 +621,6 @@
       var navSpec = spec(state);
       if (navSpec.targets[state.step] === navSel) {
         if (state.step === navSpec.steps) {
-          // The final step is opening a view (library flow). The pane
-          // renders after this click, so mark the changed element a tick
-          // later.
           state.step = navSpec.steps + 1;
           setTimeout(function () {
             markChange(state);
@@ -694,9 +637,6 @@
       }
     }
 
-    // Library flow: two mid-flow sends — importing the link (step 2, the
-    // input clears) and asking about the document (step 4, an answer card
-    // appears).
     if (state.scenario === "library") {
       var libSend = target.closest("[data-mp-send]");
       var libInput = state.windowEl.querySelector("[data-mp-input]");
@@ -715,9 +655,6 @@
       return;
     }
 
-    // Save and recall end on the Timeline send button; save-ask has one
-    // mid-flow send (saving the brief clears the input) before its final
-    // send.
     var send = target.closest("[data-mp-send]");
     var input = state.windowEl.querySelector("[data-mp-input]");
     if (!send || !input || !input.value.trim()) return;
@@ -730,7 +667,6 @@
     }
   }
 
-  // A mid-flow send either saved (input cleared) or asked (answer card).
   function midSendAdvance(state, input) {
     setTimeout(function () {
       var landed =
@@ -745,8 +681,6 @@
   function librarySendAdvance(state, input) {
     setTimeout(function () {
       if (state.step === 2 && input.value === "") {
-        // The import landed. Move on once the document is searchable, like
-        // the course step "wait for it to become searchable".
         var waitStart = Date.now();
         var poll = setInterval(function () {
           var first = state.windowEl.querySelector(
@@ -788,7 +722,6 @@
       return;
     }
     if (!event.target.matches("[data-mp-input]")) return;
-    // Typing on an input step arms the next step; clearing drops back.
     var t = spec(state).targets;
     if (t[state.step] === "[data-mp-input]" && event.target.value.trim()) {
       state.step += 1;
@@ -864,7 +797,6 @@
     }
   }
 
-  // Small floating icon button on the right edge while the window is minimized.
   function createMiniChip(state) {
     var chip = document.createElement("button");
     chip.type = "button";
@@ -891,8 +823,6 @@
       return;
     }
 
-    // Move the window to <body>: it is fixed-positioned and docks beside the
-    // article, independent of the course markup's place in the page.
     var windowEl = root.querySelector("[data-course-playground-window]");
     if (!windowEl) return;
     document.body.appendChild(windowEl);
@@ -938,7 +868,6 @@
       highlightTarget(state);
     };
     window.addEventListener("resize", state.onResize);
-    // The ringed control can move when the window's own content scrolls.
     windowEl.addEventListener(
       "scroll",
       function () {
@@ -951,7 +880,6 @@
   }
 
   function scan() {
-    // Drop moved elements whose course root left the DOM (SPA navigation).
     for (var i = tracked.length - 1; i >= 0; i -= 1) {
       var state = tracked[i];
       if (!document.contains(state.rootEl)) {

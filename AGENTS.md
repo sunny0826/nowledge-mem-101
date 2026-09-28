@@ -37,6 +37,7 @@
 
 ## Boundaries that apply across courses
 
+- Do not add comments to project code, including JS/JSX, CSS, maintenance scripts, tests, and `Justfile`. Use clear names and structure; put explanations in documentation. Preserve executable shebangs and comment syntax used as test data. This rule does not cover the unfinished video scripts stored in MDX comments below.
 - Preserve existing components and CSS classes unless a redesign is requested. Keep custom styling in `custom.css`, using `--course-*` variables and their dark-mode values.
 - Keep course-specific behavior outside the Playground. Do not inject course UI into it, change its save logic for a lesson, or invent a simulation for unsupported workflows. The course popup is available only at viewport widths of at least 1024px; hide it below that boundary.
 - Lesson steps describe the real app; simulation hints belong inside the popup. Read the Playground reference before changing its behavior.
