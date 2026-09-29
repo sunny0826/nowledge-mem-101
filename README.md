@@ -75,3 +75,4 @@ Read [AGENTS.md](AGENTS.md) for project conventions. This repository README is E
 Use `just drafts` for the merged draft preview and `just check-drafts` to validate all unpublished lessons at their final paths. See [draft publication states](drafts/README.md) for text-first releases and fully available lessons.
 
 Project-specific instructions live in [.agents/skills/nowledge-course/](.agents/skills/nowledge-course/SKILL.md). One upstream Mintlify skill is pinned in `skills-lock.json`; the course and deployment API skills are locally maintained.
+<!-- Lody trial 2026-09-29, safe to delete -->
