@@ -1,22 +1,22 @@
 ---
 title: AI Now
-description: 通过五课模拟交互，学习找回上下文、核查证据和保存结果。
+description: 通过六课模拟交互，学习找回上下文、核查证据、保存结果，并让 AI Now 管理 Mem 本身。
 sidebarTitle: AI Now
 icon: sparkles
 ---
 
 <div className="course-meta" aria-label="课程信息">
-  <span><Icon icon="book-open" /> 共 5 课</span>
-  <span><Icon icon="clock-3" /> 约 25 分钟</span>
+  <span><Icon icon="book-open" /> 共 6 课</span>
+  <span><Icon icon="clock-3" /> 约 30 分钟</span>
   <span><Icon icon="user-round" /> 进阶</span>
 </div>
 
-<p className="course-intro">在浏览器中通过模拟交互学习 AI Now：找回保存的上下文、阅读来源、检查证据支持什么，再把结果留给下一次任务。</p>
+<p className="course-intro">在浏览器中通过模拟交互学习 AI Now：找回保存的上下文、阅读来源、检查证据支持什么，把结果留给下一次任务，并让 AI Now 管理 Mem 本身。</p>
 
 <a className="course-cta" href="/zh/ai-now/start-a-grounded-task">开始第一课 <span aria-hidden="true">→</span></a>
 
 <Note>
-五课均提供带引导的模拟交互。在电脑浏览器中，第 1 课准备好后点击**开始模拟**，第 2–5 课会自动打开模拟。先用虚构的 Atlas 材料练习，再把流程用于 Nowledge Mem。模拟使用预设回答，不调用 AI 或联网搜索。
+六课均提供带引导的模拟交互。在电脑浏览器中，第 1 课准备好后点击**开始模拟**，第 2–6 课会自动打开模拟。先用虚构的 Atlas 材料练习，再把流程用于 Nowledge Mem。模拟使用预设回答，不调用 AI 或联网搜索。
 </Note>
 
 ## 你将完成什么
@@ -44,15 +44,19 @@ icon: sparkles
     <span className="learning-stage-mark" aria-hidden="true"></span>
     <span className="learning-stage-title">保存结果</span>
   </div>
+  <div className="learning-stage">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">管理 Mem</span>
+  </div>
 </div>
 
 虚构案例讨论 Atlas 是否应在下个季度进行一次跨团队计划评审，用现有季度记录检查未来十二个月的依赖。本次不决定今后的评审频率。课程开始时，试行尚未获批。第 1 课提供练习背景，第 2 课提供访谈记录，可以完整跟随案例，也可以替换为自己的问题。
 
 ## 从模拟交互开始
 
-从[第 1 课](/zh/ai-now/start-a-grounded-task)开始。第 1–4 课以及第 5 课的起草、保存步骤沿用同一条 Atlas 任务，只有最后的找回验证才新建任务。
+从[第 1 课](/zh/ai-now/start-a-grounded-task)开始。第 1–4 课以及第 5 课的起草、保存步骤沿用同一条 Atlas 任务；最后的找回验证和第 6 课的设置练习各自新建任务。
 
-每课模拟会准备好所需的示例记忆、来源和此前的对话。第 2–5 课依次带入背景核对、来源阅读、证据简报和模拟研究缺口。这些是预置示例，不是你上次练习的存档；刷新或重练会恢复到本课的起点。无需配置模型。手机端可以阅读步骤，交互练习请使用电脑浏览器。
+每课模拟会准备好所需的示例记忆、来源和此前的对话。第 2–5 课依次带入背景核对、来源阅读、证据简报和模拟研究缺口；第 6 课从全新任务开始，不使用 Atlas 材料。这些是预置示例，不是你上次练习的存档；刷新或重练会恢复到本课的起点。无需配置模型。手机端可以阅读步骤，交互练习请使用电脑浏览器。
 
 ## 在真实应用中练习前
 
@@ -60,6 +64,7 @@ icon: sparkles
 - 按照[模型提供商指南](https://mem.nowledge.co/zh/docs/llm-providers)配置并测试 AI Now 使用的模型，也可以选择受支持的本地提供商。远程客户端使用所连接 Mem 服务器上的模型配置。
 - 准备一条相关记忆和一份来源，或使用第 1–2 课的虚构练习材料。
 - 分析过程保持在同一段 AI Now 对话中，最后的找回验证使用新对话。
+- 设置课程需要 Nowledge Mem 0.10.95 或更高版本。
 
 <Note>
 课程产出是一条可追溯的建议或决定，其中也包含未知项。证据不全时，不必强行下结论。研究时间可能超出各课的估计。
@@ -100,6 +105,13 @@ icon: sparkles
     <span className="course-card-index">05</span>
     <h3>保存结果</h3>
     <p>保存核对后的结果，再用新任务找回记录、重读来源。</p>
+    <div className="course-card-footer"><span>约 5 分钟</span><span className="course-card-action">开始练习 →</span></div>
+  </a>
+
+  <a className="course-card course-card-featured" href="/zh/ai-now/let-ai-now-manage-mem">
+    <span className="course-card-index">06</span>
+    <h3>让 AI Now 管理 Mem</h3>
+    <p>查看一项支持的设置，修改并读回保存值，再还原改动。</p>
     <div className="course-card-footer"><span>约 5 分钟</span><span className="course-card-action">开始练习 →</span></div>
   </a>
 </div>

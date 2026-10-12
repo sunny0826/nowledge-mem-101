@@ -54,7 +54,7 @@ const { existsSync, readFileSync } = require('node:fs');
 const { join, resolve } = require('node:path');
 const { createTask } = require('../playground-ai-now.js');
 const { aiPracticeSeed } = require('../course-playground-guide.js');
-const lessonSequence = ['start-a-grounded-task','bring-a-source','ask-for-an-evidence-brief','research-what-is-missing','save-the-result'];
+const lessonSequence = ['start-a-grounded-task','bring-a-source','ask-for-an-evidence-brief','research-what-is-missing','save-the-result','let-ai-now-manage-mem'];
 const scenarioSequence = ['ai-context','ai-source','ai-evidence','ai-research','ai-save'];
 test('English and Chinese lessons expose identical simulation controls and automatic entry',()=>{
   const contract=page=>({
