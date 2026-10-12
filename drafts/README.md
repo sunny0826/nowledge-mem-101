@@ -23,7 +23,7 @@ During preview, changes under `drafts/`, `snippets/`, and shared site assets syn
 | Published text awaiting video | Matching root / `zh/` path, added to `docs.json`, draft tag removed | Sidebar page is reachable; course entry card and previous lesson's next link remain Coming soon / 即将上线; page explains that the demo is pending |
 | Fully available lesson | Published paths and bilingual navigation | Real locale-specific videos or an explicitly chosen interactive learning path; entry card and previous lesson's next link become available |
 
-AI Now uses guided Playground simulations as its learning path. Its five lessons, course cards, and next links are available without videos or pending-video notices. Earlier recording drafts are archived in `prompts/ai-now-recording-notes.md`, excluded from publication and draft previews by `.mintignore`.
+AI Now uses guided Playground simulations as its learning path. Its six lessons, course cards, and next links are available without videos or pending-video notices. Earlier recording drafts are archived in `prompts/ai-now-recording-notes.md`, excluded from publication and draft previews by `.mintignore`.
 
 The next-lesson section of any page reflects the next lesson's own state, not the current page's state. A published text page awaiting video is intentionally reachable before its course progression entry is activated.
 
