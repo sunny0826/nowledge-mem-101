@@ -1,6 +1,7 @@
 @media (min-width: 1024px) {
   div:has(> #localization-select-trigger) {
     position: absolute;
+    z-index: 1;
     top: 50%;
     right: 0;
     margin: 0;
@@ -9,6 +10,10 @@
 
   #navbar nav:has(.navbar-link) {
     margin-right: 7.5rem;
+  }
+
+  div:has(> #localization-select-content) {
+    z-index: 123;
   }
 }
 
