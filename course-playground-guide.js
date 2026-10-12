@@ -86,6 +86,7 @@
   SCENARIOS["ai-evidence"] = aiScenario([["ai","view","ai-now"],["fill"],["send","reply","brief"],["source","read","source"]]);
   SCENARIOS["ai-research"] = aiScenario([["ai","view","ai-now"],["research","research","on"],["fill"],["send","reply","research"]]);
   SCENARIOS["ai-save"] = aiScenario([["ai","view","ai-now"],["fill"],["send","reply","draft"],["source","read","source"],["back","back"],["fill"],["send","reply","save"],["memory","read","memory"],["back","back"],["fresh","new-task"],["fill"],["send","reply","recall"],["memory","read","memory"],["back","back"],["fill"],["send","reply","source"],["source","read","source"]]);
+  SCENARIOS["ai-manage"] = aiScenario([["ai","view","ai-now"],["fill"],["send","reply","settings"],["fill"],["send","reply","setting-change"],["fill"],["send","reply","setting-report"],["fill"],["send","reply","setting-revert"]]);
 
   var AI_HISTORY = {
   "en": [
