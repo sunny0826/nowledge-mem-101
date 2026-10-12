@@ -50,8 +50,8 @@ for(const lang of ['en','zh']) {
   });
 }
 
-const { readFileSync } = require('node:fs');
-const { resolve } = require('node:path');
+const { existsSync, readFileSync } = require('node:fs');
+const { join, resolve } = require('node:path');
 const { createTask } = require('../playground-ai-now.js');
 const { aiPracticeSeed } = require('../course-playground-guide.js');
 const lessonSequence = ['start-a-grounded-task','bring-a-source','ask-for-an-evidence-brief','research-what-is-missing','save-the-result'];
@@ -95,6 +95,74 @@ test('completion destinations follow published lesson order and only auto-start 
       assert.equal(hints.at(-1)[1],message);
       assert.ok(page.includes('data-course-guide-done role="status" hidden>'+message+'</p>'));
     }
+  }
+});
+const manageSlug='let-ai-now-manage-mem';
+function manageLessonPath(locale){
+  const root=resolve(__dirname,'..');
+  const draft=locale==='zh'?join(root,'drafts','zh','ai-now',manageSlug+'.mdx'):join(root,'drafts','ai-now',manageSlug+'.mdx');
+  const published=locale==='zh'?join(root,'zh','ai-now',manageSlug+'.mdx'):join(root,'ai-now',manageSlug+'.mdx');
+  return existsSync(draft)?draft:published;
+}
+test('lesson 6 exposes the identical settings simulation contract in both locales',()=>{
+  const contract=page=>({
+    scenario:page.match(/data-course-guide-scenario="([^"]+)"/)[1],
+    autoStart:page.match(/data-course-guide-autostart="([^"]+)"/)[1],
+    hints:[...page.matchAll(/data-course-guide-hint-(\d+)=/g)].map(m=>Number(m[1])),
+    fills:[...page.matchAll(/data-course-guide-fillable-(\d+)=/g)].map(m=>Number(m[1])),
+    steps:[...page.matchAll(/data-course-guide-source="(\d+)"/g)].map(m=>Number(m[1])),
+    next:page.match(/data-course-guide-confirm-href="([^"]+)"/)[1].replace(/^\/zh\//,'/'),
+    guide:page.match(/src="(\/course-playground-guide.js[^\"]+)"/)[1],
+    realApp:page.match(/data-course-guide-mem-url="([^"]+)"/)[1]
+  });
+  const en=contract(readFileSync(manageLessonPath('en'),'utf8'));
+  const zh=contract(readFileSync(manageLessonPath('zh'),'utf8'));
+  assert.equal(en.scenario,'ai-manage');
+  assert.equal(en.autoStart,'true');
+  assert.equal(en.next,'/ai-now');
+  assert.deepEqual(en,zh,'lesson 6 has the same interaction contract in both locales');
+});
+for(const lang of ['en','zh']){
+  test(lang+': settings lesson checks, changes, reviews, and restores a setting',()=>{
+    const text=readFileSync(manageLessonPath(lang),'utf8');
+    const blocks=[...text.matchAll(/```text\n([\s\S]*?)```/g)].map(m=>m[1].trim());
+    const f=setup(lang);
+    const isZh=lang==='zh';
+    assert.equal(f.model.send(blocks[4],false).kind,'unsupported','help and diagnostics prompts are real-app guidance, not simulation steps');
+    const earlyReport=f.model.send(blocks[2],false);
+    assert.equal(earlyReport.kind,'setting-report');
+    assert.match(earlyReport.text,isZh?/还没有改动/:/None yet/);
+    assert.equal(f.model.send(blocks[0],false).kind,'settings');
+    const changed=f.model.send(blocks[1],false);
+    assert.equal(changed.kind,'setting-change');
+    assert.match(changed.text,isZh?/英文 → 中文/:/English → Chinese/);
+    assert.match(changed.text,isZh?/读回保存值：中文/:/Reading back the saved value: Chinese/);
+    const report=f.model.send(blocks[2],false);
+    assert.equal(report.kind,'setting-report');
+    assert.match(report.text,isZh?/当前保存值：中文/:/Current saved value: Chinese/);
+    const fresh=createModel(lang,f.store);
+    const current=fresh.send(blocks[0],false);
+    assert.equal(current.kind,'settings');
+    assert.match(current.text,isZh?/当前保存值：中文/:/current saved value: Chinese/);
+    const restored=fresh.send(blocks[3],false);
+    assert.equal(restored.kind,'setting-revert');
+    assert.match(restored.text,isZh?/中文 → 英文/:/Chinese → English/);
+    assert.equal(f.store.settings.outputLanguage,isZh?'英文':'English','a new task sees the restored app-level setting');
+  });
+  test(lang+': restoring before any change reports the current value',()=>{
+    const f=setup(lang);
+    const reply=f.model.send(lang==='zh'?'把 AI 输出语言改回英文，并读回保存后的值。':'Change the AI output language back to English and read back the saved value.',false);
+    assert.equal(reply.kind,'setting-revert');
+    assert.match(reply.text,lang==='zh'?/当前保存值：英文/:/Current saved value: English/);
+  });
+}
+test('lesson 6 seeds a fresh task without Atlas history or a source',()=>{
+  for(const lang of ['en','zh']){
+    const seed=aiPracticeSeed('ai-manage',lang);
+    assert.deepEqual(seed,{source:false,history:[]});
+    const f=setup(lang);
+    const task=createTask(lang,f.store,seed.history);
+    assert.equal(task.messages.length,0);
   }
 });
 for (const lang of ['en','zh']) {

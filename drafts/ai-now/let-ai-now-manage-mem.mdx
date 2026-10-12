@@ -1,0 +1,221 @@
+---
+title: "Let AI Now manage Mem"
+description: "Ask AI Now to check a supported setting, change it, read back the saved value, and restore it."
+sidebarTitle: "6. Let AI Now manage Mem"
+icon: "settings-2"
+mode: "wide"
+tag: "Draft"
+---
+
+import Playground from "/snippets/playground.mdx"
+
+
+<div className="course-meta" aria-label="Lesson information">
+  <span><Icon icon="book-open" /> AI Now · Lesson 6 / 6</span>
+  <span><Icon icon="clock-3" /> ~5 min</span>
+  <span><Icon icon="user-round" /> Intermediate</span>
+</div>
+
+<div className="learning-stages learning-stages-progress" aria-label="Course progress">
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Question</span>
+  </div>
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Source</span>
+  </div>
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Evidence</span>
+  </div>
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Investigate</span>
+  </div>
+  <div className="learning-stage learning-stage-done">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Save</span>
+  </div>
+  <div className="learning-stage learning-stage-active" aria-current="step">
+    <span className="learning-stage-mark" aria-hidden="true"></span>
+    <span className="learning-stage-title">Manage</span>
+  </div>
+</div>
+
+Since Nowledge Mem 0.10.95, AI Now can manage Mem itself in an ordinary task: explain how a feature works, check and change supported settings, and report a problem with diagnostics. Every change is read back and can be restored.
+
+## What you'll accomplish
+
+<Check>
+You'll use one AI Now conversation to check a supported setting, change it, read back the saved value, review what changed, and restore the original value.
+</Check>
+
+## Learn with the simulation
+
+On desktop, the simulation opens automatically when you enter this lesson. Follow the popup hints to ask about settings, change one, review the change, and restore it. If you close it, click **Start the simulation** under [Your turn](#your-turn) to reopen it. This lesson starts a fresh task with preset replies about one simulated setting; no model setup is needed.
+
+<Note>
+The simulation runs locally with preset replies. It does not call AI or search the web, and refreshing resets the practice. On mobile, read the steps first and use a desktop browser for the interactive exercise.
+</Note>
+
+## Before practising in the real app
+
+- Nowledge Mem 0.10.95 or later.
+- A model configured and tested in **Settings → Providers**, following [LLM Providers](https://mem.nowledge.co/docs/llm-providers). A model that supports tool calls is recommended. Remote and Cloud connections use the connected Mem server's model configuration.
+- No separate entry or installed skill: ask in an ordinary AI Now task.
+
+## Your turn
+
+Follow the hints in the automatically opened simulation. After practising, use the steps below to repeat the workflow in Nowledge Mem.
+
+<script src="/course-playground-guide.js?v=27" defer></script>
+
+<div className="course-playground-workflow"
+  data-course-playground-guide=""
+  data-course-guide-autostart="true"
+  data-course-guide-scenario="ai-manage"
+  data-course-guide-current="1"
+  data-course-playground-open="false"
+  data-course-guide-replay-label="Practise again"
+  data-course-guide-close-label="Close simulation"
+  data-course-guide-mini-label="Playground"
+  data-course-guide-fill-label="Fill the example"
+  data-course-guide-done-message="You have completed all AI Now simulations. You can continue practising in Nowledge Mem."
+  data-course-guide-open-mem-label="Open Nowledge Mem"
+  data-course-guide-confirm-label="Back to course"
+  data-course-guide-confirm-href="/ai-now"
+  data-course-guide-mem-url="https://mem.nowledge.co"
+  data-course-guide-hint-1="Open AI Now. This lesson starts a fresh task; it does not continue the Atlas case."
+  data-course-guide-hint-2="Ask which settings this simulation supports. Fill the example or type your own question."
+  data-course-guide-hint-3="Send the settings question."
+  data-course-guide-hint-4="Ask to change the AI output language and read back the saved value."
+  data-course-guide-hint-5="Send the change request."
+  data-course-guide-hint-6="Ask which settings changed in this conversation."
+  data-course-guide-hint-7="Send the review request."
+  data-course-guide-hint-8="Ask to restore the AI output language and read back the saved value."
+  data-course-guide-hint-9="Send the restore request."
+  data-course-guide-hint-10="You have completed all AI Now simulations. You can continue practising in Nowledge Mem."
+  data-course-guide-fillable-2="Which settings can you check and change here? Read back the current values."
+  data-course-guide-fillable-4="Change the AI output language to Chinese, keep other settings, and read back the saved value."
+  data-course-guide-fillable-6="Which settings did you change in this conversation? Did they take effect immediately?"
+  data-course-guide-fillable-8="Change the AI output language back to English and read back the saved value.">
+  <button type="button" className="course-playground-launch" data-course-guide-open aria-controls="course-playground-ai-6-en" aria-expanded="false">
+    <Icon icon="panel-right-open" /> <span data-course-guide-open-label>Start the simulation</span>
+  </button>
+
+<Steps>
+  <Step title="Ask what AI Now can check and change">
+    <span className="course-playground-step-anchor" data-course-guide-source="1" aria-hidden="true"></span>
+    <span className="course-playground-step-anchor" data-course-guide-source="2" aria-hidden="true"></span>
+    <span className="course-playground-step-anchor" data-course-guide-source="3" aria-hidden="true"></span>
+
+    In an ordinary AI Now task, ask:
+
+    ```text
+    Which settings can you check and change here? Read back the current values.
+    ```
+
+    AI Now first checks which settings the current connection supports, so the answer reflects your connection, not a fixed list. Interface language, AI output language, task model, and background model are separate settings; name the one you mean.
+  </Step>
+  <Step title="Change one setting and read back the saved value">
+    <span className="course-playground-step-anchor" data-course-guide-source="4" aria-hidden="true"></span>
+    <span className="course-playground-step-anchor" data-course-guide-source="5" aria-hidden="true"></span>
+
+    Change one setting at a time and ask for the saved value to be read back:
+
+    ```text
+    Change the AI output language to Chinese, keep other settings, and read back the saved value.
+    ```
+
+    Check the read-back value yourself instead of trusting the confirmation. While practising, start with a low-risk setting such as the AI output language.
+  </Step>
+  <Step title="Review what changed">
+    <span className="course-playground-step-anchor" data-course-guide-source="6" aria-hidden="true"></span>
+    <span className="course-playground-step-anchor" data-course-guide-source="7" aria-hidden="true"></span>
+
+    Before keeping a change, ask what the conversation has actually changed:
+
+    ```text
+    Which settings did you change in this conversation? Did they take effect immediately?
+    ```
+
+    Compare the list with what you intended. Anything you did not ask for should be questioned before it stays.
+  </Step>
+  <Step title="Restore the original value">
+    <span className="course-playground-step-anchor" data-course-guide-source="8" aria-hidden="true"></span>
+    <span className="course-playground-step-anchor" data-course-guide-source="9" aria-hidden="true"></span>
+
+    Restoring is just another change request with the original value:
+
+    ```text
+    Change the AI output language back to English and read back the saved value.
+    ```
+  </Step>
+</Steps>
+
+  <p className="course-playground-workflow-status" data-course-guide-ready>Follow the popup hints; reopen the simulation if you closed it.</p>
+  <p className="course-playground-workflow-status course-playground-workflow-status-complete" data-course-guide-done role="status" hidden>You have completed all AI Now simulations. You can continue practising in Nowledge Mem.</p>
+  <div id="course-playground-ai-6-en" className="course-playground-window" data-course-playground-window role="region" aria-label="AI Now practice" aria-hidden="true">
+    <Playground />
+  </div>
+</div>
+
+## What you should see
+
+<Check>
+The read-back value matches the setting you asked to change, the review lists only the changes actually made, and restoring returns the original value. A feedback submission, when you request one, returns a feedback number and states what was included.
+</Check>
+
+## Settings that need a restart
+
+Some saved settings only apply after the backend restarts. AI Now can schedule a restart only when you explicitly request it, and only for a backend managed by the local desktop app; remote and Cloud connections cannot restart your local backend. After reconnecting, ask for the effective value again. Install or reinstall local models manually in **Settings → Models**.
+
+## Ask about Mem and report problems
+
+The same conversation can also cover help and diagnostics:
+
+- Ask how to use Mem. AI Now consults current product documentation and explains the steps and how to verify the result:
+
+  ```text
+  How do I import Codex conversations into Mem? Use the current documentation to explain the first step and how to verify the import.
+  ```
+
+  Finding instructions does not prove that a connection works; complete any login or permission steps yourself.
+- Investigate a problem with read-only checks first. Ask for confirmed facts, possible causes, and next steps to be separated:
+
+  ```text
+  Why did my AI Now task fail just now? Check available runtime state, configuration, and relevant diagnostics. Separate confirmed facts from possible causes and explain the next step.
+  ```
+
+  A diagnosis alone does not authorize a restart, deletion, configuration change, or feedback submission; request those actions explicitly.
+- Submit feedback only when you ask for it. AI Now explains what it will send before submitting. Images are ones you select and attach to the conversation; there is no automatic screenshot. Bug reports normally include recent redacted logs, and you can request "no logs" or "no images". A successful submission returns a feedback number; if the result is unknown or times out, check for an existing report before sending again.
+
+## Limits
+
+- **Auto** skips confirmation prompts but does not grant account permissions or enable unsupported backend operations. Scheduled tasks do not inherit chat auto-approval.
+- Hosted Cloud does not provide local files, Shell, Browse Now, or local app plugins, and its feedback content differs from local and self-hosted connections. Web and mobile clients work through the connected Mem server.
+- The supported settings depend on your connection and version. Ask AI Now to check what your connection supports instead of assuming a fixed list.
+
+## Why this matters
+
+You can resolve configuration questions where they appear, without leaving the task at hand. Because every change is read back and can be listed and restored, you stay in control of what was modified.
+
+## Go deeper
+
+Read the [AI Now documentation](https://mem.nowledge.co/docs/ai-now) for the full settings, diagnostics, and feedback behavior.
+
+## You've completed AI Now
+
+<Check>
+You checked saved context, read a source, assessed the evidence, chose how to investigate a gap, saved and retrieved a checked result, and let AI Now check, change, review, and restore a setting.
+</Check>
+
+If you completed the simulations, repeat the workflows in Nowledge Mem with your own material. The simulation's preset replies are practice only; in the real app, check the read-back values and the feedback number yourself.
+
+<Tip>
+Practise with a low-risk setting such as the AI output language first. After each change, read back the saved value and review what changed before you keep or restore it.
+</Tip>
+
+<Card title="Back to course →" horizontal href="/ai-now">
+</Card>
