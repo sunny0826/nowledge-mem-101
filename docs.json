@@ -43,6 +43,11 @@
         "label": "GitHub",
         "icon": "github",
         "href": "https://github.com/nowledge-co"
+      },
+      {
+        "label": "Get Mem",
+        "icon": "external-link",
+        "href": "https://mem.nowledge.co/?aff=guo"
       }
     ]
   },
@@ -164,6 +169,11 @@
               "label": "GitHub",
               "icon": "github",
               "href": "https://github.com/nowledge-co"
+            },
+            {
+              "label": "获取 Mem",
+              "icon": "external-link",
+              "href": "https://mem.nowledge.co/?aff=guo"
             }
           ]
         },
