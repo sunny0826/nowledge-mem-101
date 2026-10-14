@@ -3,129 +3,114 @@ title: "Nowledge Mem 101"
 description: "通过真实操作，学会把知识留给未来的自己和 AI。"
 sidebarTitle: "简介"
 icon: "house"
-mode: "center"
+mode: "custom"
 ---
 
-> 让你的 AI，用上你已经知道的东西。
+<div className="mem-home">
+  <section className="mem-home-hero" aria-labelledby="home-title">
+    <div className="mem-home-hero-copy">
+      <h1 id="home-title">学会用 Nowledge Mem 保存和找回知识。</h1>
+      <p className="mem-home-lead">跟着简短的课程动手练习：保存记忆、找回信息，再把你的 AI 工具连接到 Mem。</p>
+      <div className="mem-home-actions">
+        <a className="mem-home-button" href="/zh/essentials/first-memory">留下第一条记忆 <span aria-hidden="true">→</span></a>
+        <a className="mem-home-text-link" href="#courses">浏览课程 <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+    <div className="mem-home-example" role="figure" aria-labelledby="home-example-caption">
+      <div className="mem-home-memory">
+        <span className="mem-home-label"><Icon icon="bookmark" /> Capture 留下</span>
+        <p>新版官网选用 Next.js，因为我们需要 SSR 和更好的 SEO。</p>
+      </div>
+      <div className="mem-home-connector" aria-hidden="true">↓</div>
+      <div className="mem-home-recall">
+        <span className="mem-home-label"><Icon icon="search" /> Recall 找回</span>
+        <p>“我们为什么选了 Next.js？”</p>
+      </div>
+      <p className="mem-home-example-caption" id="home-example-caption">虚构示例 · 留下背景，也留下结论。</p>
+    </div>
+  </section>
 
-从第一条记忆开始，逐渐建立属于你的 AI 知识层。
+  <section className="mem-home-loop" aria-label="学习路径">
+    <div><span className="mem-home-step-number">01 <span aria-hidden="true">→</span></span><h2>Capture 留下</h2><p>留下一件值得记住的事。</p></div>
+    <div><span className="mem-home-step-number">02 <span aria-hidden="true">→</span></span><h2>Recall 找回</h2><p>需要的时候，把它找回来。</p></div>
+    <div><span className="mem-home-step-number">03 <span aria-hidden="true">→</span></span><h2>Connect 连接 AI</h2><p>把你的 AI 工具连接到 Mem。</p></div>
+    <div><span className="mem-home-step-number">04</span><h2>Reuse 复用</h2><p>带着已有的上下文继续工作。</p></div>
+  </section>
 
-## 浏览教程
+  <section className="mem-home-section" id="courses" aria-labelledby="home-courses-title">
+    <div className="mem-home-section-heading">
+      <h2 id="home-courses-title">课程</h2>
+      <p>先完成 Essentials，再选择你想练习的工作流。</p>
+    </div>
+    <div className="mem-home-courses">
+      <a className="mem-home-course mem-home-course-start" href="/zh/essentials">
+        <div className="mem-home-course-top"><span>从这里开始</span><Icon icon="book-open" /></div>
+        <h3>Essentials</h3>
+        <p>从第一条记忆，到让 AI 用上它。</p>
+        <div className="mem-home-course-footer"><span>入门 · 6 课 · 约 25 分钟</span><span aria-hidden="true">→</span></div>
+      </a>
+      <a className="mem-home-course" href="/zh/ai-workflow">
+        <div className="mem-home-course-top"><span>让上下文跟着你走</span><Icon icon="workflow" /></div>
+        <h3>AI Workflow</h3>
+        <p>建立工作简报，保存交接记录，换一个 AI 工具继续。</p>
+        <div className="mem-home-course-footer"><span>进阶 · 4 课 · 约 20 分钟</span><span aria-hidden="true">→</span></div>
+      </a>
+      <a className="mem-home-course" href="/zh/ai-now">
+        <div className="mem-home-course-top"><span>带着证据展开工作</span><Icon icon="sparkles" /></div>
+        <h3>AI Now</h3>
+        <p>找回上下文、核查来源、保存结果，让 AI Now 管理 Mem。六课引导式交互练习。</p>
+        <div className="mem-home-course-footer"><span>进阶 · 6 课 · 约 30 分钟</span><span aria-hidden="true">→</span></div>
+      </a>
+    </div>
+  </section>
 
-移动端可能看不到完整的顶部标签栏，下面的入口同样可以到达各个板块。
+  <section className="mem-home-section" aria-labelledby="home-community-title">
+    <div className="mem-home-section-heading">
+      <h2 id="home-community-title">社区实践</h2>
+      <a className="mem-home-text-link" href="/zh/community">全部社区故事 <span aria-hidden="true">→</span></a>
+    </div>
+    <div className="mem-home-stories">
+      <a href="https://x.com/guoxudong_/status/2092604004245332474" target="_blank" rel="noopener noreferrer">
+        <span className="mem-home-caption">Xudong Guo · 中文 · X 文章</span>
+        <h3>一个记忆中枢，多台设备共享。</h3>
+        <p>用 Mac mini 为笔记本、服务器、手机和连接的 Agent 提供上下文。</p>
+        <span className="mem-home-story-link">阅读原文 <span aria-hidden="true">↗</span></span>
+      </a>
+      <a href="https://x.com/hbyxabc/status/2093326775862599708" target="_blank" rel="noopener noreferrer">
+        <span className="mem-home-caption">HB · 中文 · X 文章</span>
+        <h3>Agent 时代，记忆产品应该是什么样？</h3>
+        <p>从本地优先同步到标准化导出，看看成熟记忆产品的五项能力。</p>
+        <span className="mem-home-story-link">阅读原文 <span aria-hidden="true">↗</span></span>
+      </a>
+      <a href="https://x.com/HaraAmami/status/2091523661077561348" target="_blank" rel="noopener noreferrer">
+        <span className="mem-home-caption">Amami Hara · 日文 · X 文章</span>
+        <h3>换了工具，项目背景还在。</h3>
+        <p>首位用户的跨工具记忆实践，让同一份背景不必反复重述。</p>
+        <span className="mem-home-story-link">阅读原文 <span aria-hidden="true">↗</span></span>
+      </a>
+      <a href="https://blog.yayoi.love/post/docker-nowledge-mem-browser-now" target="_blank" rel="noopener noreferrer">
+        <span className="mem-home-caption">YAYOI の 夢 · 中文 · 博客文章</span>
+        <h3>让 Docker 里的 Mem 用上 Browse Now。</h3>
+        <p>通过与 Mem 配合运行的 Chromium 容器，完成浏览器配置。</p>
+        <span className="mem-home-story-link">阅读原文 <span aria-hidden="true">↗</span></span>
+      </a>
+    </div>
+  </section>
 
-<CardGroup cols={3}>
-  <Card title="Essentials" icon="book-open" href="/zh/essentials">
-    从第一条记忆开始，建立 Mem 最基本的使用闭环。
-
-    入门 · 6 课 · 约 25 分钟
-  </Card>
-
-  <Card title="AI Workflow" icon="workflow" href="/zh/ai-workflow">
-    让不同 AI 工具共享同一份上下文。
-
-    进阶 · 4 课 · 约 20 分钟
-  </Card>
-
-  <Card title="AI Now" icon="sparkles" href="/zh/ai-now">
-    通过五课模拟交互，练习找回上下文、阅读来源、核查证据和保存结果。
-
-    进阶 · 5 课 · 约 25 分钟
-  </Card>
-
-</CardGroup>
-
-## 来自社区
-
-大家分享如何用 Nowledge Mem 搭建自己知识地图的文章、帖子和网站。打开[社区索引](/zh/community)浏览全部条目，或直接点击下方条目阅读原文。
-
-<CardGroup cols={3}>
-  <Card title="让 Agent 不再从头开始：用 Nowledge Mem 搭建统一记忆中枢" icon="external-link" href="https://x.com/guoxudong_/status/2092604004245332474">
-    Xudong Guo 分享如何把 Mac mini 作为记忆中枢，让 MacBook、Linux 服务器、手机和接入的 Agent 使用同一份长期记忆。
-
-    X 文章 · 中文 · 阅读原文 ↗
-  </Card>
-
-  <Card title="Agent 时代，用户需要怎样的记忆产品？" icon="external-link" href="https://x.com/hbyxabc/status/2093326775862599708">
-    HB 列出成熟记忆产品的五项能力，从本地优先同步到标准化导出。
-
-    X 文章 · 中文 · 阅读原文 ↗
-  </Card>
-
-  <Card title="世界首位用户眼中的 AI 项目记忆" icon="external-link" href="https://x.com/HaraAmami/status/2091523661077561348">
-    Amami Hara 讲述跨工具的项目记忆如何让背景不再反复重述。
-
-    X 文章 · 日文 · 阅读原文 ↗
-  </Card>
-
-  <Card title="Docker 版 Nowledge Mem 启用 Browse Now 实践指南" icon="external-link" href="https://blog.yayoi.love/post/docker-nowledge-mem-browser-now">
-    YAYOI の 夢 让 Chromium 容器共享 Mem 容器的网络命名空间，不改 Mem 服务端代码，就让 Docker 部署的 Mem 用上 Browse Now。
-
-    博客文章 · 中文 · 阅读原文 ↗
-  </Card>
-
-</CardGroup>
-
-## 这是什么
-
-Nowledge Mem 是你的长期知识层。你留下的每一条信息，之后都可以被重新搜索、和其他知识产生关联，并被连接到 Mem 的 AI 工具再次使用。
-
-**适合谁：** 每天使用 AI 工具，却不想反复解释同一份背景的人。
-
-**有什么不同：**
-
-- **跨工具**：Codex、Claude Code、Cursor 等 AI 共享同一份上下文
-- **可操作**：教程以真实练习为主，从第一条记忆开始建立完整闭环
-- **渐进式**：从 Essentials 到知识系统，按目标选择路线
-
-## 如何运作
-
-```mermaid placement="bottom-left"
-flowchart LR
-  A["Capture 留下"] --> B["Recall 找回"]
-  B --> C["Connect 连接 AI"]
-  C --> D["Reuse 复用"]
-```
-
-先留下知识，需要时直接把它找回来，再让连接 Mem 的 AI 使用它。
-
-## 快速体验
-
-3 分钟体验第一个 Capture → Recall 闭环：
-
-<Steps>
-  <Step title="打开 Nowledge Mem，进入 Timeline">
-    在输入框中写下一件真实、值得留下的事情。
-
-    ```text
-    我们决定新版官网使用 Next.js，因为需要 SSR 和更好的 SEO。
-    ```
-  </Step>
-  <Step title="按 Enter 保存">
-    内容出现在 Timeline 中，第一条记忆就留下了。
-  </Step>
-  <Step title="直接问 Mem">
-    不要翻记录，在 Timeline 中提问：
-
-    ```text
-    新版官网之前决定使用什么技术？
-    ```
-
-    Mem 会找到刚才的记忆并回答你。
-  </Step>
-</Steps>
-
-完成上面的步骤，你已经走通了 Mem 最基本的闭环。详细讲解见[第一课](/zh/essentials/first-memory)和[第二课](/zh/essentials/recall-memory)。
-
-## 从这里开始
-
-<CardGroup cols={3}>
-  <Card title="Essentials 课程" icon="graduation-cap" href="/zh/essentials">
-    6 节课建立完整的 Capture → Recall 闭环，约 25 分钟。
-  </Card>
-
-  <Card title="Mem 官方文档" icon="book" href="https://mem.nowledge.co/zh/docs">
-    了解 Memory、Timeline 等功能的完整说明。
-  </Card>
-
-</CardGroup>
+  <section className="mem-home-section mem-home-practice" aria-labelledby="home-practice-title">
+    <div className="mem-home-section-heading">
+      <h2 id="home-practice-title">第一次练习</h2>
+      <p>约 3 分钟。用自己工作中的一件事，或从这个虚构示例开始。</p>
+    </div>
+    <div className="mem-home-get" role="complementary" aria-label="获取 Nowledge Mem">
+      <div><strong>还没有 Nowledge Mem？</strong><p>前往官网获取，再回来开始下面的练习。</p></div>
+      <div className="mem-home-get-action"><a className="mem-home-text-link" href="https://mem.nowledge.co/?aff=guo" target="_blank" rel="sponsored noopener noreferrer">获取 Nowledge Mem <span aria-hidden="true">↗</span></a><small>推广链接</small></div>
+    </div>
+    <ol className="mem-home-exercise">
+      <li><span className="mem-home-step-number" aria-hidden="true">01</span><h3>打开 Timeline</h3><p>在 Mem 中，写下一件值得留下的事。</p><blockquote>我们选用 Next.js，因为需要 SSR 和更好的 SEO。</blockquote></li>
+      <li><span className="mem-home-step-number" aria-hidden="true">02</span><h3>保存这条记忆</h3><p>按 <strong>Enter</strong>。记忆会出现在 Timeline 中。</p></li>
+      <li><span className="mem-home-step-number" aria-hidden="true">03</span><h3>再问一次</h3><p>在 Timeline 中提问，看看 Mem 是否找回了你的决定。</p><blockquote>新版官网之前决定使用什么技术？</blockquote></li>
+    </ol>
+    <div className="mem-home-practice-footer"><a className="mem-home-button" href="/zh/essentials/first-memory">开始第一课 <span aria-hidden="true">→</span></a></div>
+  </section>
+</div>

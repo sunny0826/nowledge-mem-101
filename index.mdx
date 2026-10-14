@@ -3,129 +3,114 @@ title: "Nowledge Mem 101"
 description: "Learn to leave knowledge for your future self and your AI — by doing it for real."
 sidebarTitle: "Introduction"
 icon: "house"
-mode: "center"
+mode: "custom"
 ---
 
-> Give your AI the knowledge you already have.
+<div className="mem-home">
+  <section className="mem-home-hero" aria-labelledby="home-title">
+    <div className="mem-home-hero-copy">
+      <h1 id="home-title">Learn to save and recall knowledge with Nowledge Mem.</h1>
+      <p className="mem-home-lead">Practise saving memories, finding them again, and connecting your AI tools through short, hands-on lessons.</p>
+      <div className="mem-home-actions">
+        <a className="mem-home-button" href="/essentials/first-memory">Save your first memory <span aria-hidden="true">→</span></a>
+        <a className="mem-home-text-link" href="#courses">Explore the courses <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+    <div className="mem-home-example" role="figure" aria-labelledby="home-example-caption">
+      <div className="mem-home-memory">
+        <span className="mem-home-label"><Icon icon="bookmark" /> Capture</span>
+        <p>We chose Next.js for the new website because we need SSR and better SEO.</p>
+      </div>
+      <div className="mem-home-connector" aria-hidden="true">↓</div>
+      <div className="mem-home-recall">
+        <span className="mem-home-label"><Icon icon="search" /> Recall</span>
+        <p>“Why did we choose Next.js?”</p>
+      </div>
+      <p className="mem-home-example-caption" id="home-example-caption">Fictional example · Save the context, not just the conclusion.</p>
+    </div>
+  </section>
 
-Start with your first memory and gradually build a knowledge layer for your AI.
+  <section className="mem-home-loop" aria-label="Learning path">
+    <div><span className="mem-home-step-number">01 <span aria-hidden="true">→</span></span><h2>Capture</h2><p>Leave something worth keeping.</p></div>
+    <div><span className="mem-home-step-number">02 <span aria-hidden="true">→</span></span><h2>Recall</h2><p>Find it when you need it.</p></div>
+    <div><span className="mem-home-step-number">03 <span aria-hidden="true">→</span></span><h2>Connect</h2><p>Connect your AI tools to Mem.</p></div>
+    <div><span className="mem-home-step-number">04</span><h2>Reuse</h2><p>Continue with the context you built.</p></div>
+  </section>
 
-## Browse the tutorial
+  <section className="mem-home-section" id="courses" aria-labelledby="home-courses-title">
+    <div className="mem-home-section-heading">
+      <h2 id="home-courses-title">Courses</h2>
+      <p>Start with Essentials, then choose the workflow you want to practise.</p>
+    </div>
+    <div className="mem-home-courses">
+      <a className="mem-home-course mem-home-course-start" href="/essentials">
+        <div className="mem-home-course-top"><span>Start here</span><Icon icon="book-open" /></div>
+        <h3>Essentials</h3>
+        <p>From your first memory to an AI that can use it.</p>
+        <div className="mem-home-course-footer"><span>Beginner · 6 lessons · ~25 min</span><span aria-hidden="true">→</span></div>
+      </a>
+      <a className="mem-home-course" href="/ai-workflow">
+        <div className="mem-home-course-top"><span>Share your context</span><Icon icon="workflow" /></div>
+        <h3>AI Workflow</h3>
+        <p>Keep a work brief, save a checkpoint, and continue in another AI tool.</p>
+        <div className="mem-home-course-footer"><span>Intermediate · 4 lessons · ~20 min</span><span aria-hidden="true">→</span></div>
+      </a>
+      <a className="mem-home-course" href="/ai-now">
+        <div className="mem-home-course-top"><span>Work with evidence</span><Icon icon="sparkles" /></div>
+        <h3>AI Now</h3>
+        <p>Find context, check sources, save your result, and let AI Now manage Mem. Six guided interactive lessons.</p>
+        <div className="mem-home-course-footer"><span>Intermediate · 6 lessons · ~30 min</span><span aria-hidden="true">→</span></div>
+      </a>
+    </div>
+  </section>
 
-On mobile, the top tab bar may be hidden. The entries below get you to the same sections.
+  <section className="mem-home-section" aria-labelledby="home-community-title">
+    <div className="mem-home-section-heading">
+      <h2 id="home-community-title">Community stories</h2>
+      <a className="mem-home-text-link" href="/community">All community stories <span aria-hidden="true">→</span></a>
+    </div>
+    <div className="mem-home-stories">
+      <a href="https://x.com/guoxudong_/status/2092604004245332474" target="_blank" rel="noopener noreferrer">
+        <span className="mem-home-caption">Xudong Guo · Chinese · X article</span>
+        <h3>One memory hub. Multiple devices.</h3>
+        <p>A Mac mini shares context with a laptop, a server, a phone, and connected agents.</p>
+        <span className="mem-home-story-link">Read the original <span aria-hidden="true">↗</span></span>
+      </a>
+      <a href="https://x.com/hbyxabc/status/2093326775862599708" target="_blank" rel="noopener noreferrer">
+        <span className="mem-home-caption">HB · Chinese · X article</span>
+        <h3>What should an agent's memory be?</h3>
+        <p>Five capabilities to look for, from local-first sync to standard export.</p>
+        <span className="mem-home-story-link">Read the original <span aria-hidden="true">↗</span></span>
+      </a>
+      <a href="https://x.com/HaraAmami/status/2091523661077561348" target="_blank" rel="noopener noreferrer">
+        <span className="mem-home-caption">Amami Hara · Japanese · X article</span>
+        <h3>Project context that follows your work.</h3>
+        <p>A first user's experience with cross-tool memory and less repeated explanation.</p>
+        <span className="mem-home-story-link">Read the original <span aria-hidden="true">↗</span></span>
+      </a>
+      <a href="https://blog.yayoi.love/post/docker-nowledge-mem-browser-now" target="_blank" rel="noopener noreferrer">
+        <span className="mem-home-caption">YAYOI の 夢 · Chinese · Blog post</span>
+        <h3>Bring Browse Now to a Docker setup.</h3>
+        <p>A practical guide using Chromium in a container alongside Mem.</p>
+        <span className="mem-home-story-link">Read the original <span aria-hidden="true">↗</span></span>
+      </a>
+    </div>
+  </section>
 
-<CardGroup cols={3}>
-  <Card title="Essentials" icon="book-open" href="/essentials">
-    Start with your first memory and close Mem's most basic loop.
-
-    Beginner · 6 lessons · ~25 min
-  </Card>
-
-  <Card title="AI Workflow" icon="workflow" href="/ai-workflow">
-    Let different AI tools share the same context.
-
-    Intermediate · 4 lessons · ~20 min
-  </Card>
-
-  <Card title="AI Now" icon="sparkles" href="/ai-now">
-    Learn an analysis workflow through five guided simulations: find context, read sources, check evidence, and save the result.
-
-    Intermediate · 5 lessons · ~25 min
-  </Card>
-
-</CardGroup>
-
-## From the community
-
-Articles, posts, and sites where people share how they build their own knowledge map with Nowledge Mem. Browse [all community entries](/community), or open one here to read the original.
-
-<CardGroup cols={3}>
-  <Card title="Stop making agents start over: build a shared memory hub with Nowledge Mem" icon="external-link" href="https://x.com/guoxudong_/status/2092604004245332474">
-    Xudong Guo shares how a Mac mini serves as a memory hub for a MacBook, a Linux server, a phone, and connected agents.
-
-    X article · Chinese · Read the original ↗
-  </Card>
-
-  <Card title="What should a memory product look like in the agent era?" icon="external-link" href="https://x.com/hbyxabc/status/2093326775862599708">
-    HB lists five capabilities a mature memory product needs, from local-first sync to standard export.
-
-    X article · Chinese · Read the original ↗
-  </Card>
-
-  <Card title="Project memory for AI, seen by the world's first user" icon="external-link" href="https://x.com/HaraAmami/status/2091523661077561348">
-    Amami Hara on cross-tool project memory that ends repeated context re-explaining.
-
-    X article · Japanese · Read the original ↗
-  </Card>
-
-  <Card title="A practical guide to enabling Browse Now on Nowledge Mem in Docker" icon="external-link" href="https://blog.yayoi.love/post/docker-nowledge-mem-browser-now">
-    YAYOI の 夢 gets Browse Now working in a Docker deployment by running Chromium in a container that shares Mem's network namespace, with no changes to the Mem server.
-
-    Blog post · Chinese · Read the original ↗
-  </Card>
-
-</CardGroup>
-
-## What this is
-
-Nowledge Mem is your long-term knowledge layer. Anything you leave behind can later be searched, linked to other knowledge, and reused by the AI tools connected to Mem.
-
-**Who it's for:** People who use AI tools every day but don't want to re-explain the same background again and again.
-
-**What's different:**
-
-- **Cross-tool**: Codex, Claude Code, Cursor, and other AIs share the same context
-- **Hands-on**: The tutorial is built around real exercises, starting from your first memory
-- **Progressive**: From Essentials to a knowledge system, pick the path that fits your goals
-
-## How it works
-
-```mermaid placement="bottom-left"
-flowchart LR
-  A["Capture"] --> B["Recall"]
-  B --> C["Connect"]
-  C --> D["Reuse"]
-```
-
-Leave knowledge first. Bring it back when you need it. Then let the AI connected to Mem use it.
-
-## Try it in 3 minutes
-
-Experience your first Capture → Recall loop in about 3 minutes:
-
-<Steps>
-  <Step title="Open Nowledge Mem and go to Timeline">
-    Type something real that's worth keeping.
-
-    ```text
-    We decided the new marketing site uses Next.js because we need SSR and better SEO.
-    ```
-  </Step>
-  <Step title="Press Enter to save">
-    The content appears in Timeline. Your first memory is saved.
-  </Step>
-  <Step title="Ask Mem directly">
-    Don't scroll through your notes. Ask in Timeline:
-
-    ```text
-    What technology did we decide on for the new site?
-    ```
-
-    Mem finds the memory and answers you.
-  </Step>
-</Steps>
-
-By completing these steps, you've gone through Mem's most basic loop. For the details, see [Lesson 1](/essentials/first-memory) and [Lesson 2](/essentials/recall-memory).
-
-## Start here
-
-<CardGroup cols={3}>
-  <Card title="Essentials course" icon="graduation-cap" href="/essentials">
-    6 lessons build a complete Capture → Recall loop in about 25 minutes.
-  </Card>
-
-  <Card title="Mem official docs" icon="book" href="https://mem.nowledge.co/docs">
-    Full documentation for features like Memory and Timeline.
-  </Card>
-
-</CardGroup>
+  <section className="mem-home-section mem-home-practice" aria-labelledby="home-practice-title">
+    <div className="mem-home-section-heading">
+      <h2 id="home-practice-title">Your first practice</h2>
+      <p>About 3 minutes. Use something from your own work, or start with this fictional example.</p>
+    </div>
+    <div className="mem-home-get" role="complementary" aria-label="Get Nowledge Mem">
+      <div><strong>Don't have Nowledge Mem yet?</strong><p>Get Mem from the website, then come back for the exercise.</p></div>
+      <div className="mem-home-get-action"><a className="mem-home-text-link" href="https://mem.nowledge.co/?aff=guo" target="_blank" rel="sponsored noopener noreferrer">Get Nowledge Mem <span aria-hidden="true">↗</span></a><small>Affiliate link</small></div>
+    </div>
+    <ol className="mem-home-exercise">
+      <li><span className="mem-home-step-number" aria-hidden="true">01</span><h3>Open Timeline</h3><p>In Mem, write one thing worth keeping.</p><blockquote>We chose Next.js because we need SSR and better SEO.</blockquote></li>
+      <li><span className="mem-home-step-number" aria-hidden="true">02</span><h3>Save your memory</h3><p>Press <strong>Enter</strong>. Your memory appears in Timeline.</p></li>
+      <li><span className="mem-home-step-number" aria-hidden="true">03</span><h3>Ask for it again</h3><p>Ask in Timeline and check that Mem finds your decision.</p><blockquote>What technology did we choose for the new website?</blockquote></li>
+    </ol>
+    <div className="mem-home-practice-footer"><a className="mem-home-button" href="/essentials/first-memory">Start lesson 1 <span aria-hidden="true">→</span></a></div>
+  </section>
+</div>
