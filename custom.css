@@ -120,6 +120,10 @@ html[data-current-path^="/zh/knowledge-system/"] :is(#content, #pagination) {
   padding-inline: 0;
 }
 
+#content:not(:has(+ #pagination)) {
+  margin-bottom: 2rem;
+}
+
 html[data-course-playground-split="true"] #content-area {
   flex: none;
   width: var(--course-practice-article-width) !important;
@@ -1184,6 +1188,17 @@ html.dark .course-cta:hover {
 
   .course-cta {
     min-height: 2.75rem;
+  }
+}
+
+#footer > div {
+  max-width: 92rem;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  #footer > div {
+    padding-inline: 3rem;
   }
 }
 
