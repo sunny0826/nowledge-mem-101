@@ -41,6 +41,11 @@ Read for lesson content, metadata, cards, or course styling. Publication states 
 
   Chinese pages render `即将上线` with the same markup.
 - Course cards have two states: `.course-card-featured` is an `<a>` linking to an available lesson; `.course-card-upcoming` is a non-link `<div>` labeled **Coming soon** or **即将上线**. A card's state must match the target lesson's availability.
+- Landing heroes (home `.mem-home`, community `.community-hero`) share one typographic scale. Display title: `clamp(2.2rem, 3.4vw, 3.5rem)`, weight 600, line-height 1.15, letter-spacing -0.03em, dropping to `clamp(2rem, 8vw, 2.8rem)` below 768px. Section headings: `clamp(1.65rem, 2.4vw, 2.1rem)`, weight 600, line-height 1.3, letter-spacing -0.02em. Page and lesson titles use letter-spacing -0.03em with line-height 1.2; prose `h2` uses -0.02em.
+- Hero pages open with an eyebrow (`.mem-home-eyebrow`, `.community-eyebrow`): a blue square `::before` marker, 0.72rem, weight 600, letter-spacing 0.14em, uppercase. Localize the eyebrow text in both locales.
+- Step and count numbers (`.mem-home-step-number`, jump-link counts, `.course-card-index`) use the monospace stack with tabular numerals and wide tracking; blue for active numbers, faint for decorative arrows.
+- Link and arrow motion is micro-translation only: primary-button arrow `translateX(3px)`, course-row arrow `translateX(4px)`, external `↗` `translate(2px, -2px)`, card action `translateX(2px)`; text links grow a left-to-right `scaleX` underline. All transitions run 160ms ease; register every new transition in the `prefers-reduced-motion: reduce` and `hover: none` guard blocks.
+- Landing content sits inside Mintlify's `.prose`, where `.prose h1` outranks a single-class selector. Scope hero overrides with a two-class selector (for example `.community-hero .community-display`) or `!important`, following the block's existing convention, and verify computed styles rather than screenshots alone.
 
 ## MDX and reuse
 
