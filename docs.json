@@ -40,12 +40,7 @@
   "navbar": {
     "links": [
       {
-        "label": "GitHub",
-        "icon": "github",
-        "href": "https://github.com/nowledge-co"
-      },
-      {
-        "label": "Get Mem",
+        "label": "Get Nowledge Mem",
         "icon": "external-link",
         "href": "https://mem.nowledge.co/?aff=guo"
       }
@@ -55,7 +50,7 @@
     "socials": {
       "website": "https://mem.nowledge.co",
       "github": "https://github.com/nowledge-co",
-      "x": "https://x.com/NowledgeMem"
+      "x": "https://x.com/guoxudong_"
     },
     "links": [
       {
@@ -166,12 +161,7 @@
         "navbar": {
           "links": [
             {
-              "label": "GitHub",
-              "icon": "github",
-              "href": "https://github.com/nowledge-co"
-            },
-            {
-              "label": "获取 Mem",
+              "label": "获取 Nowledge Mem",
               "icon": "external-link",
               "href": "https://mem.nowledge.co/?aff=guo"
             }
@@ -181,7 +171,7 @@
           "socials": {
             "website": "https://mem.nowledge.co",
             "github": "https://github.com/nowledge-co",
-            "x": "https://x.com/NowledgeMem"
+            "x": "https://x.com/guoxudong_"
           },
           "links": [
             {
