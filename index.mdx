@@ -17,26 +17,56 @@ mode: "custom"
         <a className="mem-home-text-link" href="#courses">Explore the courses <span aria-hidden="true">↓</span></a>
       </div>
     </div>
-    <div className="mem-home-example" role="figure" aria-labelledby="home-example-caption">
-      <div className="mem-home-memory">
-        <span className="mem-home-label"><Icon icon="bookmark" /> Capture</span>
-        <p>We chose Next.js for the new website because we need SSR and better SEO.</p>
+    <div className="mem-home-example">
+      <div
+        className="mem-home-demo"
+        data-mem-home-demo
+        data-save="We chose Next.js for the new website because we need SSR and better SEO."
+        data-ask="Continue the new website from this decision."
+        data-agent-first="Codex"
+        data-agent-later="Kimi"
+        data-note-save="Codex is working, and generating a memory."
+        data-note-kept="Codex saved that memory."
+        data-note-ask="Kimi starts work."
+        data-note-found="Kimi can use the memory Codex generated."
+        aria-label="Codex saves a memory while working. Kimi can use it later."
+      >
+        <div className="mem-home-demo-session">
+          <div className="mem-home-demo-switch">
+            <div className="mem-home-demo-switch-track">
+              <div className="mem-home-demo-agent">
+                <p className="mem-home-demo-mark">
+                  <img className="mem-home-demo-logo mem-home-demo-logo-codex" src="/logo/chatgpt.svg?v=2" alt="" />
+                  <span className="mem-home-demo-name mem-home-demo-name-codex">Codex</span>
+                </p>
+                <p className="mem-home-demo-note mem-home-demo-note-codex" data-demo-note="codex">Codex is working, and generating a memory.</p>
+              </div>
+              <div className="mem-home-demo-agent">
+                <p className="mem-home-demo-mark">
+                  <img className="mem-home-demo-logo mem-home-demo-logo-kimi" src="/logo/kimi.png" alt="" />
+                  <span className="mem-home-demo-name mem-home-demo-name-kimi">Kimi</span>
+                </p>
+                <p className="mem-home-demo-note mem-home-demo-note-kimi" data-demo-note="kimi">Kimi starts work.</p>
+              </div>
+            </div>
+          </div>
+          <p className="mem-home-demo-ask" data-demo-ask></p>
+          <div className="mem-home-demo-above" data-demo-above>
+            <p className="mem-home-demo-memory" data-demo-text></p>
+          </div>
+          <span className="mem-home-demo-rule" aria-hidden="true"></span>
+          <div className="mem-home-demo-below" data-demo-below></div>
+        </div>
       </div>
-      <div className="mem-home-connector" aria-hidden="true">↓</div>
-      <div className="mem-home-recall">
-        <span className="mem-home-label"><Icon icon="search" /> Recall</span>
-        <p>“Why did we choose Next.js?”</p>
-      </div>
-      <p className="mem-home-example-caption" id="home-example-caption">Fictional example · Save the context, not just the conclusion.</p>
     </div>
   </section>
 
-  <section className="mem-home-loop" aria-label="Learning path">
-    <div><span className="mem-home-step-number">01 <span aria-hidden="true">→</span></span><h2>Capture</h2><p>Leave something worth keeping.</p></div>
-    <div><span className="mem-home-step-number">02 <span aria-hidden="true">→</span></span><h2>Recall</h2><p>Find it when you need it.</p></div>
-    <div><span className="mem-home-step-number">03 <span aria-hidden="true">→</span></span><h2>Connect</h2><p>Connect your AI tools to Mem.</p></div>
-    <div><span className="mem-home-step-number">04</span><h2>Reuse</h2><p>Continue with the context you built.</p></div>
-  </section>
+  <ol className="mem-home-loop" aria-label="Learning path">
+    <li><span className="mem-home-step-number">01</span><h2>Capture</h2><p>Leave something worth keeping.</p></li>
+    <li><span className="mem-home-step-number">02</span><h2>Recall</h2><p>Find it when you need it.</p></li>
+    <li><span className="mem-home-step-number">03</span><h2>Connect</h2><p>Connect your AI tools to Mem.</p></li>
+    <li><span className="mem-home-step-number">04</span><h2>Reuse</h2><p>Continue with the context you built.</p></li>
+  </ol>
 
   <section className="mem-home-section" id="courses" aria-labelledby="home-courses-title">
     <div className="mem-home-section-heading">
@@ -115,3 +145,5 @@ mode: "custom"
     <div className="mem-home-practice-footer"><a className="mem-home-button" href="/essentials/first-memory">Start lesson 1 <span aria-hidden="true">→</span></a></div>
   </section>
 </div>
+
+<script src="/mem-home-demo.js?v=12" defer></script>
