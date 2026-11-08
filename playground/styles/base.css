@@ -1,0 +1,243 @@
+html[data-current-path="/playground"] #content,
+html[data-current-path="/zh/playground"] #content {
+  max-width: 68rem;
+}
+
+html[data-current-path="/playground"] #content-area,
+html[data-current-path="/zh/playground"] #content-area {
+  @media (min-width: 1024px) {
+    width: 100%;
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
+
+.mem-playground,
+[data-mem-playground] {
+  margin: 1.2rem 0 1.5rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  --course-star: #d99a06;
+}
+
+html.dark [data-mem-playground] {
+  --course-star: #f0b429;
+}
+
+
+.mp-window {
+  overflow: hidden;
+  border: 1px solid var(--course-border);
+  border-radius: 14px;
+  background: var(--course-surface);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
+  color: var(--course-ink);
+}
+
+html.dark .mp-window {
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.mp-titlebar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 2.4rem;
+  padding: 0 0.9rem;
+  border-bottom: 1px solid var(--course-border-soft);
+  background: var(--course-surface-muted);
+}
+
+.mp-dots {
+  display: inline-flex;
+  gap: 0.42rem;
+}
+
+.mp-dots i {
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 999px;
+  background: var(--course-border);
+}
+
+.mp-window-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--course-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.mp-titlebar .mp-badge {
+  margin-left: auto;
+}
+
+
+.mp-shell {
+  position: relative;
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  height: 39.5rem;
+  overflow: hidden;
+  background: var(--course-surface);
+  color: var(--course-ink);
+}
+
+.mp-shell.mp-norail {
+  grid-template-columns: 210px minmax(0, 1fr);
+}
+
+.mp-shell svg {
+  flex-shrink: 0;
+}
+
+
+.mp-rail-left {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 0.7rem 0.6rem;
+  border-right: 1px solid var(--course-border-soft);
+  background: var(--course-surface-muted);
+  font-size: 0.875rem;
+}
+
+.mp-search {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+  padding: 0.34rem 0.55rem;
+  border: 1px solid var(--course-border-soft);
+  border-radius: 7px;
+  background: var(--course-surface);
+  color: var(--course-faint);
+  font-size: 0.8125rem;
+}
+
+.mp-search svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.mp-nav {
+  display: grid;
+  gap: 1px;
+}
+
+.mp-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.32rem 0.5rem;
+  border-radius: 7px;
+  color: var(--course-muted);
+  white-space: nowrap;
+}
+
+.mp-nav-item svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.mp-nav-item.mp-active {
+  background: var(--course-border-soft);
+  color: var(--course-ink);
+  font-weight: 600;
+}
+
+button.mp-nav-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+}
+
+button.mp-nav-item:hover {
+  background: color-mix(in srgb, var(--course-ink) 4%, transparent);
+}
+
+button.mp-nav-item.mp-active,
+button.mp-nav-item.mp-active:hover {
+  background: var(--course-border-soft);
+}
+
+.mp-rail-section {
+  margin-top: 0.95rem;
+  padding: 0 0.5rem;
+}
+
+.mp-rail-label {
+  color: var(--course-faint);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.mp-rail-empty {
+  margin-top: 0.3rem;
+  color: var(--course-faint);
+  font-size: 0.75rem;
+}
+
+.mp-rail-bottom {
+  display: grid;
+  gap: 1px;
+  margin-top: auto;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--course-border-soft);
+}
+
+.mp-ws-switch {
+  display: flex;
+  margin-left: auto;
+  color: var(--course-faint);
+}
+
+.mp-ws-switch svg {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+
+.mp-main {
+  min-width: 0;
+  padding: 1rem 1.4rem 1.4rem;
+  overflow-y: auto;
+}
+
+.mp-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mp-head h2.mp-title {
+  margin: 0;
+  color: var(--course-ink);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.mp-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.06rem 0.42rem;
+  border: 1px solid var(--course-border);
+  border-radius: 999px;
+  color: var(--course-muted);
+  font-size: 0.64rem;
+  line-height: 1.5;
+}
+
+.mp-subtitle {
+  margin-top: 0.2rem;
+  color: var(--course-faint);
+  font-size: 0.75rem;
+}

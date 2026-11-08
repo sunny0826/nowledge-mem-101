@@ -1,0 +1,341 @@
+.mp-capture {
+  margin-top: 0.95rem;
+  padding: 0.85rem 0.95rem 0.65rem;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--course-ink) 3%, transparent);
+  transition: background 160ms ease;
+}
+
+.mp-capture:hover {
+  background: color-mix(in srgb, var(--course-ink) 4%, transparent);
+}
+
+.mp-capture:focus-within {
+  background: color-mix(in srgb, var(--course-ink) 5%, transparent);
+}
+
+.mp-capture textarea {
+  display: block;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--course-ink);
+  font-family: inherit;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  outline: none;
+  resize: none;
+}
+
+.mp-capture textarea::placeholder {
+  color: var(--course-faint);
+}
+
+.mp-capture-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.5rem;
+}
+
+.mp-tools {
+  display: inline-flex;
+  gap: 0.15rem;
+}
+
+.mp-tools i {
+  display: inline-flex;
+  padding: 0.4rem;
+  border-radius: 9px;
+  color: var(--course-faint);
+}
+
+.mp-tools svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.mp-kbd {
+  margin-left: auto;
+  color: var(--course-faint);
+  font-size: 0.66rem;
+}
+
+.mp-send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
+  background: var(--course-ink);
+  color: var(--course-surface);
+  cursor: pointer;
+}
+
+.mp-send svg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.mp-send:disabled {
+  background: transparent;
+  color: var(--course-faint);
+  cursor: default;
+}
+
+
+.mp-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 1rem;
+}
+
+.mp-tab {
+  padding: 0.22rem 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--course-ink) 4%, transparent);
+  color: var(--course-muted);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  transition: background 140ms ease;
+}
+
+.mp-tab:hover {
+  background: color-mix(in srgb, var(--course-ink) 8%, transparent);
+}
+
+.mp-tab.mp-on {
+  background: var(--course-ink);
+  color: var(--course-surface);
+}
+
+.mp-space-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.22rem;
+  padding: 0.06rem 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--course-ink) 5%, transparent);
+  color: var(--course-muted);
+  font-size: 0.625rem;
+  font-weight: 500;
+}
+
+.mp-space-pill svg {
+  width: 0.62rem;
+  height: 0.62rem;
+}
+
+
+.mp-focus {
+  margin-top: 0.75rem;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--course-ink) 2%, transparent);
+}
+
+.mp-focus-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+  padding: 0.5rem 0.7rem;
+}
+
+.mp-focus-label {
+  flex-shrink: 0;
+  color: var(--course-faint);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.mp-focus-space {
+  flex-shrink: 0;
+  padding: 0.02rem 0.42rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--course-ink) 5%, transparent);
+  color: var(--course-muted);
+  font-size: 0.625rem;
+  font-weight: 500;
+}
+
+.mp-focus-text {
+  min-width: 0;
+  flex: 1;
+  overflow: hidden;
+  color: var(--course-muted);
+  font-size: 0.6875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mp-focus-time {
+  flex-shrink: 0;
+  color: var(--course-faint);
+  font-size: 0.625rem;
+}
+
+.mp-focus-caret {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--course-faint);
+}
+
+.mp-focus-caret svg {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+
+.mp-review {
+  margin-top: 0.85rem;
+  padding: 0.6rem 0.65rem;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--course-ink) 2%, transparent);
+}
+
+.mp-review-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  padding: 0.15rem 0.25rem 0.55rem;
+}
+
+.mp-review-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-top: 0.1rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--course-ink) 5%, transparent);
+  color: var(--course-muted);
+}
+
+.mp-review-badge svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.mp-review-titles {
+  min-width: 0;
+}
+
+.mp-review-title {
+  margin: 0;
+  color: var(--course-ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.mp-review-sub {
+  margin: 0.15rem 0 0;
+  color: var(--course-faint);
+  font-size: 0.6875rem;
+}
+
+.mp-review-next {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0.3rem 0 0;
+  color: var(--course-faint);
+  font-size: 0.625rem;
+}
+
+.mp-review-next svg {
+  width: 0.66rem;
+  height: 0.66rem;
+}
+
+.mp-review-list {
+  display: grid;
+  gap: 2px;
+}
+
+.mp-review-item {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  min-height: 2.2rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 7px;
+}
+
+.mp-review-item:hover {
+  background: color-mix(in srgb, var(--course-ink) 3%, transparent);
+}
+
+.mp-review-caret {
+  display: inline-flex;
+  color: var(--course-faint);
+  transform: rotate(-90deg);
+}
+
+.mp-review-caret svg {
+  width: 0.62rem;
+  height: 0.62rem;
+}
+
+.mp-review-icon {
+  display: inline-flex;
+  color: var(--course-muted);
+}
+
+.mp-review-icon svg {
+  width: 0.78rem;
+  height: 0.78rem;
+}
+
+.mp-review-main {
+  display: grid;
+  min-width: 8rem;
+  flex: 1;
+}
+
+.mp-review-name {
+  color: var(--course-ink);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.mp-review-name em {
+  color: var(--course-faint);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.mp-review-rec {
+  color: var(--course-faint);
+  font-size: 0.625rem;
+}
+
+.mp-review-apply {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--course-ink) 5%, transparent);
+  color: var(--course-muted);
+  font-size: 0.625rem;
+  font-weight: 500;
+}
+
+.mp-review-apply svg {
+  width: 0.62rem;
+  height: 0.62rem;
+}

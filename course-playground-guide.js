@@ -1,145 +1,21 @@
-(function () {
+(function (root, factory) {
+  if (typeof module !== "undefined" && module.exports) { module.exports = require("./course-playground-guide-core.js"); return; }
+  var sources = ["/course-playground-guide-core.js?v=4", "/course-playground-guide-view.js?v=5"];
+  function load(index) {
+    if (index === sources.length) { factory(root.NMemCourseGuide); return; }
+    var script = document.createElement("script");
+    script.src = sources[index];
+    script.onload = function () { load(index + 1); };
+    script.onerror = function () { throw new Error("Cannot load " + sources[index]); };
+    document.head.appendChild(script);
+  }
+  load(0);
+})(typeof globalThis !== "undefined" ? globalThis : this, function (G) {
   "use strict";
-
-  var ROOT_SELECTOR = "[data-course-playground-guide]";
-  var MIN_DOCK_WIDTH = 40 * 16;
+  var ROOT_SELECTOR = G.ROOT_SELECTOR, MIN_DOCK_WIDTH = G.MIN_DOCK_WIDTH, prepareAiPractice = G.prepareAiPractice, spec = G.spec, targetForStep = G.targetForStep, positionWindow = G.positionWindow, renderHint = G.renderHint, placeHint = G.placeHint, highlightTarget = G.highlightTarget, updateCourseSteps = G.updateCourseSteps, render = G.render, prepareWindowControl = G.prepareWindowControl, setMinimized = G.setMinimized, setWindowOpen = G.setWindowOpen, markChange = G.markChange, showDoneModal = G.showDoneModal, hideDoneModal = G.hideDoneModal, tryComplete = G.tryComplete, fillExample = G.fillExample, openMemApp = G.openMemApp, createDoneModal = G.createDoneModal;
   var states = new WeakMap();
   var tracked = [];
   var scanTimer = null;
-
-  var SCENARIOS = {
-    save: {
-      steps: 3,
-      fillSteps: [2],
-      completion: "cleared",
-      targets: {
-        1: '[data-mp-view="timeline"]',
-        2: "[data-mp-input]",
-        3: "[data-mp-send]",
-      },
-      changed: "[data-mp-timeline] .mp-entry",
-    },
-    recall: {
-      steps: 2,
-      fillSteps: [1],
-      completion: "answer",
-      targets: {
-        1: "[data-mp-input]",
-        2: "[data-mp-send]",
-      },
-      changed: ".mp-answer",
-    },
-    threads: {
-      steps: 3,
-      fillSteps: [2],
-      completion: "query",
-      targets: {
-        1: '[data-mp-view="threads"]',
-        2: "[data-mp-thr-q]",
-        3: "[data-mp-thr-go]",
-      },
-      changed: "[data-mp-thr-list] .mp-thr-row",
-    },
-    "save-ask": {
-      steps: 4,
-      fillSteps: [1, 3],
-      completion: "answer",
-      targets: {
-        1: "[data-mp-input]",
-        2: "[data-mp-send]",
-        3: "[data-mp-input]",
-        4: "[data-mp-send]",
-      },
-      changed: ".mp-answer",
-    },
-    library: {
-      steps: 5,
-      fillSteps: [1, 3],
-      completion: "view",
-      targets: {
-        1: "[data-mp-input]",
-        2: "[data-mp-send]",
-        3: "[data-mp-input]",
-        4: "[data-mp-send]",
-        5: '[data-mp-view="library"]',
-      },
-      changed: "[data-mp-lib-list] .mp-lib-row",
-    },
-  };
-
-  var AI_TARGETS = {
-    ai: '[data-mp-view="ai-now"]', library: '[data-mp-view="library"]',
-    fill: '[data-mp-ai-input]', send: '[data-mp-ai-send]',
-    source: '[data-mp-ai-last] [data-mp-ai-ref="source"]',
-    memory: '[data-mp-ai-last] [data-mp-ai-ref="memory"]',
-    import: '[data-mp-lib-import]', document: '[data-mp-lib-open="0"]',
-    back: '[data-mp-pane]:not([hidden]) [data-mp-reader-back], [data-mp-lib-back]', research: '[data-mp-ai-research]',
-    fresh: '[data-mp-ai-new]'
-  };
-  function aiScenario(actions) {
-    var result = {steps:actions.length,fillSteps:[],targets:{},actions:actions,changed:actions[actions.length-1][0]==="source"||actions[actions.length-1][0]==="memory"?'[data-mp-reader-text]':'[data-mp-ai-last]'};
-    actions.forEach(function(action,i){result.targets[i+1]=AI_TARGETS[action[0]];if(action[0]==="fill")result.fillSteps.push(i+1);});
-    return result;
-  }
-  SCENARIOS["ai-context"] = aiScenario([["ai","view","ai-now"],["fill"],["send","reply","context"],["memory","read","memory"]]);
-  SCENARIOS["ai-source"] = aiScenario([["library","view","library"],["import","imported","atlas-source"],["document","read","source"],["back","back"],["ai","view","ai-now"],["fill"],["send","reply","source"],["source","read","source"]]);
-  SCENARIOS["ai-evidence"] = aiScenario([["ai","view","ai-now"],["fill"],["send","reply","brief"],["source","read","source"]]);
-  SCENARIOS["ai-research"] = aiScenario([["ai","view","ai-now"],["research","research","on"],["fill"],["send","reply","research"]]);
-  SCENARIOS["ai-save"] = aiScenario([["ai","view","ai-now"],["fill"],["send","reply","draft"],["source","read","source"],["back","back"],["fill"],["send","reply","save"],["memory","read","memory"],["back","back"],["fresh","new-task"],["fill"],["send","reply","recall"],["memory","read","memory"],["back","back"],["fill"],["send","reply","source"],["source","read","source"]]);
-  SCENARIOS["ai-manage"] = aiScenario([["ai","view","ai-now"],["fill"],["send","reply","settings"],["fill"],["send","reply","setting-change"],["fill"],["send","reply","setting-report"],["fill"],["send","reply","setting-revert"]]);
-
-  var AI_HISTORY = {
-  "en": [
-    {
-      "text": "Search the saved Atlas planning memories in Nowledge Mem. We are considering one cross-team planning review next quarter, covering dependencies over the next twelve months. We are not deciding a recurring review schedule. List the relevant facts, constraints, and undecided questions, and identify the memories behind them. Use saved knowledge only; do not research the web or recommend a direction yet. Say which context is missing.",
-      "research": false
-    },
-    {
-      "text": "Find and read atlas-planning-interviews.md in Library alongside the Atlas planning memories already found. First identify the document and its sections. Then list statements relevant to holding one cross-team planning review of the next twelve months, citing the interview heading for each. Separate what the notes say from your interpretation. Use only these sources; if you cannot read the file, say so.",
-      "research": false
-    },
-    {
-      "text": "Based only on the Atlas planning memories and atlas-planning-interviews.md, write an evidence brief about holding one cross-team planning review next quarter to check dependencies over the next twelve months. Leave future review frequency undecided. Do not search the web. Include: 1. Findings that support a trial 2. Findings that limit or challenge it 3. Open questions, marked as internal questions or public research questions 4. Assumptions, kept separate from evidence 5. One small next step that would reduce uncertainty For each finding, give the source name and section, what it establishes, and what it does not establish. Do not force a finding into a category if there is no supporting evidence.",
-      "research": false
-    },
-    {
-      "text": "Find up to two documented methods that help teams spot cross-team dependencies before committing plans. Prefer original studies, documented trials, or first-hand case reports. For each method, give its source link, publication date, participants, planning horizon, and what was measured. Separate measured outcomes from advice or opinion. Explain what could inform one review of a twelve-month plan and what would still need an internal trial. If you find no relevant evidence, say so. Do not treat our fictional Atlas interviews as public evidence.",
-      "research": true
-    }
-  ],
-  "zh": [
-    {
-      "text": "在 Nowledge Mem 中搜索已保存的 Atlas 计划相关记忆。我们正在考虑下个季度进行一次跨团队计划评审，检查未来十二个月的依赖，本次不决定定期评审安排。列出相关事实、约束和待定问题，并说明各自来自哪些记忆。只使用已保存的知识，先不要搜索网络或给出建议。如果缺少上下文，请说明。",
-      "research": false
-    },
-    {
-      "text": "结合已找到的 Atlas 计划记忆，在 Library 中找到并阅读 atlas-planning-interviews.md。先说明文档名称和包含的章节，再列出与进行一次覆盖未来十二个月的跨团队计划评审有关的陈述，并引用各自的访谈标题。把原文内容和你的解读分开。只使用这些来源；如果无法读取文件，请说明。",
-      "research": false
-    },
-    {
-      "text": "只根据 Atlas 计划记忆和 atlas-planning-interviews.md，撰写一份证据简报，讨论是否在下季度进行一次跨团队计划评审，检查未来十二个月的依赖。保留今后评审频率未定的状态。不要搜索网络。 包含： 1. 支持试行的发现 2. 限制或质疑试行的发现 3. 开放问题，分别标为内部问题或公共研究问题 4. 假设，与证据分开 5. 一个能降低不确定性的小步骤 每项发现都说明来源名称和章节、能够证明什么、不能证明什么。没有依据时，不要为了填满分类而编造发现。",
-      "research": false
-    },
-    {
-      "text": "查找至多两种有记录的方法，了解团队如何在承诺计划前发现跨团队依赖。优先使用原始研究、有记录的试行或第一手案例报告。 每种方法都提供来源链接、发布日期、参与者、计划覆盖的时间范围和测量内容。区分实测结果与建议或观点。说明哪些内容可以用于一次覆盖十二个月计划的评审，哪些仍需内部试行。如果没有找到相关证据，请明确说明。不要把我们的虚构 Atlas 访谈当作公共证据。",
-      "research": true
-    }
-  ]
-};
-  function aiPracticeSeed(scenario, lang) {
-    var index = ["ai-context", "ai-source", "ai-evidence", "ai-research", "ai-save"].indexOf(scenario);
-    return {source:index >= 2, history:AI_HISTORY[lang].slice(0, Math.max(0,index))};
-  }
-  if (typeof module !== "undefined" && module.exports) module.exports={aiPracticeSeed:aiPracticeSeed};
-  if (typeof window === "undefined") return;
-
-  function prepareAiPractice(state) {
-    if (!spec(state).actions || state.aiSeeded) return;
-    var mount=state.windowEl.querySelector('[data-mp-ai-ready]');
-    if (!mount) return;
-    state.aiSeeded=true;
-    mount.dispatchEvent(new CustomEvent('mp:ai-seed',{detail:aiPracticeSeed(state.scenario,mount.mpAPI.zh?'zh':'en')}));
-  }
   function handleAiAction(state,event) {
     if (!spec(state).actions || !state.open) return;
     if (event.detail.type === 'ai-ready') {prepareAiPractice(state);render(state);return;}
@@ -154,410 +30,6 @@
     render(state);
   }
 
-  function spec(state) {
-    return SCENARIOS[state.scenario] || SCENARIOS.save;
-  }
-
-  function targetForStep(state, step) {
-    var selector = spec(state).targets[step];
-    var el = state.windowEl.querySelector(selector);
-    if (el && selector === "[data-mp-input]") el = el.closest(".mp-capture") || el;
-    if (el && selector === "[data-mp-thr-q]") el = el.closest(".mp-mem-search") || el;
-    return el;
-  }
-
-  function positionWindow(state) {
-    var playgroundWindow = state.windowEl;
-    var content = document.getElementById("content");
-    var html = document.documentElement;
-
-    var wantDocked = state.open && !state.minimized && window.innerWidth >= 1024;
-    if (wantDocked !== html.hasAttribute("data-course-playground-docked")) {
-      if (wantDocked) {
-        html.setAttribute("data-course-playground-docked", "true");
-      } else {
-        html.removeAttribute("data-course-playground-docked");
-      }
-    }
-
-    function reset() {
-      playgroundWindow.style.left = "";
-      playgroundWindow.style.right = "";
-      playgroundWindow.style.width = "";
-      html.removeAttribute("data-course-playground-split");
-      html.style.removeProperty("--course-practice-article-width");
-      html.style.removeProperty("--course-practice-article-offset");
-      if (content) {
-        content.style.marginLeft = "";
-        content.style.maxWidth = "";
-      }
-    }
-
-    reset();
-    if (!wantDocked) return;
-
-    var vw = document.documentElement.clientWidth;
-    var edge = 24;
-    var gap = vw >= 1600 ? 32 : 24;
-    var available = vw - edge * 2 - gap;
-    var articleWidth = Math.max(416, Math.min(704, available * 0.36));
-    var width = Math.min(1280, available - articleWidth);
-    var area = document.getElementById("content-area");
-    if (width < MIN_DOCK_WIDTH || !area) return;
-
-    var workspaceWidth = articleWidth + gap + width;
-    var articleLeft = (vw - workspaceWidth) / 2;
-    html.setAttribute("data-course-playground-split", "true");
-    html.style.setProperty("--course-practice-article-width", articleWidth + "px");
-    html.style.setProperty("--course-practice-article-offset", "0px");
-    var areaLeft = area.getBoundingClientRect().left;
-    html.style.setProperty("--course-practice-article-offset", articleLeft - areaLeft + "px");
-    playgroundWindow.style.left = articleLeft + articleWidth + gap + "px";
-    playgroundWindow.style.right = "auto";
-    playgroundWindow.style.width = width + "px";
-  }
-
-  var FILL_ICON =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>';
-
-  function renderHint(state, text, withFill) {
-    var hint = state.hintEl;
-    var key = text + "|" + (withFill ? "fill" : "");
-    if (state.hintKey === key) return;
-    state.hintKey = key;
-    hint.textContent = "";
-    var label = document.createElement("span");
-    label.textContent = text;
-    hint.appendChild(label);
-    if (!withFill) return;
-    var value =
-      state.rootEl.getAttribute("data-course-guide-fillable-" + state.step) ||
-      state.rootEl.getAttribute("data-course-guide-fillable");
-    var fillLabel = state.rootEl.getAttribute("data-course-guide-fill-label");
-    if (!value || !fillLabel) return;
-    var button = document.createElement("button");
-    button.type = "button";
-    button.className = "course-playground-hint-fill";
-    button.setAttribute("data-course-guide-fill", value);
-    button.innerHTML = FILL_ICON + "<span></span>";
-    button.querySelector("span").textContent = fillLabel;
-    hint.appendChild(button);
-  }
-
-  function placeHint(state, anchor) {
-    var hint = state.hintEl;
-    hint.hidden = false;
-    var targetRect = anchor.getBoundingClientRect();
-    var windowRect = state.windowEl.getBoundingClientRect();
-    var half = hint.offsetWidth / 2;
-    var center = targetRect.left + targetRect.width / 2;
-    center = Math.max(windowRect.left + half + 8, Math.min(center, windowRect.right - half - 8));
-    hint.style.left = center + "px";
-    var top = targetRect.bottom + 10;
-    if (top + hint.offsetHeight > windowRect.bottom - 8) {
-      top = targetRect.top - hint.offsetHeight - 10;
-    }
-    hint.style.top = top + "px";
-  }
-
-  function highlightTarget(state) {
-    var previous = state.windowEl.querySelector("[data-course-guide-target]");
-    if (previous) previous.removeAttribute("data-course-guide-target");
-
-    var hint = state.hintEl;
-    if (!state.open || state.minimized) {
-      if (hint) hint.hidden = true;
-      return;
-    }
-
-    if (state.step > spec(state).steps) {
-      var changedText =
-        state.changedEl &&
-        state.rootEl.getAttribute("data-course-guide-hint-" + (spec(state).steps + 1));
-      if (hint && changedText) {
-        renderHint(state, changedText, false);
-        placeHint(state, state.changedEl);
-      } else if (hint) {
-        hint.hidden = true;
-      }
-      return;
-    }
-
-    var target = targetForStep(state, state.step);
-    if (!target) {
-      if (hint) hint.hidden = true;
-      return;
-    }
-    target.setAttribute("data-course-guide-target", "");
-    target.scrollIntoView({ block: "nearest" });
-
-    var text = state.rootEl.getAttribute("data-course-guide-hint-" + state.step);
-    if (!hint || !text) return;
-    renderHint(state, text, spec(state).fillSteps.indexOf(state.step) !== -1);
-    placeHint(state, target);
-  }
-
-  function updateCourseSteps(state) {
-    for (var step = 1; step <= spec(state).steps; step += 1) {
-      var anchor = state.rootEl.querySelector('[data-course-guide-source="' + step + '"]');
-      var item = anchor && anchor.closest('[role="listitem"]');
-      if (!item) continue;
-      item.classList.toggle("course-playground-source-active", state.open && step === state.step);
-      item.classList.toggle("course-playground-source-complete", step < state.step);
-    }
-  }
-
-  function render(state) {
-    var root = state.rootEl;
-    var stepCount = spec(state).steps;
-    root.setAttribute("data-course-guide-current", String(state.step));
-    if (state.step <= stepCount && state.changedEl) {
-      state.changedEl.removeAttribute("data-course-guide-changed");
-      state.changedEl = null;
-    }
-    if (state.open && state.renderedStep !== undefined && state.step !== state.renderedStep) {
-      var syncAnchor = root.querySelector(
-        '[data-course-guide-source="' + Math.min(state.step, stepCount) + '"]'
-      );
-      var syncItem = syncAnchor && syncAnchor.closest('[role="listitem"]');
-      if (syncItem) {
-        var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        syncItem.scrollIntoView({ block: "center", behavior: reduced ? "auto" : "smooth" });
-      }
-    }
-    state.renderedStep = state.step;
-    updateCourseSteps(state);
-
-    var ready = root.querySelector("[data-course-guide-ready]");
-    var done = root.querySelector("[data-course-guide-done]");
-    if (ready) ready.hidden = state.step > stepCount;
-    if (done) done.hidden = state.step <= stepCount;
-
-    var launchLabel = root.querySelector("[data-course-guide-open-label]");
-    if (launchLabel) {
-      if (state.open) {
-        launchLabel.textContent = root.getAttribute("data-course-guide-close-label");
-      } else if (state.step > stepCount) {
-        launchLabel.textContent = root.getAttribute("data-course-guide-replay-label");
-      } else {
-        launchLabel.textContent = state.startLabel;
-      }
-    }
-
-    requestAnimationFrame(function () {
-      positionWindow(state);
-      highlightTarget(state);
-    });
-  }
-
-  function prepareWindowControl(state) {
-    var dots = state.windowEl.querySelectorAll(".mp-dots i");
-    if (!dots.length) return;
-    dots[0].setAttribute("data-course-guide-window-close", "");
-    dots[0].setAttribute("role", "button");
-    dots[0].setAttribute("tabindex", "0");
-    var closeLabel = state.rootEl.getAttribute("data-course-guide-close-label");
-    if (closeLabel) dots[0].setAttribute("aria-label", closeLabel);
-    for (var i = 1; i < dots.length; i += 1) {
-      dots[i].removeAttribute("data-course-guide-window-minimize");
-      dots[i].removeAttribute("data-course-guide-window-maximize");
-      dots[i].removeAttribute("role");
-      dots[i].removeAttribute("tabindex");
-      dots[i].setAttribute("aria-hidden", "true");
-    }
-  }
-
-  function setMinimized(state, minimized) {
-    state.minimized = minimized;
-    state.windowEl.setAttribute("data-course-playground-minimized", String(minimized));
-    if (state.miniEl) state.miniEl.hidden = !minimized;
-    if (minimized) {
-      hideDoneModal(state);
-      if (state.hintEl) state.hintEl.hidden = true;
-    } else {
-      positionWindow(state);
-      setTimeout(function () {
-        highlightTarget(state);
-      }, 280);
-    }
-  }
-
-  function setWindowOpen(state, open, restoreFocus) {
-    if(!open)clearTimeout(state.doneTimer);
-    var playgroundWindow = state.windowEl;
-    var launch = state.rootEl.querySelector("[data-course-guide-open]");
-    if (!playgroundWindow || !launch) return;
-
-    state.open = open;
-    playgroundWindow.setAttribute("data-course-playground-open", String(open));
-    playgroundWindow.setAttribute("aria-hidden", String(!open));
-    launch.setAttribute("aria-expanded", String(open));
-
-    if (open) {
-      if (state.minimized) setMinimized(state, false);
-      playgroundWindow.removeAttribute("inert");
-      prepareWindowControl(state);
-      positionWindow(state);
-      setTimeout(function () {
-        prepareWindowControl(state);
-        highlightTarget(state);
-      }, 280);
-    } else {
-      if (state.minimized) setMinimized(state, false);
-      playgroundWindow.setAttribute("inert", "");
-      hideDoneModal(state);
-      positionWindow(state);
-      if (restoreFocus !== false) launch.focus();
-    }
-    render(state);
-  }
-
-  function markChange(state) {
-    var entry = state.windowEl.querySelector(spec(state).changed);
-    state.changedEl = entry || null;
-    if (entry) {
-      entry.setAttribute("data-course-guide-changed", "");
-      entry.scrollIntoView({ block: "nearest" });
-    }
-  }
-
-  function showDoneModal(state) {
-    var modal = state.modalEl;
-    if (!modal || state.step <= spec(state).steps) return;
-    modal.hidden = false;
-    var confirm = modal.querySelector("[data-course-guide-done-confirm]");
-    if (confirm) confirm.focus();
-  }
-
-  function hideDoneModal(state) {
-    if (state.modalEl) state.modalEl.hidden = true;
-  }
-
-  function tryComplete(state, input) {
-    setTimeout(function () {
-      var mode = spec(state).completion;
-      if (mode === "answer") {
-        if (!state.windowEl.querySelector(".mp-answer")) return;
-      } else if (mode === "query") {
-        if (!input.value.trim()) return;
-      } else if (input.value !== "") {
-        return;
-      }
-      state.step = spec(state).steps + 1;
-      markChange(state);
-      render(state);
-      setTimeout(function () {
-        showDoneModal(state);
-      }, 5000);
-    }, 40);
-  }
-
-  function fillExample(state, value) {
-    var input = state.windowEl.querySelector(spec(state).targets[state.step]);
-    if (!input || !value) return;
-    if (!state.open) setWindowOpen(state, true);
-    input.value = value;
-    input.dispatchEvent(new Event("input", { bubbles: true }));
-    render(state);
-    setTimeout(function () {
-      input.focus();
-      input.setSelectionRange(value.length, value.length);
-    }, 320);
-  }
-
-  function openMemApp(state) {
-    var site = state.rootEl.getAttribute("data-course-guide-mem-url") || "https://mem.nowledge.co";
-    var handled = false;
-    var timer = setTimeout(function () {
-      if (!handled && !document.hidden) window.open(site, "_blank", "noopener");
-    }, 1600);
-    function cleanup() {
-      clearTimeout(timer);
-      document.removeEventListener("visibilitychange", onVisibility);
-      window.removeEventListener("blur", onBlur);
-      window.removeEventListener("pagehide", cleanup);
-    }
-    function markHandled() {
-      handled = true;
-      cleanup();
-    }
-    function onVisibility() {
-      if (document.hidden) markHandled();
-    }
-    function onBlur() {
-      markHandled();
-    }
-    document.addEventListener("visibilitychange", onVisibility);
-    window.addEventListener("blur", onBlur);
-    window.addEventListener("pagehide", cleanup);
-    var probe = document.createElement("iframe");
-    probe.style.display = "none";
-    probe.setAttribute("aria-hidden", "true");
-    probe.src = "nowledgemem://";
-    document.body.appendChild(probe);
-    setTimeout(function () {
-      if (probe.parentNode) probe.parentNode.removeChild(probe);
-      cleanup();
-    }, 2500);
-  }
-
-  function createDoneModal(state) {
-    var root = state.rootEl;
-    var message = root.getAttribute("data-course-guide-done-message");
-    if (!message) return null;
-    var url = root.getAttribute("data-course-guide-mem-url") || "https://mem.nowledge.co";
-
-    var modal = document.createElement("div");
-    modal.className = "course-playground-done";
-    modal.hidden = true;
-    modal.innerHTML =
-      '<div class="course-playground-done-backdrop" data-course-guide-done-dismiss></div>' +
-      '<div class="course-playground-done-dialog" role="dialog" aria-modal="true">' +
-      '<p class="course-playground-done-message"></p>' +
-      '<div class="course-playground-done-actions">' +
-      '<a class="course-playground-done-open" target="_blank" rel="noopener"></a>' +
-      '<button type="button" class="course-playground-done-confirm" data-course-guide-done-confirm></button>' +
-      "</div></div>";
-
-    var dialog = modal.querySelector(".course-playground-done-dialog");
-    dialog.setAttribute("aria-label", message);
-    modal.querySelector(".course-playground-done-message").textContent = message;
-    var open = modal.querySelector(".course-playground-done-open");
-    open.href = url;
-    open.textContent = root.getAttribute("data-course-guide-open-mem-label") || url;
-    var confirmHref = root.getAttribute("data-course-guide-confirm-href");
-    modal.querySelector("[data-course-guide-done-confirm]").textContent =
-      root.getAttribute("data-course-guide-confirm-label") || "OK";
-
-    modal.addEventListener("click", function (event) {
-      if (event.target.closest(".course-playground-done-open")) {
-        event.preventDefault();
-        openMemApp(state);
-        hideDoneModal(state);
-        setWindowOpen(state, false);
-        return;
-      }
-      if (event.target.closest("[data-course-guide-done-confirm]")) {
-        hideDoneModal(state);
-        if (confirmHref) {
-          setWindowOpen(state, false, false);
-          window.location.assign(confirmHref);
-        }
-        return;
-      }
-      if (event.target.closest("[data-course-guide-done-dismiss]")) {
-        hideDoneModal(state);
-      }
-    });
-    modal.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        hideDoneModal(state);
-      }
-    });
-    document.body.appendChild(modal);
-    return modal;
-  }
 
   function startPractice(state) {
     if (window.innerWidth < 1024) return;
@@ -591,6 +63,8 @@
       if (state.open) {
         setWindowOpen(state, false);
       } else {
+        state.scenario = state.rootEl.getAttribute("data-course-guide-scenario") || "save";
+        state.step = 1;
         startPractice(state);
       }
       return;
@@ -638,6 +112,20 @@
       }
     }
 
+    var memoryActions = target.closest("[data-mp-memory-actions]");
+    if (memoryActions && state.scenario === "save" && state.step === 2) {
+      state.step += 1;
+      render(state);
+      return;
+    }
+
+    var addMemory = target.closest("[data-mp-add-memory]");
+    if (addMemory && state.scenario === "save" && state.step === 3) {
+      state.step += 1;
+      render(state);
+      return;
+    }
+
     if (state.scenario === "library") {
       var libSend = target.closest("[data-mp-send]");
       var libInput = state.windowEl.querySelector("[data-mp-input]");
@@ -651,7 +139,24 @@
       var thrGo = target.closest("[data-mp-thr-go]");
       var thrInput = state.windowEl.querySelector("[data-mp-thr-q]");
       if (state.step === 3 && thrGo && !thrGo.disabled && thrInput && thrInput.value.trim()) {
-        tryComplete(state, thrInput);
+        setTimeout(function () {
+          if (state.step === 3 && state.windowEl.querySelector("[data-mp-thread-open]")) {
+            state.step += 1;
+            render(state);
+          }
+        }, 0);
+        return;
+      }
+      var threadOpen = target.closest("[data-mp-thread-open]");
+      if (state.step === 4 && threadOpen) {
+        state.step += 1;
+        setTimeout(function () {
+          markChange(state);
+          render(state);
+        }, 60);
+        setTimeout(function () {
+          showDoneModal(state);
+        }, 5000);
       }
       return;
     }
@@ -766,7 +271,12 @@
       !event.isComposing &&
       event.target.value.trim()
     ) {
-      tryComplete(state, event.target);
+      setTimeout(function () {
+        if (state.step === 3 && state.windowEl.querySelector("[data-mp-thread-open]")) {
+          state.step += 1;
+          render(state);
+        }
+      }, 0);
       return;
     }
     if (
@@ -921,4 +431,4 @@
   } else {
     scheduleScan();
   }
-})();
+});

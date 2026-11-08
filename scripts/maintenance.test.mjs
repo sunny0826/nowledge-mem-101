@@ -56,7 +56,9 @@ function previewFixture(t) {
   const repo = join(root, "repo");
   const log = join(root, "calls.jsonl");
   mkdirSync(join(repo, "scripts"), { recursive: true });
-  copyFileSync(join(scripts, "preview-drafts.mjs"), join(repo, "scripts/preview-drafts.mjs"));
+  const previewSource = readFileSync(join(scripts, "preview-drafts.mjs"), "utf8");
+  write(repo, "scripts/preview-drafts.mjs", previewSource);
+  const sharedFiles = [...previewSource.match(/const sharedFiles = \[([\s\S]*?)\];/)[1].matchAll(/"([^"]+)"/g)].map((match) => match[1]);
   const languages = ["en", "zh"].map((language) => {
     const prefix = language === "en" ? "" : "zh/";
     for (const [path, number] of [["ai-workflow/index", null], ["ai-workflow/first", 1]]) {
@@ -68,7 +70,8 @@ function previewFixture(t) {
   });
   write(repo, "docs.json", JSON.stringify({ navigation: { languages } }));
   write(repo, ".mintignore", "drafts/\n");
-  for (const file of ["custom.css", "course-playground-guide.js", "mem-video-loading.css", "mem-video-loading.js", "playground.css", "playground.js", "playground-ai-now.js"]) write(repo, file, "");
+  for (const file of sharedFiles) write(repo, file, "");
+  mkdirSync(join(repo, "playground-assets"), { recursive: true });
   write(root, "bin/mint", `#!/usr/bin/env node
 const fs = require('node:fs');
 const args = process.argv.slice(2);
