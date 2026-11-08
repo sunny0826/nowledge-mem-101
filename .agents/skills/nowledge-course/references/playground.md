@@ -4,21 +4,22 @@ Read only when changing the shared simulation, course guide, or popup styling. C
 
 ## Ownership and supported flows
 
-- Root `playground.js`, `playground-ai-now.js`, and `playground.css` implement the reusable app replica; `snippets/playground.mdx` mounts it. `course-playground-guide.js` owns course-specific guidance outside the component.
-- The replica includes Timeline capture/recall, Memories, Threads, Library, and AI Now. The AI Now extension uses fictional Atlas fixtures and preset replies, with local task history, source/memory readers, a Research toggle, and save/retrieve state. It never calls a model or the web. A document URL or filename with an extension sent in Timeline imports a Library row; the simulated indexing delay and answer behavior belong to the replica, not the real product contract.
+- Root `playground.js`, `playground-ai-now.js`, and `playground.css` are the reusable app's browser entry points. `playground/` contains locale data, page renderers, mount-local state, feature event bindings, and shared styles; `snippets/playground.mdx` mounts the app, and each entry point loads its dependent modules in order. Course guidance is split between `course-playground-guide-core.js` (scenarios and seed data), `course-playground-guide-view.js` (rendering), and `course-playground-guide.js` (events and lifecycle). Home uses the app's actual styles in `playground-home.css`, illustration templates in `playground-home-templates.js`, renderer in `playground-home.js`, and local assets in `playground-assets/`. Artifacts, Memories, and Threads use the corresponding layout and typography in `playground-library.css`, `playground-memories.css`, and `playground-threads.css`. Preserve the original dimensions and asset coordinates, retain fictional Atlas practice content instead of account data, and keep the course `data-mp-*` bindings intact.
+- The replica includes Home capture/recall, Memories, Threads, Artifacts, global search, and AI Now. Knowledge Tree, Graph, Wiki, Skills, Identities, archived conversations, and the additional AI Now attachment/memory/planning/plugin controls remain explicitly unavailable rather than simulated. The AI Now extension uses fictional Atlas fixtures and preset replies, with local task history, source/memory readers, a Research toggle, and save/retrieve state. It never calls a model or the web. A document URL or filename with an extension sent on Home imports an Artifacts row; the simulated indexing delay and answer behavior belong to the replica, not the real product contract.
 - Course pages select `data-course-guide-scenario`; the guide's `SCENARIOS` table is the current mapping. Do not invent simulation flows for external AI connections or other UI that the replica does not support.
 
 | Scenario | Interaction | Completion / changed element |
 | --- | --- | --- |
-| `save` (default) | Timeline → input → send | Input clears / saved entry |
+| `save` (default) | Home → Memory actions → Add memory → input → send | Input clears / saved entry |
+| `create` | Memories → Create Memory → content → Create | `saved` `mp:action` with `via:"create"` / new memory row |
 | `recall` | Question → send | Answer appears / `.mp-answer` |
 | `threads` | Threads → search → Enter or search button | Non-empty query / found thread row |
 | `save-ask` | Save brief → ask to find it | First send advances on clear; final answer completes |
-| `library` | Import in Timeline → ask about document → open Library | Final navigation / imported row |
+| `library` | Import on Home → ask about document → open Artifacts | Final navigation / imported row |
 | `ai-context`, `ai-source`, `ai-evidence`, `ai-research`, `ai-save` | AI Now tasks → typed prompts → checked source/memory → fresh-task retrieval | Verified `mp:action` events; missing prerequisites never advance |
 | `ai-manage` | AI Now task → settings check → change → review → restore | Verified `mp:action` events; fresh task without Atlas history |
 
-Each scenario supplies its fill step, completion mode (`cleared`, `answer`, or `query`), and changed element. `data-course-guide-fillable-N` can supply per-step values; the final changed hint uses `data-course-guide-hint-(steps+1)`. Inspect actual lesson attributes before changing a binding.
+Each scenario supplies its fill step, completion mode (`cleared`, `answer`, `query`, `view`, or `create`), and changed element. `data-course-guide-fillable-N` can supply per-step values; the final changed hint uses `data-course-guide-hint-(steps+1)`. Inspect actual lesson attributes before changing a binding. The first-memory page also offers `data-course-guide-create` for the full-form path without replacing the default Home flow.
 
 ## Interaction invariants
 
@@ -39,16 +40,24 @@ Each scenario supplies its fill step, completion mode (`cleared`, `answer`, or `
 - When changing `course-playground-guide.js`, bump its `?v=` query in every English/Chinese lesson that loads it. Find current callers with `rg`, rather than keeping a version or exhaustive page list in instructions.
 - Verify affected scenarios, hint fill clicks, close/restore, sidebar restoration, both locales and color modes, and desktop/mobile boundaries. Keep root asset locations unchanged when promoting a demo host page.
 
-## Library layout
+## Memories and Threads
 
-- Match the real app's source sidebar and document detail layout; do not reuse Thread rows. The Artifacts tab contains compact grouped sources, search, type/status filters, sorting, and a source count. Other tabs remain explicitly unavailable in the simulation.
-- Selecting a Library source opens its text in the adjacent detail pane (a list/detail switch on narrow containers), and emits the existing source-read event. Keep import/indexing and course events intact. AI Now citations and saved-memory references still use its shared reader.
-- Inspect the loaded Library body, not only the app heading: navigation updates the heading before the lazy-loaded content arrives. Use DOM/source and computed styles when screenshots are not requested.
+- Memories uses the app's 900px content column, tier tabs, submitted search, filter menu, memory cards, and right reading panel. Type, source, importance, and search-depth filters work on the fictional local data. Create Memory opens the matching form with optional title, type, labels, and a 1–5 importance rating; content is required and saves only to the current mount. Other filter facets and cloud create/edit/access actions remain disabled.
+- Rating and pin state persist only within the current mount. Deleted rows disappear until the page resets. Search submits on Enter or the search button; reset restores the active unfiltered view without discarding saved practice entries.
+- Threads uses the app's source/scope filter, submitted search, conversation cards, and full reading view. Its preset Atlas messages, message navigation, summary, related memories, and related objects are fixtures, not imported user conversations. Related-memory links open the corresponding local memory detail.
+- Thread pin, copy-reference, and delete actions stay inside the real UI's More menu. Import, sharing, export, and AI distillation are explicitly disabled rather than reported as completed.
+
+## Artifacts and global search
+
+- Artifacts uses a toolbar and file table with Upload, search, type/status filters, sorting, and a source count. The Knowledge Library disclosure keeps Tree, Graph, and Wiki explicitly unavailable. Do not restore the retired Wiki/Artifacts/Entities/Crystals tab row.
+- Selecting a source opens its text in the right reading panel (a list/detail switch on narrow containers), and emits the existing source-read event. Keep import/indexing and course events intact. AI Now citations and saved-memory references still use its shared reader.
+- Global search searches local memories, threads, and sources, then opens the matching view. It does not call a server. Below 767px the standalone replica uses bottom Home/More navigation and a drawer; this does not change the course popup's 1024px boundary.
+- Inspect the loaded Artifacts body, not only the app heading: navigation updates the heading before the lazy-loaded content arrives. Use DOM/source and computed styles when screenshots are not requested.
 
 ## AI Now extension
 
-- `playground.js` exposes a mount-local `mpAPI` and emits `mp:ready` after initialization. The extension handles either load order and only initializes once per mount. Keep the existing Timeline save/recall behavior independent.
-- `mp:ai-seed` accepts prerequisite state (`source: true/false`, `history: [{text, research}]`) from the course guide. The guide selects cumulative earlier turns for AI Now lessons 2–5; `ai-manage` seeds a fresh task with empty history. The replica rebuilds them in the current task without emitting live reply events or advancing the guide. Seeded history is preset practice context, not persisted learner input. Preparing a new lesson or replay resets its local result; ordinary **New Task** preserves saved knowledge and Library while clearing conversation history and draft state. Nothing persists after a page reload.
+- `playground.js` exposes a mount-local `mpAPI` and emits `mp:ready` after initialization. The extension handles either load order and only initializes once per mount. Keep the existing Home save/recall behavior independent.
+- `mp:ai-seed` accepts prerequisite state (`source: true/false`, `history: [{text, research}]`) from the course guide. The guide selects cumulative earlier turns for AI Now lessons 2–5; `ai-manage` seeds a fresh task with empty history. The replica rebuilds them in the current task without emitting live reply events or advancing the guide. Seeded history is preset practice context, not persisted learner input. Preparing a new lesson or replay resets its local result; ordinary **New Task** preserves saved knowledge and Artifacts while clearing conversation history and draft state. Nothing persists after a page reload.
 - Settings practice simulates one supported setting (`AI output language`) with reply kinds `settings`, `setting-change`, `setting-report`, and `setting-revert`. The setting lives on the mount's model store, so it persists across **New Task** within a mount and resets on `mp:ai-seed`; the replica never claims settings beyond what it simulates.
 - Course step maps, fill prompts, and hints remain outside the replica. The guide advances on completed `mp:action` events, including indexed imports and opened evidence; clicking Send alone is insufficient.
 - Replies display a short, labeled simulation of processing stages, with an optional Stop action. Run model work and memory writes only after the stages finish; stop, task switches, reseeding, and detached mounts must not produce stale replies or writes. Emit the reply event only after the answer is rendered.

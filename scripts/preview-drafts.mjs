@@ -33,11 +33,22 @@ if (checkMode && requestedChecks.some((check) => !availableChecks.includes(check
 const previewRoot = mkdtempSync(join(tmpdir(), "nowledge-mem-drafts-"));
 const sharedFiles = [
   "custom.css",
+  "course-playground-guide-core.js",
+  "course-playground-guide-view.js",
   "course-playground-guide.js",
+  "playground-ai-now-data.js",
+  "playground-ai-now-model.js",
+  "playground-ai-now-renderer.js",
   "mem-video-loading.css",
   "mem-video-loading.js",
   "playground.css",
+  "playground-home.css",
+  "playground-library.css",
+  "playground-memories.css",
+  "playground-threads.css",
   "playground.js",
+  "playground-home.js",
+  "playground-home-templates.js",
   "playground-ai-now.js",
 ];
 let synchronizedDestinations = new Set();
@@ -480,6 +491,28 @@ if (existsSync(snippetsDirectory)) {
     watch(snippetsDirectory, { recursive: true }, (_event, filename) => {
       withRaceRetry(() =>
         syncChangedPath(snippetsDirectory, join(previewRoot, "snippets"), filename),
+      );
+    }),
+  );
+}
+
+const playgroundDirectory = join(repositoryRoot, "playground");
+if (existsSync(playgroundDirectory)) {
+  watchers.push(
+    watch(playgroundDirectory, { recursive: true }, (_event, filename) => {
+      withRaceRetry(() =>
+        syncChangedPath(playgroundDirectory, join(previewRoot, "playground"), filename),
+      );
+    }),
+  );
+}
+
+const playgroundAssetsDirectory = join(repositoryRoot, "playground-assets");
+if (existsSync(playgroundAssetsDirectory)) {
+  watchers.push(
+    watch(playgroundAssetsDirectory, { recursive: true }, (_event, filename) => {
+      withRaceRetry(() =>
+        syncChangedPath(playgroundAssetsDirectory, join(previewRoot, "playground-assets"), filename),
       );
     }),
   );

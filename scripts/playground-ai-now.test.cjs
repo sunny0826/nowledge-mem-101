@@ -251,3 +251,49 @@ test('a detached or replaced task never runs stale response work',()=>{
   const h=responseHarness();h.tick();h.tick();h.detach();h.tick();
   assert.deepEqual(h.counts(),{work:0,completions:0});
 });
+
+function shellSource() {
+  const entry=readFileSync(resolve(__dirname,'..','playground.js'),'utf8');
+  const modules=[...entry.matchAll(/"(playground(?:\/|-home)[^"]+\.js)"/g)].map(match=>match[1]);
+  return modules.map(file=>readFileSync(resolve(__dirname,'..',file),'utf8')).join('\n')+'\n'+entry;
+}
+
+test('shared shell exposes the current navigation and responsive work controls',()=>{
+  const shell=shellSource();
+  const ai=readFileSync(resolve(__dirname,'..','playground-ai-now.js'),'utf8');
+  for(const text of [
+    '["home","Home","timeline"]',
+    '["home","首页","timeline"]',
+    '["library","Artifacts","library"]',
+    '["library","资料","library"]',
+    '["compass","Identities",null]',
+    '["compass","身份",null]',
+    'data-mp-memory-actions',
+    'data-mp-more',
+    'data-mp-global-search'
+  ]) assert.ok(shell.includes(text),text+' is available in the shared shell');
+  for(const text of ['data-mp-ai-attachments','data-mp-ai-memory','data-mp-ai-planning']) {
+    assert.ok(ai.includes(text),text+' is available in AI Now');
+  }
+  for(const text of ['data-mp-lib-filter-option','data-mp-lib-filter-clear','data-mp-lib-reading-view','data-mp-lib-ask-form','data-mp-lib-count','count + "，共 " + count + " 条"','count + " of " + count']) {
+    assert.ok(shell.includes(text),text+' is available in Artifacts');
+  }
+  for(const text of ['data-mp-mem-open','data-mp-mem-filter-option','data-mp-mem-back','data-mp-thread-open','data-mp-thread-back','data-mp-thread-filter-option','data-mp-thr-clear','mp-thr-row','state.threads.appliedQ = thrQ.value','state.mem.importance > 3']) {
+    assert.ok(shell.includes(text),text+' is available in the updated list views');
+  }
+});
+
+test('first memory creation exposes the form and guided completion contract',()=>{
+  const shell=shellSource();
+  const guide=['course-playground-guide-core.js','course-playground-guide-view.js','course-playground-guide.js'].map(file=>readFileSync(resolve(__dirname,'..',file),'utf8')).join('\n');
+  for(const text of ['data-mp-mem-create','data-mp-create-content','data-mp-create-submit','data-mp-create-form','data-mp-create-close','data-mp-create-discard','via:"create"']) {
+    assert.ok(shell.includes(text),text+' is available in Create Memory');
+  }
+  for(const text of ['data-course-guide-create','[data-mp-create-content]','[data-mp-create-submit]','event.detail.via === "create"']) {
+    assert.ok(guide.includes(text),text+' is available in the Create Memory guide');
+  }
+  for(const lang of ['en','zh']) {
+    const lesson=readFileSync(resolve(__dirname,'..',lang==='zh'?'zh':'','essentials','first-memory.mdx'),'utf8');
+    assert.ok(lesson.includes('data-course-guide-create'),lang+' offers the alternate Create Memory guide');
+  }
+});

@@ -1,0 +1,12 @@
+(function () {
+  var G = window.NMemPlayground;
+  G.LOCALES = G.LOCALES || {};
+  G.LOCALES.zh = G.LOCALES.zh || {};
+  Object.assign(G.LOCALES.zh, {"workspace":"远程工作空间","workspaceKind":"远程","search":"搜索","homeBrief":"Atlas 发布计划已进入核对阶段：落地页采用 Next.js，英文版先行，中文版延后一周。发布前检查每页 title、description、og 图与 canonical 链接。首份转化数据将于下周一生成，再据此决定是否恢复定价页。","viewDetail":"查看详情","sourceAttention":"1 个对话来源需要关注","searchTimeline":"筛选已加载的时间线","nextPaperStyle":"换一种纸张样式（当前是{{weekday}}的）","nav":[["home","首页","timeline"],["lightbulb","记忆","memories"],["msgtext","会话记录","threads"],["library","资料","library"],["asterisk","AI Now","ai-now"],["diamonds","技能",null],["compass","身份",null]],"groupKnowledge":"知识","groupAI":"AI","libraryNavLabel":"知识库","libraryChildren":[["network","知识树",null],["share","知识图谱",null],["bookopen","Wiki",null]],"memoryActions":"记忆操作","addMemory":"添加记忆","askPlaceholder":"向 AI Now 询问你的记忆","more":"更多","globalSearch":"搜索记忆、对话和来源…","globalSearchTitle":"搜索你的知识","globalSearchHint":"无需离开当前页面，即可找到记忆、对话或来源。","suggestions":["我最近在忙什么？","这个月我做过哪些决定？","这周我学到了什么？"],"unsupported":"此模拟暂不支持","favorites":"收藏","noFavorites":"还没有收藏","bottom":[["pie","统计"],["puzzle","连接"],["settings","设置"]],"title":"首页","homeHeadline":"在这里管理你的个人记忆","badge":"演示","subtitle":"最近的保存、发现与工作记忆","windowTitle":"Nowledge Mem","placeholder":"想到了什么？","sendLabel":"发送","closeLabel":"关闭","tabs":[["all","全部时间线"],["saved","记忆与洞察"],["events","我的活动"]],"dayToday":"今天","dayYesterday":"昨天","daySummary":function (saved, events) {
+        return saved + events + " 个事件";
+      },"memoryKind":"已保存","savedFoot":"Mem 保存了 1 条长期记忆","you":"你","savedEvent":"已保存 1 条记忆","answerTitle":"回答","answerFound":function (n) {
+        return "根据 " + n + " 条相关记忆：";
+      },"answerNone":"还没有匹配的记忆。换个关键词试试，或先保存几条。","emptyFiltered":"这里还没有内容。","overview":"知识概览","statLabels":["记忆","主题","核心","话题"],"statMeta":{"archived":"另有 12 条已归档","perWeek":"+6/周"},"pulse":"有 20+ 条新通知待查看","focus":{"label":"今日焦点","space":"默认","text":"关键变化：Playground 组件复刻完成；第 2 课现在嵌入实时演示。","time":"3 小时前"},"review":{"title":"需要留意","subtitle":"可按类别批阅；未处理的事项到期后会安全移出，不会改动记忆。","next":"下一项将在 27 天后移出 · 不改动记忆","apply":function (n) {
+          return "应用到 " + n + " 项";
+        },"items":[["warn","记忆冲突",1,"推荐：保留两条并建立关联"],["clock","可能已过时",1,"推荐：保持不变"],["database","记忆健康",1,"推荐：保持不变"]]},"activity":"记忆活动","attention":"需留意","attentionItems":["可能存在矛盾","记忆可能已过时","记忆健康审阅已就绪"],"recentEvents":"最近事件","legend":["少","多"],"dow":["一","二","三","四","五","六","日"]});
+})();

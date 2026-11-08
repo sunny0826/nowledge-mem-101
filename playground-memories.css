@@ -1,0 +1,376 @@
+@import url("/playground/styles/memories-app.css?v=2");
+
+[data-mem-playground] .mp-create-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: hsl(var(--overlay) / 0.16);
+}
+
+[data-mem-playground] .mp-create-backdrop[hidden] {
+  display: none;
+}
+
+[data-mem-playground] .mp-create-dialog {
+  position: relative;
+  width: min(460px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  border-radius: 16px;
+  background: hsl(var(--control-background));
+  box-shadow: 0 18px 50px hsl(var(--overlay) / 0.16);
+  color: hsl(var(--control-foreground));
+}
+
+[data-mem-playground] .mp-create-header {
+  padding: 20px 24px 0;
+}
+
+[data-mem-playground] .mp-create-header h2 {
+  margin: 0;
+  padding-right: 32px;
+  color: hsl(var(--control-foreground));
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+[data-mem-playground] .mp-create-close {
+  position: absolute;
+  top: 19px;
+  right: 19px;
+  display: inline-flex;
+  width: 26px;
+  height: 26px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: hsl(var(--control-muted));
+  cursor: pointer;
+}
+
+[data-mem-playground] .mp-create-close:hover {
+  background: hsl(var(--control-hover));
+}
+
+[data-mem-playground] .mp-create-close img {
+  width: 16px;
+  height: 16px;
+}
+
+[data-mem-playground] .mp-create-space {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  color: hsl(var(--control-muted));
+  font-size: 12px;
+  line-height: 16px;
+}
+
+[data-mem-playground] .mp-create-space svg {
+  width: 14px;
+  height: 14px;
+}
+
+[data-mem-playground] .mp-create-form {
+  display: grid;
+  gap: 24px;
+  padding: 24px;
+}
+
+[data-mem-playground] .mp-create-field {
+  display: grid;
+  gap: 4px;
+  color: hsl(var(--control-foreground));
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+[data-mem-playground] .mp-create-field > span {
+  display: flex;
+  gap: 4px;
+}
+
+[data-mem-playground] .mp-create-optional {
+  color: hsl(var(--control-muted));
+}
+
+[data-mem-playground] .mp-create-field input,
+[data-mem-playground] .mp-create-field select,
+[data-mem-playground] .mp-create-field textarea,
+[data-mem-playground] .mp-create-label-input {
+  width: 100%;
+  min-width: 0;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 8px;
+  outline: 0;
+  background: hsl(var(--control-hover));
+  color: hsl(var(--control-foreground));
+  font: inherit;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+[data-mem-playground] .mp-create-field input,
+[data-mem-playground] .mp-create-field select {
+  height: 32px;
+}
+
+[data-mem-playground] .mp-create-field textarea {
+  min-height: 96px;
+  resize: none;
+}
+
+[data-mem-playground] .mp-create-field :is(input, select, textarea)::placeholder,
+[data-mem-playground] .mp-create-label-input::placeholder {
+  color: hsl(var(--control-placeholder));
+  opacity: 1;
+}
+
+[data-mem-playground] .mp-create-labels-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+[data-mem-playground] .mp-create-rating {
+  position: relative;
+}
+
+[data-mem-playground] .mp-create-rating > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: hsl(var(--control-muted));
+  font-size: 12px;
+  line-height: 16px;
+  list-style: none;
+  cursor: pointer;
+}
+
+[data-mem-playground] .mp-create-rating > summary::-webkit-details-marker {
+  display: none;
+}
+
+[data-mem-playground] .mp-create-rating > summary svg {
+  width: 12px;
+  height: 12px;
+}
+
+[data-mem-playground] .mp-create-rating-menu {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 6px);
+  z-index: 4;
+  display: flex;
+  gap: 4px;
+  padding: 12px;
+  border: 0.5px solid hsl(var(--control-border));
+  border-radius: 12px;
+  background: hsl(var(--control-background));
+  box-shadow: 0 8px 24px hsl(var(--overlay) / 0.08);
+}
+
+[data-mem-playground] .mp-create-rating-choice {
+  display: inline-flex;
+  width: 20px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+[data-mem-playground] .mp-create-rating-choice img {
+  width: 16px;
+  height: 16px;
+}
+
+[data-mem-playground] .mp-create-label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+[data-mem-playground] .mp-create-label-input {
+  flex: 1;
+}
+
+[data-mem-playground] .mp-create-label-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+[data-mem-playground] .mp-create-label-chip {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 4px 4px 10px;
+  border-radius: 8px;
+  background: hsl(var(--control-hover));
+  color: hsl(var(--control-foreground));
+  font-size: 12px;
+  line-height: 16px;
+}
+
+[data-mem-playground] .mp-create-label-chip button {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: hsl(var(--control-muted));
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+[data-mem-playground] .mp-create-primary,
+[data-mem-playground] .mp-create-secondary,
+[data-mem-playground] .mp-create-add-label {
+  display: inline-flex;
+  min-height: 32px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+[data-mem-playground] .mp-create-primary {
+  border: 0;
+  background: hsl(var(--control-primary));
+  color: hsl(var(--control-primary-foreground));
+}
+
+[data-mem-playground] .mp-create-primary:hover {
+  background: hsl(var(--control-primary-hover));
+}
+
+[data-mem-playground] .mp-create-primary:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+[data-mem-playground] .mp-create-secondary,
+[data-mem-playground] .mp-create-add-label {
+  border: 0.5px solid hsl(var(--control-border));
+  background: transparent;
+  color: hsl(var(--control-foreground));
+}
+
+[data-mem-playground] .mp-create-add-label {
+  flex-shrink: 0;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+[data-mem-playground] .mp-create-secondary:hover,
+[data-mem-playground] .mp-create-add-label:hover {
+  background: hsl(var(--control-hover));
+}
+
+[data-mem-playground] .mp-create-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+[data-mem-playground] .mp-create-confirm {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  border-radius: inherit;
+  background: hsl(var(--control-background) / 0.97);
+}
+
+[data-mem-playground] .mp-create-confirm h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+[data-mem-playground] .mp-create-confirm p {
+  margin: 0;
+  color: hsl(var(--control-muted));
+  font-size: 14px;
+  line-height: 20px;
+}
+
+[data-mem-playground] .mp-create-confirm .mp-create-primary {
+  background: hsl(0 72% 51%);
+  color: hsl(0 0% 100%);
+}
+
+[data-mem-playground] .mp-create-dialog :is(button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid hsl(var(--control-foreground) / 0.42);
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  [data-mem-playground] .mp-create-backdrop {
+    padding: 12px;
+  }
+
+  [data-mem-playground] .mp-create-header {
+    padding: 20px 20px 0;
+  }
+
+  [data-mem-playground] .mp-create-form {
+    gap: 20px;
+    padding: 20px;
+  }
+}
+
+@media (pointer: coarse) {
+  [data-mem-playground] .mp-create-close,
+  [data-mem-playground] .mp-create-rating-choice,
+  [data-mem-playground] .mp-create-label-chip button {
+    width: 36px;
+    min-height: 40px;
+  }
+
+  [data-mem-playground] .mp-create-field input,
+  [data-mem-playground] .mp-create-field select,
+  [data-mem-playground] .mp-create-primary,
+  [data-mem-playground] .mp-create-secondary,
+  [data-mem-playground] .mp-create-add-label {
+    min-height: 44px;
+  }
+}
+
+[data-mem-playground] .mp-create-backdrop,
+.course-playground-window [data-mem-playground] .mp-create-backdrop {
+  height: auto;
+  min-height: 0;
+}
