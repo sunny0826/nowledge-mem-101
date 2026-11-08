@@ -287,8 +287,6 @@
       var mode = spec(state).completion;
       if (mode === "answer") {
         if (!state.windowEl.querySelector(".mp-answer")) return;
-      } else if (mode === "query") {
-        if (!input.value.trim()) return;
       } else if (input.value !== "") {
         return;
       }

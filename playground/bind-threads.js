@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  var G = window.NMemPlayground;
+  var G = window.NMemPlayground = window.NMemPlayground || {};
   var renderThreadList = G.renderThreadList, copyText = G.copyText, icon = G.icon, esc = G.esc;
   G.bindThreads = function (context) {
   var mount = context.mount, L = context.L, state = context.state, input = context.input, send = context.send, memQ = context.memQ, memGo = context.memGo, thrQ = context.thrQ, thrGo = context.thrGo, globalPanel = context.globalPanel, globalQ = context.globalQ, globalResults = context.globalResults;

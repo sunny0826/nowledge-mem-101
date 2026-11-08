@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  var G = window.NMemPlayground;
+  var G = window.NMemPlayground = window.NMemPlayground || {};
   var esc = G.esc, icon = G.icon, appAsset = G.appAsset, appPageHeaderHtml = G.appPageHeaderHtml, sourceIconHtml = G.sourceIconHtml, appPaginationHtml = G.appPaginationHtml, isZh = G.isZh, homeIcon = G.homeIcon;
   function artifactIcon(name) {
     return '<span class="home-icon mp-artifact-icon" aria-hidden="true" style="mask-image:url(/playground-assets/artifacts/' + name + '.svg);-webkit-mask-image:url(/playground-assets/artifacts/' + name + '.svg)"></span>';

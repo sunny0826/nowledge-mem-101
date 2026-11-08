@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  var G = window.NMemPlayground;
+  var G = window.NMemPlayground = window.NMemPlayground || {};
   var renderTimeline = G.renderTimeline, nowHM = G.nowHM, esc = G.esc, icon = G.icon;
   G.bindHome = function (context) {
   var mount = context.mount, L = context.L, state = context.state, input = context.input, send = context.send, memQ = context.memQ, memGo = context.memGo, thrQ = context.thrQ, thrGo = context.thrGo, globalPanel = context.globalPanel, globalQ = context.globalQ, globalResults = context.globalResults;

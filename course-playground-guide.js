@@ -1,6 +1,6 @@
 (function (root, factory) {
   if (typeof module !== "undefined" && module.exports) { module.exports = require("./course-playground-guide-core.js"); return; }
-  var sources = ["/course-playground-guide-core.js?v=3", "/course-playground-guide-view.js?v=3"];
+  var sources = ["/course-playground-guide-core.js?v=4", "/course-playground-guide-view.js?v=4"];
   function load(index) {
     if (index === sources.length) { factory(root.NMemCourseGuide); return; }
     var script = document.createElement("script");
@@ -139,7 +139,24 @@
       var thrGo = target.closest("[data-mp-thr-go]");
       var thrInput = state.windowEl.querySelector("[data-mp-thr-q]");
       if (state.step === 3 && thrGo && !thrGo.disabled && thrInput && thrInput.value.trim()) {
-        tryComplete(state, thrInput);
+        setTimeout(function () {
+          if (state.step === 3 && state.windowEl.querySelector("[data-mp-thread-open]")) {
+            state.step += 1;
+            render(state);
+          }
+        }, 0);
+        return;
+      }
+      var threadOpen = target.closest("[data-mp-thread-open]");
+      if (state.step === 4 && threadOpen) {
+        state.step += 1;
+        setTimeout(function () {
+          markChange(state);
+          render(state);
+        }, 60);
+        setTimeout(function () {
+          showDoneModal(state);
+        }, 5000);
       }
       return;
     }
@@ -254,7 +271,12 @@
       !event.isComposing &&
       event.target.value.trim()
     ) {
-      tryComplete(state, event.target);
+      setTimeout(function () {
+        if (state.step === 3 && state.windowEl.querySelector("[data-mp-thread-open]")) {
+          state.step += 1;
+          render(state);
+        }
+      }, 0);
       return;
     }
     if (

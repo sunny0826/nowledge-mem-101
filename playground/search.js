@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  var G = window.NMemPlayground;
+  var G = window.NMemPlayground = window.NMemPlayground || {};
 
   function tokenize(query) {
     var tokens = [];

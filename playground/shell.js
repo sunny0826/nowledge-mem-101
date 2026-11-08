@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  var G = window.NMemPlayground;
+  var G = window.NMemPlayground = window.NMemPlayground || {};
   var homeViewHtml = G.homeViewHtml, memPaneHtml = G.memPaneHtml, threadsPaneHtml = G.threadsPaneHtml, libPaneHtml = G.libPaneHtml, globalSearchHtml = G.globalSearchHtml, esc = G.esc, icon = G.icon, homeIcon = G.homeIcon, navItemHtml = G.navItemHtml, captureHtml = G.captureHtml;
   function renderShell(L) {
     var bottom = L.bottom.map(function (item) {

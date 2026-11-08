@@ -31,15 +31,16 @@
       changed: ".mp-answer",
     },
     threads: {
-      steps: 3,
+      steps: 4,
       fillSteps: [2],
-      completion: "query",
+      completion: "view",
       targets: {
         1: '[data-mp-view="threads"]',
         2: "[data-mp-thr-q]",
         3: "[data-mp-thr-go]",
+        4: "[data-mp-thread-open]",
       },
-      changed: "[data-mp-thr-list] .mp-thr-row",
+      changed: "[data-mp-thread-detail]",
     },
     "save-ask": {
       steps: 4,

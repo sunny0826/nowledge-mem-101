@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  var G = window.NMemPlayground = {};
+  var G = window.NMemPlayground = window.NMemPlayground || {};
   var MOUNT_ATTR = "data-mem-playground";
   var INIT_ATTR = "data-mem-playground-init";
   var DEFER_MS = 1200;

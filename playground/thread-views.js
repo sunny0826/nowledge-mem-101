@@ -1,7 +1,7 @@
 (function () {
   "use strict";
-  var G = window.NMemPlayground;
-  var esc = G.esc, icon = G.icon, appAsset = G.appAsset, appPageHeaderHtml = G.appPageHeaderHtml, sourceIconHtml = G.sourceIconHtml, appPaginationHtml = G.appPaginationHtml;
+  var G = window.NMemPlayground = window.NMemPlayground || {};
+  var esc = G.esc, icon = G.icon, appAsset = G.appAsset, appPageHeaderHtml = G.appPageHeaderHtml, sourceIconHtml = G.sourceIconHtml, appPaginationHtml = G.appPaginationHtml, isZh = G.isZh;
   function threadFilterMenuHtml(L, state) {
     var V = L.threadView;
     var sources = [];

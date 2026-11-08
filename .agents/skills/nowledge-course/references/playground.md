@@ -12,13 +12,13 @@ Read only when changing the shared simulation, course guide, or popup styling. C
 | --- | --- | --- |
 | `save` (default) | Home → Memory actions → Add memory → input → send | Input clears / saved entry |
 | `recall` | Question → send | Answer appears / `.mp-answer` |
-| `threads` | Threads → search → Enter or search button | Non-empty query / found thread row |
+| `threads` | Threads → search → open result | Full conversation view / thread detail |
 | `save-ask` | Save brief → ask to find it | First send advances on clear; final answer completes |
 | `library` | Import on Home → ask about document → open Artifacts | Final navigation / imported row |
 | `ai-context`, `ai-source`, `ai-evidence`, `ai-research`, `ai-save` | AI Now tasks → typed prompts → checked source/memory → fresh-task retrieval | Verified `mp:action` events; missing prerequisites never advance |
 | `ai-manage` | AI Now task → settings check → change → review → restore | Verified `mp:action` events; fresh task without Atlas history |
 
-Each scenario supplies its fill step, completion mode (`cleared`, `answer`, `query`, or `view`), and changed element. `data-course-guide-fillable-N` can supply per-step values; the final changed hint uses `data-course-guide-hint-(steps+1)`. Inspect actual lesson attributes before changing a binding. The first-memory flow advances from Memory actions to the existing Add memory menu item before focusing the input.
+Each scenario supplies its fill step, completion mode (`cleared`, `answer`, or `view`), and changed element. `data-course-guide-fillable-N` can supply per-step values; the final changed hint uses `data-course-guide-hint-(steps+1)`. Inspect actual lesson attributes before changing a binding. The first-memory flow advances from Memory actions to the existing Add memory menu item before focusing the input.
 
 ## Interaction invariants
 

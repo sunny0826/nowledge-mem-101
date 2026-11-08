@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  var G = window.NMemPlayground;
+  var G = window.NMemPlayground = window.NMemPlayground || {};
   var INIT_ATTR = G.INIT_ATTR, LOCALES = G.LOCALES, renderShell = G.renderShell, isZh = G.isZh;
   function createContext(mount) {
     if (mount.hasAttribute(INIT_ATTR)) {
