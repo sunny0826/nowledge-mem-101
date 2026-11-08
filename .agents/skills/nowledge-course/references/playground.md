@@ -43,7 +43,7 @@ Each scenario supplies its fill step, completion mode (`cleared`, `answer`, or `
 
 - Memories uses the app's 900px content column, tier tabs, submitted search, filter menu, memory cards, and right reading panel. Type, source, importance, and search-depth filters work on the fictional local data. Create Memory and cloud edit/access actions are explicitly unavailable rather than simulated; the first-memory course uses only Home's existing Memory actions → Add memory flow.
 - Rating and pin state persist only within the current mount. Deleted rows disappear until the page resets. Search submits on Enter or the search button; reset restores the active unfiltered view without discarding saved practice entries.
-- Threads uses the app's source/scope filter, submitted search, conversation cards, and full reading view. Its preset Atlas messages, message navigation, summary, related memories, and related objects are fixtures, not imported user conversations. Related-memory links open the corresponding local memory detail.
+- Threads uses the app's source/scope filter, submitted search, conversation cards, and full reading view. Search guidance highlights the entire `.mp-thr-row` card, not just its title button, then opens the full conversation. Its preset Atlas messages, message navigation, summary, related memories, and related objects are fixtures, not imported user conversations. Related-memory links open the corresponding local memory detail.
 - Thread pin, copy-reference, and delete actions stay inside the real UI's More menu. Import, sharing, export, and AI distillation are explicitly disabled rather than reported as completed.
 
 ## Artifacts and global search

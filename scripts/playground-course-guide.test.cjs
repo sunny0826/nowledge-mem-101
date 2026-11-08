@@ -44,3 +44,19 @@ test('thread search presents a result before opening the full conversation',()=>
     assert.equal(detailHint,lang==='zh'?'已打开对话，可以查看完整内容':'Opened — read the full conversation');
   }
 });
+
+
+test('thread result guidance highlights the whole conversation row',()=>{
+  const previous=global.window;
+  const row={};
+  const title={closest:selector=>selector==='.mp-thr-row'?row:null};
+  global.window={NMemCourseGuide:require('../course-playground-guide-core.js')};
+  try {
+    require('../course-playground-guide-view.js');
+    const state={scenario:'threads',windowEl:{querySelector:selector=>selector==='[data-mp-thread-open]'?title:null}};
+    assert.equal(global.window.NMemCourseGuide.targetForStep(state,4),row);
+  } finally {
+    if(previous===undefined) delete global.window;
+    else global.window=previous;
+  }
+});

@@ -1,6 +1,6 @@
 (function (root, factory) {
   if (typeof module !== "undefined" && module.exports) { module.exports = require("./course-playground-guide-core.js"); return; }
-  var sources = ["/course-playground-guide-core.js?v=4", "/course-playground-guide-view.js?v=4"];
+  var sources = ["/course-playground-guide-core.js?v=4", "/course-playground-guide-view.js?v=5"];
   function load(index) {
     if (index === sources.length) { factory(root.NMemCourseGuide); return; }
     var script = document.createElement("script");

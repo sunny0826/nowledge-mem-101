@@ -11,6 +11,7 @@
     var el = state.windowEl.querySelector(selector);
     if (el && selector === "[data-mp-input]") el = el.closest(".mp-capture") || el;
     if (el && selector === "[data-mp-thr-q]") el = el.closest(".mp-mem-search") || el;
+    if (el && selector === "[data-mp-thread-open]") el = el.closest(".mp-thr-row") || el;
     return el;
   }
 
