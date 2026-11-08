@@ -8,28 +8,17 @@
 
   var SCENARIOS = {
     save: {
-      steps: 4,
-      fillSteps: [3],
+      steps: 5,
+      fillSteps: [4],
       completion: "cleared",
       targets: {
         1: '[data-mp-view="timeline"]',
         2: "[data-mp-memory-actions]",
-        3: "[data-mp-input]",
-        4: "[data-mp-send]",
+        3: "[data-mp-add-memory]",
+        4: "[data-mp-input]",
+        5: "[data-mp-send]",
       },
       changed: "[data-mp-timeline] .mp-entry",
-    },
-    create: {
-      steps: 4,
-      fillSteps: [3],
-      completion: "create",
-      targets: {
-        1: '[data-mp-view="memories"]',
-        2: "[data-mp-mem-create]",
-        3: "[data-mp-create-content]",
-        4: "[data-mp-create-submit]",
-      },
-      changed: "[data-mp-mem-list] .mp-mem-row",
     },
     recall: {
       steps: 2,

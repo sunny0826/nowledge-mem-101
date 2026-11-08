@@ -50,40 +50,9 @@
       '<div class="mp-app-body"><div class="mp-app-tabs-row"><div class="mp-app-tabs" role="radiogroup" aria-label="' + esc(V.title) + '">' + tiers + '</div>' +
       '<div class="mp-app-search">' + icon("search") + '<input type="search" data-mp-mem-q placeholder="' + esc(V.searchPh) + '" aria-label="' + esc(V.searchPh) + '"><button type="button" class="mp-app-search-action" data-mp-mem-clear aria-label="' + esc(V.clearSearch) + '" hidden>×</button><button type="button" class="mp-app-search-action" data-mp-mem-go aria-label="' + esc(V.searchBtn) + '" title="' + esc(V.searchBtn) + '" hidden disabled>' + icon("search") + '</button></div></div>' +
       '<div class="mp-app-toolbar"><div class="mp-app-toolbar-group"><details class="mp-app-filter" data-mp-mem-filter><summary>' + memFilterSummaryHtml(L, {mem:{type:"all",source:"all",importance:3,mode:"normal"}}) + '</summary><div class="mp-filter-menu" data-mp-mem-filter-menu></div></details><span class="mp-app-count" role="status">' + esc(V.results) + ' · <b data-mp-mem-count></b></span></div>' +
-      '<div class="mp-app-toolbar-group"><button type="button" class="mp-app-button mp-app-button-outline" data-mp-mem-refresh>' + appAsset("memories", "sync") + '<span>' + esc(V.refresh) + '</span></button><button type="button" class="mp-app-button" data-mp-mem-create>' + appAsset("memories", "plus") + '<span>' + esc(V.createBtn) + '</span></button></div></div>' +
+      '<div class="mp-app-toolbar-group"><button type="button" class="mp-app-button mp-app-button-outline" data-mp-mem-refresh>' + appAsset("memories", "sync") + '<span>' + esc(V.refresh) + '</span></button><button type="button" class="mp-app-button" data-mp-mem-create disabled title="' + esc(L.unsupported) + '">' + appAsset("memories", "plus") + '<span>' + esc(V.createBtn) + '</span></button></div></div>' +
       '<div class="mp-mem-list" data-mp-mem-list></div><div data-mp-mem-pages></div></div>' +
       '<aside class="mp-mem-detail" data-mp-mem-detail></aside></div></div>';
-  }
-
-  function memoryCreateDraft() {
-    return {title:"", unit:"auto", text:"", tags:[], labelInput:"", rating:3};
-  }
-
-  function createDialogHtml(L, state) {
-    var C = L.memView.create;
-    var draft = state.mem.createDraft;
-    var types = [["auto", C.auto]].concat(Object.keys(L.memView.units).map(function (unit) { return [unit, L.memView.units[unit]]; }));
-    var ratingButtons = "";
-    for (var rating = 1; rating <= 5; rating++) {
-      ratingButtons += '<button type="button" class="mp-create-rating-choice" data-mp-create-rating="' + rating + '" aria-label="' + esc(L.memView.star) + ' ' + rating + '/5" aria-pressed="' + (draft.rating === rating) + '">' + appAsset("memories", rating <= draft.rating ? "importance" : "importance-empty", false) + '</button>';
-    }
-    return '<section class="mp-create-dialog" role="dialog" aria-modal="true" aria-label="' + esc(C.title) + '" aria-describedby="mp-create-description">' +
-      '<div class="mp-create-header"><h2>' + esc(C.title) + '</h2><p id="mp-create-description" class="sr-only">' + esc(C.description) + '</p><div class="mp-create-space"><span>' + esc(C.savingTo) + '</span>' + icon("user") + '<span>' + esc(L.workspace) + '</span></div></div>' +
-      '<button type="button" class="mp-create-close" data-mp-create-close aria-label="' + esc(L.closeLabel) + '">' + appAsset("memories", "create-close") + '</button>' +
-      '<form class="mp-create-form" data-mp-create-form><label class="mp-create-field"><span>' + esc(C.titleLabel) + '<span class="mp-create-optional">' + esc(C.optional) + '</span></span><input type="text" data-mp-create-title aria-label="' + esc(C.titleLabel) + '" placeholder="' + esc(C.titlePlaceholder) + '" maxlength="200" value="' + esc(draft.title) + '"></label>' +
-      '<label class="mp-create-field"><span>' + esc(C.typeLabel) + '</span><select data-mp-create-type aria-label="' + esc(C.typeLabel) + '">' + types.map(function (type) { return '<option value="' + type[0] + '"' + (draft.unit === type[0] ? ' selected' : "") + '>' + esc(type[1]) + '</option>'; }).join("") + '</select></label>' +
-      '<label class="mp-create-field"><span>' + esc(C.contentLabel) + '</span><textarea data-mp-create-content aria-label="' + esc(C.contentLabel) + '" placeholder="' + esc(C.contentPlaceholder) + '" maxlength="32768" required>' + esc(draft.text) + '</textarea></label>' +
-      '<div class="mp-create-field"><div class="mp-create-labels-head"><span>' + esc(C.labelsLabel) + '</span><details class="mp-create-rating"><summary>' + esc(C.importance) + ' <span>' + draft.rating + '/5</span>' + icon("settings") + '</summary><div class="mp-create-rating-menu">' + ratingButtons + '</div></details></div>' +
-      '<div class="mp-create-label-chips">' + draft.tags.map(function (tag) { return '<span class="mp-create-label-chip">' + esc(tag) + '<button type="button" data-mp-create-remove-label="' + esc(tag) + '" aria-label="' + esc(C.removeLabel(tag)) + '">×</button></span>'; }).join("") + '</div>' +
-      '<div class="mp-create-label-row"><input class="mp-create-label-input" data-mp-create-label-input aria-label="' + esc(C.labelPlaceholder) + '" placeholder="' + esc(C.labelPlaceholder) + '" value="' + esc(draft.labelInput) + '"><button type="button" class="mp-create-add-label" data-mp-create-add-label>' + icon("plus") + '<span>' + esc(C.addLabel) + '</span></button></div></div>' +
-      '<div class="mp-create-actions"><button type="button" class="mp-create-secondary" data-mp-create-cancel>' + esc(C.cancel) + '</button><button type="submit" class="mp-create-primary" data-mp-create-submit' + (draft.text.trim() ? "" : " disabled") + '>' + esc(C.createButton) + '</button></div></form>' +
-      (state.mem.discardOpen ? '<div class="mp-create-confirm" role="alertdialog" aria-modal="true" aria-label="' + esc(C.discardTitle) + '"><h3>' + esc(C.discardTitle) + '</h3><p>' + esc(C.discardDescription) + '</p><div class="mp-create-actions"><button type="button" class="mp-create-secondary" data-mp-create-keep>' + esc(C.keepEditing) + '</button><button type="button" class="mp-create-primary" data-mp-create-discard>' + esc(C.discard) + '</button></div></div>' : "") + '</section>';
-  }
-
-  function renderCreateDialog(mount, L, state) {
-    var host = mount.querySelector("[data-mp-create-dialog]");
-    host.hidden = !state.mem.createOpen;
-    host.innerHTML = state.mem.createOpen ? createDialogHtml(L, state) : "";
   }
 
   function memRowHtml(L, memory, index) {
@@ -171,9 +140,8 @@
       detail.removeAttribute("role");
       detail.removeAttribute("aria-label");
     }
-    renderCreateDialog(mount, L, state);
   }
 
 
-  Object.assign(G, {memFilterCount, memFilterSummaryHtml, memFilterMenuHtml, memPaneHtml, memoryCreateDraft, createDialogHtml, renderCreateDialog, memRowHtml, memDetailHtml, renderMemList});
+  Object.assign(G, {memFilterCount, memFilterSummaryHtml, memFilterMenuHtml, memPaneHtml, memRowHtml, memDetailHtml, renderMemList});
 })();

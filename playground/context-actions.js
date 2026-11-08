@@ -1,7 +1,7 @@
 (function () {
   "use strict";
   var G = window.NMemPlayground;
-  var renderLibList = G.renderLibList, renderMemList = G.renderMemList, renderThreadList = G.renderThreadList, renderCreateDialog = G.renderCreateDialog, nowHM = G.nowHM, searchMemories = G.searchMemories, searchDocuments = G.searchDocuments, renderTimeline = G.renderTimeline, renderStats = G.renderStats, renderCalendar = G.renderCalendar, renderAnswer = G.renderAnswer, isZh = G.isZh, esc = G.esc, memoryCreateDraft = G.memoryCreateDraft;
+  var renderLibList = G.renderLibList, renderMemList = G.renderMemList, renderThreadList = G.renderThreadList, nowHM = G.nowHM, searchMemories = G.searchMemories, searchDocuments = G.searchDocuments, renderTimeline = G.renderTimeline, renderStats = G.renderStats, renderCalendar = G.renderCalendar, renderAnswer = G.renderAnswer, esc = G.esc;
   function attachActions(context) {
   var mount = context.mount, L = context.L, state = context.state, input = context.input, send = context.send, memQ = context.memQ, memGo = context.memGo, thrQ = context.thrQ, thrGo = context.thrGo, globalPanel = context.globalPanel, globalQ = context.globalQ, globalResults = context.globalResults;
     function submit() {
@@ -89,11 +89,6 @@
 
     function setView(view) {
       state.view = view;
-      if (state.mem.createOpen) {
-        state.mem.createOpen = false;
-        state.mem.discardOpen = false;
-        renderCreateDialog(mount, L, state);
-      }
       setDrawer(false);
       closeGlobalSearch();
       var panes = mount.querySelectorAll("[data-mp-pane]");
@@ -134,73 +129,6 @@
         main.scrollTop = 0;
       }
       mount.dispatchEvent(new CustomEvent("mp:action", {bubbles:true, detail:{type:"view",kind:view}}));
-    }
-
-
-    function finishCreateDialog() {
-      state.mem.createOpen = false;
-      state.mem.discardOpen = false;
-      state.mem.createDraft = memoryCreateDraft();
-      renderMemList(mount, L, state);
-      mount.querySelector("[data-mp-mem-create]").focus({preventScroll:true});
-    }
-
-    function requestCreateClose() {
-      var draft = state.mem.createDraft;
-      var dirty = draft.title.trim() || draft.text.trim() || draft.tags.length || draft.unit !== "auto" || draft.rating !== 3;
-      if (dirty) {
-        state.mem.discardOpen = true;
-        renderCreateDialog(mount, L, state);
-        mount.querySelector("[data-mp-create-keep]").focus({preventScroll:true});
-        return;
-      }
-      finishCreateDialog();
-    }
-
-    function createMemoryFromDraft() {
-      var draft = state.mem.createDraft;
-      var text = draft.text.trim();
-      if (!text) return;
-      state.mem.list.unshift({
-        title: draft.title.trim() || text,
-        text: text,
-        unit: draft.unit === "auto" ? "fact" : draft.unit,
-        source: L.you,
-        ago: L.memView.justNow,
-        date: new Intl.DateTimeFormat(isZh() ? "zh-CN" : "en-US", {year:"numeric",month:"long",day:"numeric"}).format(new Date()),
-        rating: draft.rating,
-        tags: draft.tags.slice(),
-        pinned: false,
-        archived: false,
-      });
-      state.memories.unshift({day:"today",time:nowHM(),source:L.you,text:text,tags:draft.tags.slice()});
-      state.events.unshift({day:"today",time:nowHM(),title:L.savedEvent});
-      state.counts.memories += 1;
-      state.todayLevel = Math.min(4, state.todayLevel + 1);
-      state.answer = null;
-      state.mem.createOpen = false;
-      state.mem.discardOpen = false;
-      state.mem.selected = null;
-      state.mem.createDraft = memoryCreateDraft();
-      state.mem.q = "";
-      state.mem.appliedQ = "";
-      state.mem.type = "all";
-      state.mem.source = "all";
-      state.mem.importance = 3;
-      state.mem.tier = "active";
-      state.mem.mode = "normal";
-      state.mem.filterFacet = "";
-      memQ.value = "";
-      memGo.disabled = true;
-      var activeTiers = mount.querySelectorAll("[data-mp-tier]");
-      for (var tierIndex = 0; tierIndex < activeTiers.length; tierIndex++) {
-        var activeTier = activeTiers[tierIndex].getAttribute("data-mp-tier") === "active";
-        activeTiers[tierIndex].classList.toggle("mp-on", activeTier);
-        activeTiers[tierIndex].setAttribute("aria-checked", String(activeTier));
-      }
-      renderMemList(mount, L, state);
-      rerenderAll();
-      mount.dispatchEvent(new CustomEvent("mp:action", {bubbles:true,detail:{type:"saved",kind:"memory",via:"create"}}));
     }
 
 
@@ -245,13 +173,6 @@
     }
 
 
-    function setDrawer(open) {
-      var shell = mount.querySelector(".mp-shell");
-      shell.classList.toggle("mp-drawer-open", open);
-      mount.querySelector("[data-mp-more]").setAttribute("aria-expanded", String(open));
-    }
-
-
     function rerenderAll() {
       if (!input.value) input.style.height = "";
       renderTimeline(mount, L, state);
@@ -261,7 +182,7 @@
     }
 
 
-    Object.assign(context, {submit, setView, finishCreateDialog, requestCreateClose, createMemoryFromDraft, closeGlobalSearch, renderGlobalResults, setDrawer, rerenderAll});
+    Object.assign(context, {submit, setView, closeGlobalSearch, renderGlobalResults, setDrawer, rerenderAll});
   }
   G.attachActions = attachActions;
 })();

@@ -1,7 +1,7 @@
 (function () {
   "use strict";
   var G = window.NMemPlayground;
-  var INIT_ATTR = G.INIT_ATTR, LOCALES = G.LOCALES, memoryCreateDraft = G.memoryCreateDraft, renderShell = G.renderShell, isZh = G.isZh;
+  var INIT_ATTR = G.INIT_ATTR, LOCALES = G.LOCALES, renderShell = G.renderShell, isZh = G.isZh;
   function createContext(mount) {
     if (mount.hasAttribute(INIT_ATTR)) {
       return;
@@ -34,9 +34,6 @@
         importance: 3,
         filterFacet: "",
         selected: null,
-        createOpen: false,
-        discardOpen: false,
-        createDraft: memoryCreateDraft(),
         list: L.memList.map(function (memory) {
           return {
             title: memory.title,

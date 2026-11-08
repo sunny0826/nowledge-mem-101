@@ -33,7 +33,6 @@
       '<div class="mp-main">' + homeViewHtml(L, tabs) +
       memPaneHtml(L) + threadsPaneHtml(L) + libPaneHtml(L) +
       '</div></div>' +
-      '<div class="mp-create-backdrop" data-mp-create-dialog hidden></div>' +
       '<div class="mp-mobile-nav"><button type="button" data-mp-view="timeline">' + icon("home") + '<span>' + esc(L.nav[0][1]) + '</span></button>' +
       '<button type="button" data-mp-more aria-expanded="false">' + icon("grid") + '<span>' + esc(L.more) + '</span></button></div>' +
       globalSearchHtml(L) +

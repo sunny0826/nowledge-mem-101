@@ -283,17 +283,23 @@ test('shared shell exposes the current navigation and responsive work controls',
   }
 });
 
-test('first memory creation exposes the form and guided completion contract',()=>{
+test('first memory guides the existing Add memory menu item',()=>{
   const shell=shellSource();
+  const {SCENARIOS}=require('../course-playground-guide-core.js');
+  assert.equal(SCENARIOS.save.steps,5);
+  assert.deepEqual(SCENARIOS.save.fillSteps,[4]);
+  assert.equal(SCENARIOS.save.targets[2],'[data-mp-memory-actions]');
+  assert.equal(SCENARIOS.save.targets[3],'[data-mp-add-memory]');
+  assert.equal(SCENARIOS.save.targets[4],'[data-mp-input]');
+  assert.equal(SCENARIOS.save.targets[5],'[data-mp-send]');
+  assert.ok(!shell.includes('data-mp-create-form'),'the course does not need a separate Create Memory form');
   const guide=['course-playground-guide-core.js','course-playground-guide-view.js','course-playground-guide.js'].map(file=>readFileSync(resolve(__dirname,'..',file),'utf8')).join('\n');
-  for(const text of ['data-mp-mem-create','data-mp-create-content','data-mp-create-submit','data-mp-create-form','data-mp-create-close','data-mp-create-discard','via:"create"']) {
-    assert.ok(shell.includes(text),text+' is available in Create Memory');
-  }
-  for(const text of ['data-course-guide-create','[data-mp-create-content]','[data-mp-create-submit]','event.detail.via === "create"']) {
-    assert.ok(guide.includes(text),text+' is available in the Create Memory guide');
-  }
+  assert.ok(!guide.includes('data-course-guide-create'),'the alternate Create Memory guide is removed');
   for(const lang of ['en','zh']) {
     const lesson=readFileSync(resolve(__dirname,'..',lang==='zh'?'zh':'','essentials','first-memory.mdx'),'utf8');
-    assert.ok(lesson.includes('data-course-guide-create'),lang+' offers the alternate Create Memory guide');
+    assert.ok(!lesson.includes('data-course-guide-create'),lang+' keeps only the original Home flow');
+    assert.ok(lesson.includes('data-course-guide-hint-6='),lang+' has a final saved hint after the five actions');
+    const hint=lesson.match(/data-course-guide-hint-3="([^"]+)"/)[1];
+    assert.equal(hint,lang==='zh'?'选择「添加记忆」':'Choose Add memory');
   }
 });

@@ -109,7 +109,7 @@
   }
 
   function highlightTarget(state) {
-    var hintPrefix = state.scenario === "create" ? "data-course-guide-create-hint-" : "data-course-guide-hint-";
+    var hintPrefix = "data-course-guide-hint-";
     var previous = state.windowEl.querySelector("[data-course-guide-target]");
     if (previous) previous.removeAttribute("data-course-guide-target");
 

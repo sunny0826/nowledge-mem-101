@@ -1,10 +1,10 @@
 (function () {
   "use strict";
   var G = window.NMemPlayground;
-  var memoryCreateDraft = G.memoryCreateDraft, renderMemList = G.renderMemList, renderCreateDialog = G.renderCreateDialog;
+  var renderMemList = G.renderMemList;
   G.bindMemories = function (context) {
   var mount = context.mount, L = context.L, state = context.state, input = context.input, send = context.send, memQ = context.memQ, memGo = context.memGo, thrQ = context.thrQ, thrGo = context.thrGo, globalPanel = context.globalPanel, globalQ = context.globalQ, globalResults = context.globalResults;
-    var setView = context.setView, submit = context.submit, rerenderAll = context.rerenderAll, requestCreateClose = context.requestCreateClose, finishCreateDialog = context.finishCreateDialog, createMemoryFromDraft = context.createMemoryFromDraft, closeGlobalSearch = context.closeGlobalSearch, setDrawer = context.setDrawer, renderGlobalResults = context.renderGlobalResults;
+    var setView = context.setView, submit = context.submit, rerenderAll = context.rerenderAll, closeGlobalSearch = context.closeGlobalSearch, setDrawer = context.setDrawer, renderGlobalResults = context.renderGlobalResults;
     var memQ = mount.querySelector("[data-mp-mem-q]");
     var memGo = mount.querySelector("[data-mp-mem-go]");
 
@@ -32,79 +32,9 @@
     });
 
 
-    mount.addEventListener("submit", function (event) {
-      if (!event.target.matches("[data-mp-create-form]")) return;
-      event.preventDefault();
-      createMemoryFromDraft();
-    });
-
-    mount.addEventListener("input", function (event) {
-      if (event.target.matches("[data-mp-create-title]")) {
-        state.mem.createDraft.title = event.target.value;
-      }
-      if (event.target.matches("[data-mp-create-content]")) {
-        state.mem.createDraft.text = event.target.value;
-        mount.querySelector("[data-mp-create-submit]").disabled = !event.target.value.trim();
-      }
-      if (event.target.matches("[data-mp-create-label-input]")) {
-        state.mem.createDraft.labelInput = event.target.value;
-      }
-    });
-
-    mount.addEventListener("change", function (event) {
-      if (event.target.matches("[data-mp-create-type]")) {
-        state.mem.createDraft.unit = event.target.value;
-      }
-    });
-
-
     mount.addEventListener("click", function (event) {
-      var target = event.target.closest ? event.target.closest("[data-mp-mem-create], [data-mp-create-close], [data-mp-create-cancel], [data-mp-create-keep], [data-mp-create-discard], [data-mp-create-rating], [data-mp-create-add-label], [data-mp-create-remove-label], [data-mp-mem-open], [data-mp-mem-back], [data-mp-mem-clear], [data-mp-mem-facet], [data-mp-mem-filter-option], [data-mp-mode], [data-mp-tier], [data-mp-mem-go], [data-mp-mem-refresh], [data-mp-rate], [data-mp-pin], [data-mp-del]") : null;
+      var target = event.target.closest ? event.target.closest("[data-mp-mem-open], [data-mp-mem-back], [data-mp-mem-clear], [data-mp-mem-facet], [data-mp-mem-filter-option], [data-mp-mode], [data-mp-tier], [data-mp-mem-go], [data-mp-mem-refresh], [data-mp-rate], [data-mp-pin], [data-mp-del]") : null;
       if (!target || !mount.contains(target)) return;
-      if (target.hasAttribute("data-mp-mem-create")) {
-        state.mem.selected = null;
-        state.mem.createDraft = memoryCreateDraft();
-        state.mem.createOpen = true;
-        state.mem.discardOpen = false;
-        renderMemList(mount, L, state);
-        mount.querySelector("[data-mp-create-content]").focus({preventScroll:true});
-        return;
-      }
-      if (target.hasAttribute("data-mp-create-close") || target.hasAttribute("data-mp-create-cancel")) {
-        requestCreateClose();
-        return;
-      }
-      if (target.hasAttribute("data-mp-create-keep")) {
-        state.mem.discardOpen = false;
-        renderCreateDialog(mount, L, state);
-        mount.querySelector("[data-mp-create-content]").focus({preventScroll:true});
-        return;
-      }
-      if (target.hasAttribute("data-mp-create-discard")) {
-        finishCreateDialog();
-        return;
-      }
-      if (target.hasAttribute("data-mp-create-rating")) {
-        state.mem.createDraft.rating = Number(target.getAttribute("data-mp-create-rating"));
-        renderCreateDialog(mount, L, state);
-        return;
-      }
-      if (target.hasAttribute("data-mp-create-add-label")) {
-        var newLabel = state.mem.createDraft.labelInput.trim();
-        if (newLabel && state.mem.createDraft.tags.indexOf(newLabel) === -1) {
-          state.mem.createDraft.tags.push(newLabel);
-        }
-        state.mem.createDraft.labelInput = "";
-        renderCreateDialog(mount, L, state);
-        mount.querySelector("[data-mp-create-label-input]").focus({preventScroll:true});
-        return;
-      }
-      if (target.hasAttribute("data-mp-create-remove-label")) {
-        var removedLabel = target.getAttribute("data-mp-create-remove-label");
-        state.mem.createDraft.tags = state.mem.createDraft.tags.filter(function (tag) { return tag !== removedLabel; });
-        renderCreateDialog(mount, L, state);
-        return;
-      }
       if (target.hasAttribute("data-mp-mem-open")) {
         state.mem.selected = state.mem.list[Number(target.getAttribute("data-mp-mem-open"))];
         renderMemList(mount, L, state);

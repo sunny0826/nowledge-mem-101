@@ -11,7 +11,6 @@ Read only when changing the shared simulation, course guide, or popup styling. C
 | Scenario | Interaction | Completion / changed element |
 | --- | --- | --- |
 | `save` (default) | Home → Memory actions → Add memory → input → send | Input clears / saved entry |
-| `create` | Memories → Create Memory → content → Create | `saved` `mp:action` with `via:"create"` / new memory row |
 | `recall` | Question → send | Answer appears / `.mp-answer` |
 | `threads` | Threads → search → Enter or search button | Non-empty query / found thread row |
 | `save-ask` | Save brief → ask to find it | First send advances on clear; final answer completes |
@@ -19,7 +18,7 @@ Read only when changing the shared simulation, course guide, or popup styling. C
 | `ai-context`, `ai-source`, `ai-evidence`, `ai-research`, `ai-save` | AI Now tasks → typed prompts → checked source/memory → fresh-task retrieval | Verified `mp:action` events; missing prerequisites never advance |
 | `ai-manage` | AI Now task → settings check → change → review → restore | Verified `mp:action` events; fresh task without Atlas history |
 
-Each scenario supplies its fill step, completion mode (`cleared`, `answer`, `query`, `view`, or `create`), and changed element. `data-course-guide-fillable-N` can supply per-step values; the final changed hint uses `data-course-guide-hint-(steps+1)`. Inspect actual lesson attributes before changing a binding. The first-memory page also offers `data-course-guide-create` for the full-form path without replacing the default Home flow.
+Each scenario supplies its fill step, completion mode (`cleared`, `answer`, `query`, or `view`), and changed element. `data-course-guide-fillable-N` can supply per-step values; the final changed hint uses `data-course-guide-hint-(steps+1)`. Inspect actual lesson attributes before changing a binding. The first-memory flow advances from Memory actions to the existing Add memory menu item before focusing the input.
 
 ## Interaction invariants
 
@@ -42,7 +41,7 @@ Each scenario supplies its fill step, completion mode (`cleared`, `answer`, `que
 
 ## Memories and Threads
 
-- Memories uses the app's 900px content column, tier tabs, submitted search, filter menu, memory cards, and right reading panel. Type, source, importance, and search-depth filters work on the fictional local data. Create Memory opens the matching form with optional title, type, labels, and a 1–5 importance rating; content is required and saves only to the current mount. Other filter facets and cloud create/edit/access actions remain disabled.
+- Memories uses the app's 900px content column, tier tabs, submitted search, filter menu, memory cards, and right reading panel. Type, source, importance, and search-depth filters work on the fictional local data. Create Memory and cloud edit/access actions are explicitly unavailable rather than simulated; the first-memory course uses only Home's existing Memory actions → Add memory flow.
 - Rating and pin state persist only within the current mount. Deleted rows disappear until the page resets. Search submits on Enter or the search button; reset restores the active unfiltered view without discarding saved practice entries.
 - Threads uses the app's source/scope filter, submitted search, conversation cards, and full reading view. Its preset Atlas messages, message navigation, summary, related memories, and related objects are fixtures, not imported user conversations. Related-memory links open the corresponding local memory detail.
 - Thread pin, copy-reference, and delete actions stay inside the real UI's More menu. Import, sharing, export, and AI distillation are explicitly disabled rather than reported as completed.

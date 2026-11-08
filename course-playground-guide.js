@@ -1,6 +1,6 @@
 (function (root, factory) {
   if (typeof module !== "undefined" && module.exports) { module.exports = require("./course-playground-guide-core.js"); return; }
-  var sources = ["/course-playground-guide-core.js?v=2", "/course-playground-guide-view.js?v=2"];
+  var sources = ["/course-playground-guide-core.js?v=3", "/course-playground-guide-view.js?v=3"];
   function load(index) {
     if (index === sources.length) { factory(root.NMemCourseGuide); return; }
     var script = document.createElement("script");
@@ -17,14 +17,6 @@
   var tracked = [];
   var scanTimer = null;
   function handleAiAction(state,event) {
-    if (state.scenario === "create" && state.open && state.step === 4 && event.detail.type === "saved" && event.detail.via === "create") {
-      state.step += 1;
-      markChange(state);
-      clearTimeout(state.doneTimer);
-      state.doneTimer=setTimeout(function(){if(state.open&&document.contains(state.rootEl))showDoneModal(state);},5000);
-      render(state);
-      return;
-    }
     if (!spec(state).actions || !state.open) return;
     if (event.detail.type === 'ai-ready') {prepareAiPractice(state);render(state);return;}
     var action=spec(state).actions[state.step-1];
@@ -78,15 +70,6 @@
       return;
     }
 
-    var createLaunch = target.closest("[data-course-guide-create]");
-    if (createLaunch && state.rootEl.contains(createLaunch)) {
-      if (window.innerWidth < 1024) return;
-      state.scenario = "create";
-      state.step = 1;
-      startPractice(state);
-      return;
-    }
-
     var fill = target.closest("[data-course-guide-fill]");
     if (fill && (state.rootEl.contains(fill) || state.hintEl.contains(fill))) {
       fillExample(state, fill.getAttribute("data-course-guide-fill"));
@@ -129,18 +112,17 @@
       }
     }
 
-    var addMemory = target.closest("[data-mp-add-memory]");
-    if (addMemory && state.scenario === "save" && state.step === 2) {
+    var memoryActions = target.closest("[data-mp-memory-actions]");
+    if (memoryActions && state.scenario === "save" && state.step === 2) {
       state.step += 1;
       render(state);
       return;
     }
 
-    var createButton = target.closest("[data-mp-mem-create]");
-    if (createButton && state.scenario === "create" && state.step === 2) {
+    var addMemory = target.closest("[data-mp-add-memory]");
+    if (addMemory && state.scenario === "save" && state.step === 3) {
       state.step += 1;
       render(state);
-      setTimeout(function () { render(state); }, 60);
       return;
     }
 
@@ -220,16 +202,6 @@
       var actions=spec(state).actions;
       if(actions[state.step-1] && actions[state.step-1][0]==='fill' && event.target.value.trim()){state.step+=1;render(state);}
       else if(actions[state.step-2] && actions[state.step-2][0]==='fill' && !event.target.value.trim()){state.step-=1;render(state);}
-      return;
-    }
-    if (state.scenario === "create" && event.target.matches("[data-mp-create-content]")) {
-      if (state.step === 3 && event.target.value.trim()) {
-        state.step = 4;
-        render(state);
-      } else if (state.step === 4 && !event.target.value.trim()) {
-        state.step = 3;
-        render(state);
-      }
       return;
     }
     if (state.scenario === "threads") {
