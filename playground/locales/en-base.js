@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/locales/en-base.js", function () {
   var G = window.NMemPlayground = window.NMemPlayground || {};
   G.LOCALES = G.LOCALES || {};
   G.LOCALES.en = G.LOCALES.en || {};
@@ -10,4 +10,4 @@
       },"answerNone":"No matching memories yet. Try different keywords, or save a few first.","emptyFiltered":"Nothing here yet.","overview":"Knowledge Pulse","statLabels":["Memories","Theme","Core","Topic"],"statMeta":{"archived":"+12 archived","perWeek":"+6/wk"},"pulse":"20+ new notifications are waiting to be viewed","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"focus":{"label":"Today's focus","space":"Default","text":"Key change: playground replica shipped; Lesson 2 now embeds the live demo.","time":"3h ago"},"review":{"title":"Needs Attention","subtitle":"Review by category, or let items clear without changing your memories.","next":"Next item clears in 27d · no memory changes","apply":function (n) {
           return "Apply to " + n;
         },"items":[["warn","Conflicts",1,"Recommended: Keep both and link"],["clock","Possibly outdated",1,"Recommended: Leave unchanged"],["database","Memory health",1,"Recommended: Leave unchanged"]]},"activity":"Memory activity","attention":"Needs Attention","attentionItems":["Possible contradiction","Memory may be outdated","Memory health review is ready"],"recentEvents":"Recent Events","legend":["Less","More"],"dow":["M","T","W","T","F","S","S"]});
-})();
+}]);

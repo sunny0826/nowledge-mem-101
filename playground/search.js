@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/search.js", function () {
   "use strict";
   var G = window.NMemPlayground = window.NMemPlayground || {};
 
@@ -81,4 +81,4 @@
   }
 
   Object.assign(G, {tokenize, searchMemories, searchDocuments});
-})();
+}]);

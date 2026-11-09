@@ -1,8 +1,12 @@
 (function (root, factory) {
-  var data = typeof module !== "undefined" && module.exports ? require("./playground-ai-now-data.js") : root.MemPlaygroundAIData;
-  var value = factory(data.FIXTURES, data.COPY);
-  if (typeof module !== "undefined" && module.exports) module.exports = value;
-  else root.MemPlaygroundAIModel = value;
+  if (typeof module !== "undefined" && module.exports) {
+    var data = require("./playground-ai-now-data.js");
+    module.exports = factory(data.FIXTURES, data.COPY);
+    return;
+  }
+  (root.NMemModules = root.NMemModules || []).push(["playground-ai-now-model.js", function () {
+    root.MemPlaygroundAIModel = factory(root.MemPlaygroundAIData.FIXTURES, root.MemPlaygroundAIData.COPY);
+  }]);
 })(typeof globalThis !== "undefined" ? globalThis : this, function (FIXTURES, COPY) {
   "use strict";
   function createModel(lang, store) {

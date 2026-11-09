@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/context-actions.js", function () {
   "use strict";
   var G = window.NMemPlayground = window.NMemPlayground || {};
   var renderLibList = G.renderLibList, renderMemList = G.renderMemList, renderThreadList = G.renderThreadList, nowHM = G.nowHM, searchMemories = G.searchMemories, searchDocuments = G.searchDocuments, renderTimeline = G.renderTimeline, renderStats = G.renderStats, renderCalendar = G.renderCalendar, renderAnswer = G.renderAnswer, esc = G.esc;
@@ -185,4 +185,4 @@
     Object.assign(context, {submit, setView, closeGlobalSearch, renderGlobalResults, setDrawer, rerenderAll});
   }
   G.attachActions = attachActions;
-})();
+}]);

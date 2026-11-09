@@ -1,20 +1,10 @@
 (function (root, factory) {
   if (typeof module !== "undefined" && module.exports) { module.exports = require("./playground-ai-now-model.js"); return; }
-  var sources = ["/playground-ai-now-data.js?v=3", "/playground-ai-now-model.js?v=3", "/playground-ai-now-renderer.js?v=3"];
-  function load(index) {
-    if (index === sources.length) {
-      var model = root.MemPlaygroundAIModel;
-      var data = root.MemPlaygroundAIData;
-      factory(model.createTask, model.startResponse, data.FIXTURES, data.COPY);
-      return;
-    }
-    var script = document.createElement("script");
-    script.src = sources[index];
-    script.onload = function () { load(index + 1); };
-    script.onerror = function () { throw new Error("Cannot load " + sources[index]); };
-    document.head.appendChild(script);
-  }
-  load(0);
+  (root.NMemModules = root.NMemModules || []).push(["playground-ai-now.js", function () {
+    var model = root.MemPlaygroundAIModel;
+    var data = root.MemPlaygroundAIData;
+    factory(model.createTask, model.startResponse, data.FIXTURES, data.COPY);
+  }]);
 })(typeof globalThis !== "undefined" ? globalThis : this, function (createTask, startResponse, FIXTURES, COPY) {
   "use strict";
   function init(api) {

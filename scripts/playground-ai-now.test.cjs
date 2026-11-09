@@ -57,16 +57,18 @@ const { aiPracticeSeed } = require('../course-playground-guide.js');
 const lessonSequence = ['start-a-grounded-task','bring-a-source','ask-for-an-evidence-brief','research-what-is-missing','save-the-result','let-ai-now-manage-mem'];
 const scenarioSequence = ['ai-context','ai-source','ai-evidence','ai-research','ai-save'];
 test('English and Chinese lessons expose identical simulation controls and automatic entry',()=>{
-  const contract=page=>({
-    scenario:page.match(/data-course-guide-scenario="([^"]+)"/)[1],
-    autoStart:page.match(/data-course-guide-autostart="([^"]+)"/)[1],
-    hints:[...page.matchAll(/data-course-guide-hint-(\d+)=/g)].map(m=>Number(m[1])),
-    fills:[...page.matchAll(/data-course-guide-fillable-(\d+)=/g)].map(m=>Number(m[1])),
-    steps:[...page.matchAll(/data-course-guide-source="(\d+)"/g)].map(m=>Number(m[1])),
-    next:page.match(/data-course-guide-confirm-href="([^"]+)"/)[1].replace(/^\/zh\//,'/'),
-    guide:page.match(/src="(\/course-playground-guide.js[^\"]+)"/)[1],
-    realApp:page.match(/data-course-guide-mem-url="([^"]+)"/)[1]
-  });
+  const contract=page=>{
+    assert.doesNotMatch(page,/<script\b[^>]*\bsrc=["']\/course-playground-guide\.js(?:[?#][^"']*)?["']/);
+    return {
+      scenario:page.match(/data-course-guide-scenario="([^"]+)"/)[1],
+      autoStart:page.match(/data-course-guide-autostart="([^"]+)"/)[1],
+      hints:[...page.matchAll(/data-course-guide-hint-(\d+)=/g)].map(m=>Number(m[1])),
+      fills:[...page.matchAll(/data-course-guide-fillable-(\d+)=/g)].map(m=>Number(m[1])),
+      steps:[...page.matchAll(/data-course-guide-source="(\d+)"/g)].map(m=>Number(m[1])),
+      next:page.match(/data-course-guide-confirm-href="([^"]+)"/)[1].replace(/^\/zh\//,'/'),
+      realApp:page.match(/data-course-guide-mem-url="([^"]+)"/)[1]
+    };
+  };
   for(const slug of lessonSequence){
     const en=contract(readFileSync(resolve(__dirname,'..','ai-now',slug+'.mdx'),'utf8'));
     const zh=contract(readFileSync(resolve(__dirname,'..','zh/ai-now',slug+'.mdx'),'utf8'));
@@ -105,16 +107,18 @@ function manageLessonPath(locale){
   return existsSync(draft)?draft:published;
 }
 test('lesson 6 exposes the identical settings simulation contract in both locales',()=>{
-  const contract=page=>({
-    scenario:page.match(/data-course-guide-scenario="([^"]+)"/)[1],
-    autoStart:page.match(/data-course-guide-autostart="([^"]+)"/)[1],
-    hints:[...page.matchAll(/data-course-guide-hint-(\d+)=/g)].map(m=>Number(m[1])),
-    fills:[...page.matchAll(/data-course-guide-fillable-(\d+)=/g)].map(m=>Number(m[1])),
-    steps:[...page.matchAll(/data-course-guide-source="(\d+)"/g)].map(m=>Number(m[1])),
-    next:page.match(/data-course-guide-confirm-href="([^"]+)"/)[1].replace(/^\/zh\//,'/'),
-    guide:page.match(/src="(\/course-playground-guide.js[^\"]+)"/)[1],
-    realApp:page.match(/data-course-guide-mem-url="([^"]+)"/)[1]
-  });
+  const contract=page=>{
+    assert.doesNotMatch(page,/<script\b[^>]*\bsrc=["']\/course-playground-guide\.js(?:[?#][^"']*)?["']/);
+    return {
+      scenario:page.match(/data-course-guide-scenario="([^"]+)"/)[1],
+      autoStart:page.match(/data-course-guide-autostart="([^"]+)"/)[1],
+      hints:[...page.matchAll(/data-course-guide-hint-(\d+)=/g)].map(m=>Number(m[1])),
+      fills:[...page.matchAll(/data-course-guide-fillable-(\d+)=/g)].map(m=>Number(m[1])),
+      steps:[...page.matchAll(/data-course-guide-source="(\d+)"/g)].map(m=>Number(m[1])),
+      next:page.match(/data-course-guide-confirm-href="([^"]+)"/)[1].replace(/^\/zh\//,'/'),
+      realApp:page.match(/data-course-guide-mem-url="([^"]+)"/)[1]
+    };
+  };
   const en=contract(readFileSync(manageLessonPath('en'),'utf8'));
   const zh=contract(readFileSync(manageLessonPath('zh'),'utf8'));
   assert.equal(en.scenario,'ai-manage');
@@ -254,7 +258,8 @@ test('a detached or replaced task never runs stale response work',()=>{
 
 function shellSource() {
   const entry=readFileSync(resolve(__dirname,'..','playground.js'),'utf8');
-  const modules=[...entry.matchAll(/"(playground(?:\/|-home)[^"]+\.js)"/g)].map(match=>match[1]);
+  const manifest=readFileSync(resolve(__dirname,'..','playground-runtime.js'),'utf8');
+  const modules=[...manifest.matchAll(/"(playground(?:\/|-home)[^"]+\.js)"/g)].map(match=>match[1]);
   return modules.map(file=>readFileSync(resolve(__dirname,'..',file),'utf8')).join('\n')+'\n'+entry;
 }
 

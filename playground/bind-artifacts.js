@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/bind-artifacts.js", function () {
   "use strict";
   var G = window.NMemPlayground = window.NMemPlayground || {};
   var renderLibList = G.renderLibList, libraryFilterHtml = G.libraryFilterHtml;
@@ -79,4 +79,4 @@
     });
 
   };
-})();
+}]);

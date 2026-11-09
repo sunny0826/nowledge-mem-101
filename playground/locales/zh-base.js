@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/locales/zh-base.js", function () {
   var G = window.NMemPlayground = window.NMemPlayground || {};
   G.LOCALES = G.LOCALES || {};
   G.LOCALES.zh = G.LOCALES.zh || {};
@@ -9,4 +9,4 @@
       },"answerNone":"还没有匹配的记忆。换个关键词试试，或先保存几条。","emptyFiltered":"这里还没有内容。","overview":"知识概览","statLabels":["记忆","主题","核心","话题"],"statMeta":{"archived":"另有 12 条已归档","perWeek":"+6/周"},"pulse":"有 20+ 条新通知待查看","focus":{"label":"今日焦点","space":"默认","text":"关键变化：Playground 组件复刻完成；第 2 课现在嵌入实时演示。","time":"3 小时前"},"review":{"title":"需要留意","subtitle":"可按类别批阅；未处理的事项到期后会安全移出，不会改动记忆。","next":"下一项将在 27 天后移出 · 不改动记忆","apply":function (n) {
           return "应用到 " + n + " 项";
         },"items":[["warn","记忆冲突",1,"推荐：保留两条并建立关联"],["clock","可能已过时",1,"推荐：保持不变"],["database","记忆健康",1,"推荐：保持不变"]]},"activity":"记忆活动","attention":"需留意","attentionItems":["可能存在矛盾","记忆可能已过时","记忆健康审阅已就绪"],"recentEvents":"最近事件","legend":["少","多"],"dow":["一","二","三","四","五","六","日"]});
-})();
+}]);

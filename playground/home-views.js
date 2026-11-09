@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/home-views.js", function () {
   "use strict";
   var G = window.NMemPlayground = window.NMemPlayground || {};
   var esc = G.esc, icon = G.icon, appAsset = G.appAsset, appPageHeaderHtml = G.appPageHeaderHtml, sourceIconHtml = G.sourceIconHtml, appPaginationHtml = G.appPaginationHtml, isZh = G.isZh;
@@ -266,4 +266,4 @@
 
 
   Object.assign(G, {focusHtml, reviewHtml, homeIcon, navItemHtml, captureHtml, globalSearchHtml, homeViewHtml, renderStats, calendarLevel, renderCalendar, entryHtml, eventHtml, renderTimeline, renderAnswer});
-})();
+}]);

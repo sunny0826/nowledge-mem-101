@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/assets.js", function () {
   "use strict";
   var G = window.NMemPlayground = window.NMemPlayground || {};
   var esc = G.esc, icon = G.icon;
@@ -27,4 +27,4 @@
   }
 
   Object.assign(G, {appAsset, appPageHeaderHtml, sourceIconHtml, appPaginationHtml});
-})();
+}]);
