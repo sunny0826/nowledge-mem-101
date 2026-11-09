@@ -1,15 +1,8 @@
 (function (root, factory) {
   if (typeof module !== "undefined" && module.exports) { module.exports = require("./course-playground-guide-core.js"); return; }
-  var sources = ["/course-playground-guide-core.js?v=4", "/course-playground-guide-view.js?v=5"];
-  function load(index) {
-    if (index === sources.length) { factory(root.NMemCourseGuide); return; }
-    var script = document.createElement("script");
-    script.src = sources[index];
-    script.onload = function () { load(index + 1); };
-    script.onerror = function () { throw new Error("Cannot load " + sources[index]); };
-    document.head.appendChild(script);
-  }
-  load(0);
+  (root.NMemModules = root.NMemModules || []).push(["course-playground-guide.js", function () {
+    factory(root.NMemCourseGuide);
+  }]);
 })(typeof globalThis !== "undefined" ? globalThis : this, function (G) {
   "use strict";
   var ROOT_SELECTOR = G.ROOT_SELECTOR, MIN_DOCK_WIDTH = G.MIN_DOCK_WIDTH, prepareAiPractice = G.prepareAiPractice, spec = G.spec, targetForStep = G.targetForStep, positionWindow = G.positionWindow, renderHint = G.renderHint, placeHint = G.placeHint, highlightTarget = G.highlightTarget, updateCourseSteps = G.updateCourseSteps, render = G.render, prepareWindowControl = G.prepareWindowControl, setMinimized = G.setMinimized, setWindowOpen = G.setWindowOpen, markChange = G.markChange, showDoneModal = G.showDoneModal, hideDoneModal = G.hideDoneModal, tryComplete = G.tryComplete, fillExample = G.fillExample, openMemApp = G.openMemApp, createDoneModal = G.createDoneModal;

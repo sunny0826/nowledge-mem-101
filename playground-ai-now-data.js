@@ -1,7 +1,8 @@
 (function (root, factory) {
-  var value = factory();
-  if (typeof module !== "undefined" && module.exports) module.exports = value;
-  else root.MemPlaygroundAIData = value;
+  if (typeof module !== "undefined" && module.exports) { module.exports = factory(); return; }
+  (root.NMemModules = root.NMemModules || []).push(["playground-ai-now-data.js", function () {
+    root.MemPlaygroundAIData = factory();
+  }]);
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   "use strict";
   var FIXTURES = {

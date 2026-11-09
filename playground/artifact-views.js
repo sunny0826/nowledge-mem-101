@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/artifact-views.js", function () {
   "use strict";
   var G = window.NMemPlayground = window.NMemPlayground || {};
   var esc = G.esc, icon = G.icon, appAsset = G.appAsset, appPageHeaderHtml = G.appPageHeaderHtml, sourceIconHtml = G.sourceIconHtml, appPaginationHtml = G.appPaginationHtml, isZh = G.isZh, homeIcon = G.homeIcon;
@@ -133,4 +133,4 @@
 
 
   Object.assign(G, {artifactIcon, libraryFilterHtml, libPaneHtml, libraryDocKind, libraryDocIcon, libraryDocDate, libraryDocSize, libraryDateMatches, libRowHtml, libraryContentHtml, libDetailHtml, renderLibList});
-})();
+}]);

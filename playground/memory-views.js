@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/memory-views.js", function () {
   "use strict";
   var G = window.NMemPlayground = window.NMemPlayground || {};
   var esc = G.esc, icon = G.icon, appAsset = G.appAsset, appPageHeaderHtml = G.appPageHeaderHtml, sourceIconHtml = G.sourceIconHtml, appPaginationHtml = G.appPaginationHtml;
@@ -144,4 +144,4 @@
 
 
   Object.assign(G, {memFilterCount, memFilterSummaryHtml, memFilterMenuHtml, memPaneHtml, memRowHtml, memDetailHtml, renderMemList});
-})();
+}]);

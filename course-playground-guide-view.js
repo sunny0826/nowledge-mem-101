@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["course-playground-guide-view.js", function () {
   "use strict";
   var G = window.NMemCourseGuide;
   var ROOT_SELECTOR = G.ROOT_SELECTOR, MIN_DOCK_WIDTH = G.MIN_DOCK_WIDTH, SCENARIOS = G.SCENARIOS;
@@ -409,4 +409,4 @@
 
 
   Object.assign(G, {spec, targetForStep, positionWindow, renderHint, placeHint, highlightTarget, updateCourseSteps, render, prepareWindowControl, setMinimized, setWindowOpen, markChange, showDoneModal, hideDoneModal, tryComplete, fillExample, openMemApp, createDoneModal});
-})();
+}]);

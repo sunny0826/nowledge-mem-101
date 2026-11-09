@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/core.js", function () {
   "use strict";
   var G = window.NMemPlayground = window.NMemPlayground || {};
   var MOUNT_ATTR = "data-mem-playground";
@@ -147,4 +147,4 @@
 
 
   Object.assign(G, {MOUNT_ATTR, INIT_ATTR, DEFER_MS, SCAN_DEBOUNCE_MS, isZh, esc, ICON_PATHS, UNIT_ICONS, icon, nowHM, copyText});
-})();
+}]);

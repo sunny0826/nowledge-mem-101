@@ -5,7 +5,7 @@ const { resolve } = require('node:path');
 
 function shellSource() {
   const entry=readFileSync(resolve(__dirname,'..','playground.js'),'utf8');
-  const modules=[...entry.matchAll(/"(playground(?:\/|-home)[^"]+\.js)"/g)].map(match=>match[1]);
+  const modules=require('../playground-runtime.js').filter(file=>file.startsWith('playground/')||file.startsWith('playground-home'));
   return modules.map(file=>readFileSync(resolve(__dirname,'..',file),'utf8')).join('\n')+'\n'+entry;
 }
 
@@ -53,6 +53,7 @@ test('thread result guidance highlights the whole conversation row',()=>{
   global.window={NMemCourseGuide:require('../course-playground-guide-core.js')};
   try {
     require('../course-playground-guide-view.js');
+    global.window.NMemModules[0][1]();
     const state={scenario:'threads',windowEl:{querySelector:selector=>selector==='[data-mp-thread-open]'?title:null}};
     assert.equal(global.window.NMemCourseGuide.targetForStep(state,4),row);
   } finally {

@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground-home.js", function () {
   "use strict";
 
   var templates = window.NMemHomeTemplates;
@@ -76,4 +76,4 @@
   }
 
   window.NMemHome = {render: render, templates: templates};
-})();
+}]);

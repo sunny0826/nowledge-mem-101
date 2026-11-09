@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/bind-threads.js", function () {
   "use strict";
   var G = window.NMemPlayground = window.NMemPlayground || {};
   var renderThreadList = G.renderThreadList, copyText = G.copyText, icon = G.icon, esc = G.esc;
@@ -153,4 +153,4 @@
     });
 
   };
-})();
+}]);

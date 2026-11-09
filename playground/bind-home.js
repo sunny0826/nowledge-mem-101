@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/bind-home.js", function () {
   "use strict";
   var G = window.NMemPlayground = window.NMemPlayground || {};
   var renderTimeline = G.renderTimeline, nowHM = G.nowHM, esc = G.esc, icon = G.icon;
@@ -129,4 +129,4 @@
     });
 
   };
-})();
+}]);

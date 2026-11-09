@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/bind-memories.js", function () {
   "use strict";
   var G = window.NMemPlayground = window.NMemPlayground || {};
   var renderMemList = G.renderMemList;
@@ -143,4 +143,4 @@
     });
 
   };
-})();
+}]);

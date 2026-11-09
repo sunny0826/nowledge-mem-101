@@ -1,6 +1,8 @@
 (function (root, factory) {
   if (typeof module !== "undefined" && module.exports) { module.exports = factory({}); return; }
-  root.NMemCourseGuide = factory(root.NMemCourseGuide || {});
+  (root.NMemModules = root.NMemModules || []).push(["course-playground-guide-core.js", function () {
+    root.NMemCourseGuide = factory(root.NMemCourseGuide || {});
+  }]);
 })(typeof globalThis !== "undefined" ? globalThis : this, function (G) {
   "use strict";
   var ROOT_SELECTOR = "[data-course-playground-guide]";

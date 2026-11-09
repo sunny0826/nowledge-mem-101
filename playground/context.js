@@ -1,4 +1,4 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground/context.js", function () {
   "use strict";
   var G = window.NMemPlayground = window.NMemPlayground || {};
   var INIT_ATTR = G.INIT_ATTR, LOCALES = G.LOCALES, renderShell = G.renderShell, isZh = G.isZh;
@@ -111,4 +111,4 @@
   }
 
   Object.assign(G, {createContext});
-})();
+}]);

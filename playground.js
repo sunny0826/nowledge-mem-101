@@ -1,33 +1,5 @@
-(function () {
+(window.NMemModules = window.NMemModules || []).push(["playground.js", function () {
   "use strict";
-  var MODULES = [
-    "playground-home-templates.js",
-    "playground-home.js",
-    "playground/core.js",
-    "playground/assets.js",
-    "playground/search.js",
-    "playground/locales/en-base.js",
-    "playground/locales/en-timeline.js",
-    "playground/locales/en-memories.js",
-    "playground/locales/en-threads.js",
-    "playground/locales/en-artifacts.js",
-    "playground/locales/zh-base.js",
-    "playground/locales/zh-timeline.js",
-    "playground/locales/zh-memories.js",
-    "playground/locales/zh-threads.js",
-    "playground/locales/zh-artifacts.js",
-    "playground/home-views.js",
-    "playground/memory-views.js",
-    "playground/thread-views.js",
-    "playground/artifact-views.js",
-    "playground/shell.js",
-    "playground/context-actions.js",
-    "playground/context.js",
-    "playground/bind-home.js",
-    "playground/bind-artifacts.js",
-    "playground/bind-memories.js",
-    "playground/bind-threads.js"
-  ];
 
   function start() {
     var G = window.NMemPlayground;
@@ -72,17 +44,5 @@
     else window.addEventListener("load", boot, {once:true});
   }
 
-  function load(index) {
-    if (index === MODULES.length) {
-      start();
-      return;
-    }
-    var script = document.createElement("script");
-    script.src = "/" + MODULES[index] + "?v=3";
-    script.onload = function () { load(index + 1); };
-    script.onerror = function () { throw new Error("Cannot load " + MODULES[index]); };
-    document.head.appendChild(script);
-  }
-
-  load(0);
-})();
+  start();
+}]);
